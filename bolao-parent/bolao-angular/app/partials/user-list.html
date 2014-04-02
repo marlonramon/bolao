@@ -22,33 +22,36 @@
                         <i class="icon-th"></i>
                     </span>
                     <h5>Usuários</h5>
+                    <!--<input type="text" id="inpuFilter" ng-model="filter"/>-->
                 </div>
                 <table class="table table-bordered table-striped table-hover">
                     <thead>
                         <tr>
                             <th>Código</th>
+                            <th>Login</th>
                             <th>Nome</th>
                             <th>E-mail</th>
                             <th>Data Cadastro</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
-                    <tr ng-repeat="user in users">
+                    
+                    <tr ng-repeat="user in users | filter:filter">
                         <td>{{user.idUser}}</td>
+                        <td>{{user.login}}</td>
                         <td>{{user.name}}</td>
                         <td>{{user.email}}</td>
-                        <td>{{user.dateInsert}}</td>
+                        <td>{{user.dateInsert | date:'dd/MM/yyyy HH:mm:ss'}}</td>
                         <td>
                             <a ng-click="editUser(user.idUser)" class="btn btn-primary">Editar</a>
-                            <a ng-click="deleteUser(user.idUser)" class="btn btn-primary">Excluir</a>
+                            <a ng-click="deleteUser(user.idUser)" class="btn btn-danger">Excluir</a>
                         </td>
                     </tr>
-
                 </table>
             </div>
 
-            <a ng-click="createNewUser()" class="btn btn-primary">create new user</a>
-
+            <a ng-click="newUser()" class="btn btn-primary">Novo</a>
+            Total: {{users.length}}
         </div>
     </div>
 

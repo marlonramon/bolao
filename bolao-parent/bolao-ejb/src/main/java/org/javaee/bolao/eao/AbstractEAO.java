@@ -23,231 +23,233 @@ import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.SingularAttribute;
 
 import org.javaee.bolao.entities.AbstractEntity;
+import org.javaee.rest.common.XmlUtil;
 
 public abstract class AbstractEAO<E extends AbstractEntity> implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private Logger logger = Logger.getLogger(getClass().getName());
+	private Logger logger = Logger.getLogger(getClass().getName());
 
-    protected Class<E> entityClass;
+	protected Class<E> entityClass;
 
-    public AbstractEAO(Class<E> entityClass) {
-        this.entityClass = entityClass;
-    }
+	public AbstractEAO(Class<E> entityClass) {
+		this.entityClass = entityClass;
+	}
 
-    public abstract EntityManager getEntityManager();
+	public abstract EntityManager getEntityManager();
 
-    public void insert(E entity) {
-    	logger.log(Level.INFO, "Insert: {0}", entity);
-    	getEntityManager().persist(entity);
-    }
+	public void insert(E entity) {
 
-    public void delete(Long id) {
-    	logger.log(Level.INFO, "Delete: {0}", id);
-    	if (id != null) {
-            E entity = getEntityManager().getReference(entityClass, id);
-            getEntityManager().remove(entity);
-        }
-    }
+		logger.log(Level.INFO, "Insert: {0}", XmlUtil.toString(entity, true));
+		getEntityManager().persist(entity);
+	}
 
-    public void delete(E entity) {
-        delete(entity.getId());
-    }
+	public void delete(Long id) {
+		logger.log(Level.INFO, "Delete Id: {0}", id);
+		if (id != null) {
+			E entity = getEntityManager().getReference(entityClass, id);
+			getEntityManager().remove(entity);
+		}
+	}
 
-    public E update(E entity) {
-    	logger.log(Level.INFO, "Update: {0}", entity);
-        return getEntityManager().merge(entity);
-    }
+	public void delete(E entity) {
+		delete(entity.getId());
+	}
 
-    public E find(Long id) {
-        logger.log(Level.INFO, "Find: {0}", id);
-        if (id == null) {
-            return null;
-        }
-        return getEntityManager().find(entityClass, id);
-    }
+	public E update(E entity) {
+		logger.log(Level.INFO, "Update: {0}", XmlUtil.toString(entity, true));
+		return getEntityManager().merge(entity);
+	}
 
-    public E find(E entity) {
-        if (entity == null || entity.getId() == null) {
-            return null;
-        }
-        return find(entity.getId());
-    }
+	public E find(Long id) {
+		logger.log(Level.INFO, "Find Id: {0}", id);
+		if (id == null) {
+			return null;
+		}
+		return getEntityManager().find(entityClass, id);
+	}
 
-    protected TypedQuery<E> createTypedQuery(String sql) {
-        return getEntityManager().createQuery(sql, entityClass);
-    }
+	public E find(E entity) {
+		if (entity == null || entity.getId() == null) {
+			return null;
+		}
+		return find(entity.getId());
+	}
 
-    protected TypedQuery<E> createQuery(CriteriaQuery<E> criteriaQuery) {
-        return getEntityManager().createQuery(criteriaQuery);
-    }
+	protected TypedQuery<E> createTypedQuery(String sql) {
+		return getEntityManager().createQuery(sql, entityClass);
+	}
 
-    protected Query createQuery(CriteriaUpdate<E> criteriaUpdate) {
-        return getEntityManager().createQuery(criteriaUpdate);
-    }
+	protected TypedQuery<E> createQuery(CriteriaQuery<E> criteriaQuery) {
+		return getEntityManager().createQuery(criteriaQuery);
+	}
 
-    public List<E> createQuery(String sql, Object... params) {
-        TypedQuery<E> query = getEntityManager().createQuery(sql, entityClass);
+	protected Query createQuery(CriteriaUpdate<E> criteriaUpdate) {
+		return getEntityManager().createQuery(criteriaUpdate);
+	}
 
-        int i = 1;
+	public List<E> createQuery(String sql, Object... params) {
+		TypedQuery<E> query = getEntityManager().createQuery(sql, entityClass);
 
-        if (params != null) {
-            for (Object param : params) {
-                query.setParameter(i++, param);
-            }
-        }
+		int i = 1;
 
-        return query.getResultList();
-    }
+		if (params != null) {
+			for (Object param : params) {
+				query.setParameter(i++, param);
+			}
+		}
 
-    public List<E> findAll() {
-        CriteriaQuery<E> criteriaQuery = getEntityManager().getCriteriaBuilder().createQuery(entityClass);
+		return query.getResultList();
+	}
 
-        Root<E> root = criteriaQuery.from(entityClass);
-        criteriaQuery = criteriaQuery.select(root);
-        TypedQuery<E> query = getEntityManager().createQuery(criteriaQuery);
+	public List<E> findAll() {
+		CriteriaQuery<E> criteriaQuery = getEntityManager().getCriteriaBuilder().createQuery(entityClass);
 
-        List<E> resultList = query.getResultList();
-        
-        logger.log(Level.INFO, "FindAll: {0}", resultList.size());
-        
+		Root<E> root = criteriaQuery.from(entityClass);
+		criteriaQuery = criteriaQuery.select(root);
+		TypedQuery<E> query = getEntityManager().createQuery(criteriaQuery);
+
+		List<E> resultList = query.getResultList();
+
+		logger.log(Level.INFO, "FindAll Total: {0}", resultList.size());
+
 		return resultList;
-    }
+	}
 
-    public List<E> findRange(int[] range) {
-        CriteriaQuery<E> cq = getEntityManager().getCriteriaBuilder().createQuery(entityClass);
-        cq.select(cq.from(entityClass));
-        TypedQuery<E> q = createQuery(cq);
-        q.setMaxResults(range[1] - range[0] + 1);
-        q.setFirstResult(range[0]);
-        return q.getResultList();
-    }
+	public List<E> findRange(int[] range) {
+		CriteriaQuery<E> cq = getEntityManager().getCriteriaBuilder().createQuery(entityClass);
+		cq.select(cq.from(entityClass));
+		TypedQuery<E> q = createQuery(cq);
+		q.setMaxResults(range[1] - range[0] + 1);
+		q.setFirstResult(range[0]);
+		return q.getResultList();
+	}
 
-    public List<E> findBetween(SingularAttribute<E, ? extends Date> dateAttribute, Date startDate, Date endDate) {
+	public List<E> findBetween(SingularAttribute<E, ? extends Date> dateAttribute, Date startDate, Date endDate) {
 
-        CriteriaQuery<E> criteriaQuery = getEntityManager().getCriteriaBuilder().createQuery(entityClass);
+		CriteriaQuery<E> criteriaQuery = getEntityManager().getCriteriaBuilder().createQuery(entityClass);
 
-        Root<E> root = criteriaQuery.from(entityClass);
-        criteriaQuery = criteriaQuery.select(root);
+		Root<E> root = criteriaQuery.from(entityClass);
+		criteriaQuery = criteriaQuery.select(root);
 
-        Path<? extends Date> pathDate = root.get(dateAttribute);
+		Path<? extends Date> pathDate = root.get(dateAttribute);
 
-        Predicate betweenDate = getCriteriaBuilder().between(pathDate, startDate, endDate);
+		Predicate betweenDate = getCriteriaBuilder().between(pathDate, startDate, endDate);
 
-        criteriaQuery.where(betweenDate);
+		criteriaQuery.where(betweenDate);
 
-        TypedQuery<E> query = getEntityManager().createQuery(criteriaQuery);
+		TypedQuery<E> query = getEntityManager().createQuery(criteriaQuery);
 
-        return query.getResultList();
-    }
+		return query.getResultList();
+	}
 
-    public E createIntance() {
-        try {
-            return entityClass.newInstance();
-        } catch (Exception e) {
-            throw new RuntimeException("Erro ao instanciar a classe: " + entityClass.getSimpleName(), e);
-        }
-    }
+	public E createIntance() {
+		try {
+			return entityClass.newInstance();
+		} catch (Exception e) {
+			throw new RuntimeException("Erro ao instanciar a classe: " + entityClass.getSimpleName(), e);
+		}
+	}
 
-    protected CriteriaQuery<E> createCriteriaQuery() {
-        return getCriteriaBuilder().createQuery(entityClass);
-    }
+	protected CriteriaQuery<E> createCriteriaQuery() {
+		return getCriteriaBuilder().createQuery(entityClass);
+	}
 
-    protected CriteriaUpdate<E> createCriteriaUpdateQuery() {
-        return getCriteriaBuilder().createCriteriaUpdate(entityClass);
-    }
+	protected CriteriaUpdate<E> createCriteriaUpdateQuery() {
+		return getCriteriaBuilder().createCriteriaUpdate(entityClass);
+	}
 
-    protected CriteriaBuilder getCriteriaBuilder() {
-        return getEntityManager().getCriteriaBuilder();
-    }
+	protected CriteriaBuilder getCriteriaBuilder() {
+		return getEntityManager().getCriteriaBuilder();
+	}
 
-    public int count() {
+	public int count() {
 
-        CriteriaBuilder qb = getEntityManager().getCriteriaBuilder();
-        CriteriaQuery<Long> cq = qb.createQuery(Long.class);
-        cq.select(qb.count(cq.from(entityClass)));
+		CriteriaBuilder qb = getEntityManager().getCriteriaBuilder();
+		CriteriaQuery<Long> cq = qb.createQuery(Long.class);
+		cq.select(qb.count(cq.from(entityClass)));
 
-        int count = getEntityManager().createQuery(cq).getSingleResult().intValue();
-        
-        logger.log(Level.INFO, "Count: {0}", count);
-        
+		int count = getEntityManager().createQuery(cq).getSingleResult().intValue();
+
+		logger.log(Level.INFO, "Count: {0}", count);
+
 		return count;
-    }
+	}
 
-    public List<E> paginator(int firstResult, int maxResults) {
-        return paginator(firstResult, maxResults, null, null);
-    }
+	public List<E> paginator(int firstResult, int maxResults) {
+		return paginator(firstResult, maxResults, null, null);
+	}
 
-    public List<E> paginator(int firstResult, int maxResults, SingularAttribute<E, ?> attributeOrder, Boolean sortOrder) {
+	public List<E> paginator(int firstResult, int maxResults, SingularAttribute<E, ?> attributeOrder, Boolean sortOrder) {
 
-        CriteriaQuery<E> cq = createCriteriaQuery();
-        Root<E> from = cq.from(entityClass);
-        cq = cq.select(from);
+		CriteriaQuery<E> cq = createCriteriaQuery();
+		Root<E> from = cq.from(entityClass);
+		cq = cq.select(from);
 
-        if (sortOrder != null) {
-            Order order;
-            if (sortOrder) {
-                order = getCriteriaBuilder().asc(from.get(attributeOrder));
-            } else {
-                order = getCriteriaBuilder().desc(from.get(attributeOrder));
-            }
+		if (sortOrder != null) {
+			Order order;
+			if (sortOrder) {
+				order = getCriteriaBuilder().asc(from.get(attributeOrder));
+			} else {
+				order = getCriteriaBuilder().desc(from.get(attributeOrder));
+			}
 
-            cq = cq.orderBy(order);
-        }
+			cq = cq.orderBy(order);
+		}
 
-        TypedQuery<E> query = createQuery(cq);
+		TypedQuery<E> query = createQuery(cq);
 
-        query.setFirstResult(firstResult);
-        query.setMaxResults(maxResults);
+		query.setFirstResult(firstResult);
+		query.setMaxResults(maxResults);
 
-        return query.getResultList();
-    }
+		return query.getResultList();
+	}
 
-    public List<E> paginatorLike(int firstResult, int maxResult, Map<String, String> filters, Boolean ascending, String sortField) {
+	public List<E> paginatorLike(int firstResult, int maxResult, Map<String, String> filters, Boolean ascending, String sortField) {
 
-        CriteriaQuery<E> criteriaQuery = createCriteriaQuery();
+		CriteriaQuery<E> criteriaQuery = createCriteriaQuery();
 
-        Root<E> from = criteriaQuery.from(entityClass);
+		Root<E> from = criteriaQuery.from(entityClass);
 
-        if (filters != null) {
+		if (filters != null) {
 
-            Predicate[] predicate = new Predicate[filters.size()];
+			Predicate[] predicate = new Predicate[filters.size()];
 
-            int i = 0;
+			int i = 0;
 
-            for (Entry<String, String> filter : filters.entrySet()) {
+			for (Entry<String, String> filter : filters.entrySet()) {
 
-                Expression<String> expression = from.get(filter.getKey()).as(String.class);
+				Expression<String> expression = from.get(filter.getKey()).as(String.class);
 
-                predicate[i++] = getCriteriaBuilder().like(getCriteriaBuilder().lower(expression), "%" + filter.getValue().toString().toLowerCase() + "%");
+				predicate[i++] = getCriteriaBuilder().like(getCriteriaBuilder().lower(expression), "%" + filter.getValue().toString().toLowerCase() + "%");
 
-            }
+			}
 
-            if (predicate.length > 0) {
-                criteriaQuery.where(getCriteriaBuilder().and(predicate));
-            }
-        }
+			if (predicate.length > 0) {
+				criteriaQuery.where(getCriteriaBuilder().and(predicate));
+			}
+		}
 
-        if (sortField != null) {
-            if (ascending != null) {
-                criteriaQuery.orderBy(ascending ? getCriteriaBuilder().asc(from.get(sortField)) : getCriteriaBuilder().desc(from.get(sortField)));
-            }
-        }
+		if (sortField != null) {
+			if (ascending != null) {
+				criteriaQuery.orderBy(ascending ? getCriteriaBuilder().asc(from.get(sortField)) : getCriteriaBuilder().desc(from.get(sortField)));
+			}
+		}
 
-        return createQuery(criteriaQuery).setMaxResults(maxResult).setFirstResult(firstResult).getResultList();
+		return createQuery(criteriaQuery).setMaxResults(maxResult).setFirstResult(firstResult).getResultList();
 
-    }
+	}
 
-    public E getSingleResult(TypedQuery<E> query) {
-        try {
-            return query.getSingleResult();
-        } catch (NoResultException e) {
-            return null;
-        }
-    }
+	public E getSingleResult(TypedQuery<E> query) {
+		try {
+			return query.getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
 
-    public void flush() {
-        getEntityManager().flush();
-    }
+	public void flush() {
+		getEntityManager().flush();
+	}
 }

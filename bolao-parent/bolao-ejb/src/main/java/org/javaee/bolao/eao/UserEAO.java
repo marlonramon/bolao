@@ -1,7 +1,6 @@
 package org.javaee.bolao.eao;
 
 
-import java.util.logging.Logger;
 import javax.annotation.ManagedBean;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;

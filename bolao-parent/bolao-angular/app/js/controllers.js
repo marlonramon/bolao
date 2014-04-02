@@ -7,7 +7,6 @@ app.controller('UserListCtrl', ['$scope', 'UsersFactory', '$location',
     function($scope, UsersFactory, $location) {
 
         var reload = function() {
-            console.log('reload');
             $scope.users = UsersFactory.query();
         };
 
@@ -15,16 +14,15 @@ app.controller('UserListCtrl', ['$scope', 'UsersFactory', '$location',
             $location.path('/user-detail/' + userId);
         };
 
-        $scope.deleteUser = function(userId) {
-            console.log('delete');
+        $scope.deleteUser = function(userId) {                        
             UsersFactory.delete({id: userId}, function(){
                 reload();                
             }, function(error){
-                alert('error: '+error)
-            });          
+                $scope.errors = error.data;
+            });  
         };
 
-        $scope.createNewUser = function() {
+        $scope.newUser = function() {
             $location.path('/user-creation');
         };
 
@@ -35,30 +33,35 @@ app.controller('UserListCtrl', ['$scope', 'UsersFactory', '$location',
 app.controller('UserDetailCtrl', ['$scope', '$routeParams', 'UsersFactory', '$location',
     function($scope, $routeParams, UsersFactory, $location) {
 
-        /* callback for ng-click 'updateUser': */
-        $scope.updateUser = function() {
-            UsersFactory.update($scope.user);
-            $location.path('/user-list');
+        $scope.save = function() {
+            UsersFactory.save($scope.user,function(){
+                $location.path('/user-list');
+            }, function(error){
+                $scope.errors = error.data;
+            });            
         };
 
-        /* callback for ng-click 'cancel': */
         $scope.cancel = function() {
             $location.path('/user-list');
         };
-
-        $scope.user = UsersFactory.show({id: $routeParams.id});
+        
+        $scope.user = UsersFactory.get({id: $routeParams.id});
     }]);
 
 app.controller('UserCreationCtrl', ['$scope', 'UsersFactory', '$location',
     function($scope, UsersFactory, $location) {
     
         /* callback for ng-click 'createNewUser': */
-        $scope.createNewUser = function() {
+        $scope.save = function() {
             UsersFactory.save($scope.user, function(){
                 $location.path('/user-list');
             }, function(error){                
                 $scope.errors = error.data;
             });            
+        };
+        
+        $scope.cancel = function() {
+            $location.path('/user-list');
         };
         
      
