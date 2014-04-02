@@ -1,0 +1,8 @@
+CREATE TABLE User (
+  idUser INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  login VARCHAR(80) NOT NULL ,
+  password VARCHAR(80) NOT NULL ,
+  dateInsert TIMESTAMP NOT NULL ,
+  dateLastAccess TIMESTAMP,
+  name VARCHAR(80) NOT NULL ,
+  email VARCHAR(100));
