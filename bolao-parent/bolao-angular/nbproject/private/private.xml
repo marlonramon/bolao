@@ -3,11 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/ambiente/eclipse-kepler/workspace/bolao/bolao-parent/bolao-angular/app/partials/user-creation.html</file>
-            <file>file:/D:/ambiente/eclipse-kepler/workspace/bolao/bolao-parent/bolao-angular/app/js/controllers.js</file>
-            <file>file:/D:/ambiente/eclipse-kepler/workspace/bolao/bolao-parent/bolao-angular/app/js/services.js</file>
-            <file>file:/D:/ambiente/eclipse-kepler/workspace/bolao/bolao-parent/bolao-angular/app/partials/user-list.html</file>
-            <file>file:/D:/ambiente/eclipse-kepler/workspace/bolao/bolao-parent/bolao-angular/app/partials/user-detail.html</file>
+            <file>file:/C:/projetos/bolao-parent/bolao-angular/app/index.html</file>
+            <file>file:/C:/projetos/bolao-parent/bolao-angular/app/js/directives.js</file>
+            <file>file:/C:/projetos/bolao-parent/bolao-angular/app/js/controllers.js</file>
+            <file>file:/C:/projetos/bolao-parent/bolao-angular/app/js/filters.js</file>
+            <file>file:/C:/projetos/bolao-parent/bolao-angular/app/js/services.js</file>
+            <file>file:/C:/projetos/bolao-parent/bolao-angular/app/js/app.js</file>
         </group>
     </open-files>
 </project-private>

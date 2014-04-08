@@ -94,6 +94,6 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>bolao-jpa</artifactId>
             <version>${project.version}</version>
-        </dependency>
+        </dependency>        
     </dependencies>
 </project>

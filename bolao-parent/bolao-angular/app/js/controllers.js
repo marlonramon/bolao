@@ -14,12 +14,16 @@ app.controller('UserListCtrl', ['$scope', 'UsersFactory', '$location',
             $location.path('/user-detail/' + userId);
         };
 
-        $scope.deleteUser = function(userId) {                        
-            UsersFactory.delete({id: userId}, function(){
-                reload();                
-            }, function(error){
-                $scope.errors = error.data;
-            });  
+        $scope.deleteUser = function(userId) {
+
+            var confirmation = confirm('Are you sure you want to delete this user?');
+            if (confirmation === true) {
+                UsersFactory.delete({id: userId}, function() {
+                    reload();
+                }, function(error) {
+                    $scope.errors = error.data;
+                });
+            }
         };
 
         $scope.newUser = function() {
@@ -34,35 +38,35 @@ app.controller('UserDetailCtrl', ['$scope', '$routeParams', 'UsersFactory', '$lo
     function($scope, $routeParams, UsersFactory, $location) {
 
         $scope.save = function() {
-            UsersFactory.save($scope.user,function(){
+            UsersFactory.save($scope.user, function() {
                 $location.path('/user-list');
-            }, function(error){
+            }, function(error) {
                 $scope.errors = error.data;
-            });            
+            });
         };
 
         $scope.cancel = function() {
             $location.path('/user-list');
         };
-        
+
         $scope.user = UsersFactory.get({id: $routeParams.id});
     }]);
 
 app.controller('UserCreationCtrl', ['$scope', 'UsersFactory', '$location',
     function($scope, UsersFactory, $location) {
-    
+
         /* callback for ng-click 'createNewUser': */
         $scope.save = function() {
-            UsersFactory.save($scope.user, function(){
+            UsersFactory.save($scope.user, function() {
                 $location.path('/user-list');
-            }, function(error){                
+            }, function(error) {
                 $scope.errors = error.data;
-            });            
+            });
         };
-        
+
         $scope.cancel = function() {
             $location.path('/user-list');
         };
-        
-     
+
+
     }]);
