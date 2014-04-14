@@ -3,11 +3,11 @@
 var app = angular.module('bolao.controllers', []);
 
 
-app.controller('UserListCtrl', ['$scope', 'UsersFactory', '$location',
-    function($scope, UsersFactory, $location) {
+app.controller('UserListCtrl', ['$scope', 'UsersFactory', '$location', 'Restangular' ,
+    function($scope, UsersFactory, $location, Restangular) {
 
         var reload = function() {
-            $scope.users = UsersFactory.query();
+            $scope.users = Restangular.all('users').getList().$object;
         };
 
         $scope.editUser = function(userId) {

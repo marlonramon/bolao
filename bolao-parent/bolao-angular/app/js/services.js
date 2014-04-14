@@ -4,7 +4,7 @@ var services = angular.module('bolao.services', ['ngResource']);
 
 var baseUrl = 'http://localhost:8080/bolao-web/rest';
 
-services.factory('Auth', ['Base64', '$cookieStore', '$http', function (Base64, $cookieStore, $http) {
+/*services.factory('Auth', ['Base64', '$cookieStore', '$http', function (Base64, $cookieStore, $http) {
     // initialize to whatever is in the cookie, if anything
     $http.defaults.headers.common['Authorization'] = 'Basic ' + $cookieStore.get('authdata');
  
@@ -20,7 +20,7 @@ services.factory('Auth', ['Base64', '$cookieStore', '$http', function (Base64, $
             $http.defaults.headers.common.Authorization = 'Basic ';
         }
     };
-}]);
+}]);*/
 
 
 services.factory('UsersFactory', function ($resource, $http, $cookieStore, Base64) {
