@@ -76,6 +76,11 @@ public class UserEAO extends AbstractEAO<User> {
 
 		return super.getSingleResult(q);
 	}
+
+	public User findByAuthorization(String authorization) {
+		//TODO
+		return null;
+	}
 	
 //	public List<User> findAdminActive(User notIn) {
 //		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
