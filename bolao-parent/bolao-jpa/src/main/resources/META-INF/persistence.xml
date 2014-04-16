@@ -7,6 +7,8 @@
     <jta-data-source>jdbc/Bolao</jta-data-source>
     
     <class>org.javaee.bolao.entities.User</class>
+    <class>org.javaee.bolao.entities.UserSession</class>
+    <class>org.javaee.bolao.entities.UserRole</class>
         
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     

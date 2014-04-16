@@ -1,13 +1,13 @@
 package org.javaee.bolao.entities;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -19,104 +19,116 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "User")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")})
-public class User extends AbstractEntity{
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idUser;
-    @NotNull
-    @Size(min = 1, max = 80)
-    private String login;
-    @NotNull
-    @Size(min = 1, max = 80)
-    private String password;
-    @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateInsert;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateLastAccess;
-    @NotNull
-    @Size(min = 1, max = 80)
-    private String name;
-    @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="E-mail inválido")//if the field contains email address consider using this annotation to enforce field validation
-    @Size(max = 100)
-    private String email;
+public class User extends AbstractEntity {
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long idUser;
+	@NotNull
+	@Size(min = 1, max = 80)
+	private String login;
+	@NotNull
+	@Size(min = 1, max = 80)
+	private String password;
+	@NotNull
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dateInsert;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dateLastAccess;
+	@NotNull
+	@Size(min = 1, max = 80)
+	private String name;
+	@Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "E-mail inválido")
+	// if the field contains email address consider using this annotation to
+	// enforce field validation
+	@Size(max = 100)
+	private String email;
 
-    public User() {
-    }
+	@OneToMany(mappedBy = "user")
+	private Set<UserRole> roles;
 
-    public User(Long id) {
-        this.idUser = id;
-    }
+	public User() {
+	}
 
-    public User(Long id, String login, String password, Date dateinsert, String name) {
-        this.idUser = id;
-        this.login = login;
-        this.password = password;
-        this.dateInsert = dateinsert;
-        this.name = name;
-    }
+	public User(Long id) {
+		this.idUser = id;
+	}
 
-    @Override
-    public Long getId() {
-        return idUser;
-    }
+	public User(Long id, String login, String password, Date dateinsert, String name) {
+		this.idUser = id;
+		this.login = login;
+		this.password = password;
+		this.dateInsert = dateinsert;
+		this.name = name;
+	}
 
-    public Long getIdUser() {
+	@Override
+	public Long getId() {
 		return idUser;
 	}
-    
-    public void setIdUser(Long id) {
-        this.idUser = id;
-    }
 
-    public String getLogin() {
-        return login;
-    }
+	public Long getIdUser() {
+		return idUser;
+	}
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
+	public void setIdUser(Long id) {
+		this.idUser = id;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public String getLogin() {
+		return login;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public void setLogin(String login) {
+		this.login = login;
+	}
 
-    public Date getDateInsert() {
-        return dateInsert;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public void setDateInsert(Date dateInsert) {
-        this.dateInsert = dateInsert;
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-    public Date getDateLastAccess() {
-        return dateLastAccess;
-    }
+	public Date getDateInsert() {
+		return dateInsert;
+	}
 
-    public void setDateLastAccess(Date dateLastAccess) {
-        this.dateLastAccess = dateLastAccess;
-    }
+	public void setDateInsert(Date dateInsert) {
+		this.dateInsert = dateInsert;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public Date getDateLastAccess() {
+		return dateLastAccess;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setDateLastAccess(Date dateLastAccess) {
+		this.dateLastAccess = dateLastAccess;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-}    
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Set<UserRole> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<UserRole> roles) {
+		this.roles = roles;
+	}
+
+}

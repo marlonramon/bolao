@@ -46,8 +46,8 @@ public abstract class AbstractEntity implements Serializable {
 		return super.toString() + "[ID = " + getId() + "]";
 	}
 	
-	public boolean isNew(){
-		return getId() == null;
+	public boolean hasId(){
+		return getId() != null;
 	}
 
 }
