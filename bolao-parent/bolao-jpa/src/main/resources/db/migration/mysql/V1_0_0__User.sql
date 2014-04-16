@@ -5,4 +5,7 @@ CREATE TABLE User (
   dateInsert TIMESTAMP NOT NULL ,
   dateLastAccess TIMESTAMP,
   name VARCHAR(80) NOT NULL ,
-  email VARCHAR(100));
+  email VARCHAR(100)
+  ) ENGINE=InnoDB;
+  
+  CREATE UNIQUE INDEX User_login_IDX ON User(login);

@@ -7,7 +7,7 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class ErrorBean implements Serializable {
+public class ErrorResponse implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -15,10 +15,10 @@ public class ErrorBean implements Serializable {
 	
 	private List<String> childMessages = new ArrayList<>();
 	
-	public ErrorBean() {
+	public ErrorResponse() {
 	}
 	
-	public ErrorBean(String message) {
+	public ErrorResponse(String message) {
 		this.message = message;			
 	}
 	

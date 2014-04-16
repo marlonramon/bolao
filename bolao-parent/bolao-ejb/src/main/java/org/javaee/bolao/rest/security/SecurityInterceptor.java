@@ -17,7 +17,7 @@ import javax.ws.rs.ext.Provider;
 import org.javaee.bolao.eao.UserSessionEAO;
 import org.javaee.bolao.eao.UserRoleEAO;
 import org.javaee.bolao.entities.UserSession;
-import org.javaee.bolao.exception.ErrorBean;
+import org.javaee.bolao.exception.ErrorResponse;
 
 @Provider
 public class SecurityInterceptor implements ContainerRequestFilter {
@@ -73,7 +73,7 @@ public class SecurityInterceptor implements ContainerRequestFilter {
 			}
 
 		} catch (UnauthorizedException ue) {
-			requestContext.abortWith(Response.status(Status.UNAUTHORIZED).entity(new ErrorBean(ue.getMessage())).build());
+			requestContext.abortWith(Response.status(Status.UNAUTHORIZED).entity(new ErrorResponse(ue.getMessage())).build());
 		}
 
 	}

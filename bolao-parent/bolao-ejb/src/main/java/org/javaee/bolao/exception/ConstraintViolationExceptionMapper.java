@@ -21,7 +21,7 @@ public class ConstraintViolationExceptionMapper implements ExceptionMapper<Const
 		
 		Set<ConstraintViolation<?>> constraintViolations = exception.getConstraintViolations();
 		
-		ErrorBean errorBean = new ErrorBean(exception.getMessage());
+		ErrorResponse errorBean = new ErrorResponse(exception.getMessage());
 		
 		for (ConstraintViolation<?> constraintViolation : constraintViolations) {
 			errorBean.addChildMessage(constraintViolation.getMessage());
