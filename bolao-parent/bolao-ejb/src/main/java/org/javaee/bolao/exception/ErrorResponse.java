@@ -1,6 +1,7 @@
 package org.javaee.bolao.exception;
 
 import java.io.Serializable;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,10 @@ public class ErrorResponse implements Serializable {
 	
 	public ErrorResponse(String message) {
 		this.message = message;			
+	}
+	
+	public ErrorResponse(String message, Object ... arguments) {
+		this.message = MessageFormat.format(message, arguments);			
 	}
 	
 	public String getMessage() {

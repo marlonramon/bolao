@@ -37,45 +37,49 @@ public class SecurityInterceptor implements ContainerRequestFilter {
 	public void filter(ContainerRequestContext requestContext) throws IOException {
 		try {
 
-			String[] roles = getUserRoles(resourceInfo);
-
-			//has Roles Annotation
-			if (roles != null && roles.length > 0) {
-
-				String token = requestContext.getHeaderString(AUTHORIZATION_PROPERTY);
-				
-				//has token
-				if (token == null || token.isEmpty()) {
-					throw new UnauthorizedException("Permission Denied");
-				}
-				
-				UserSession userSession = userAuthorizationEAO.findByToken(token);
-				//has session for the token
-				if (userSession == null) {
-					throw new UnauthorizedException("Invalid Token");
-				}
-
-				Date actualDate = new Date();
-				//is session expirated
-				if (userSession.isExpired(actualDate)) {
-					throw new UnauthorizedException("Session Expired");
-				}
-
-				boolean isUserInRole = userRoleEAO.isUserInRoles(userSession.getUser(), roles);
-				
-				//is user in some role
-				if (!isUserInRole) {
-					throw new UnauthorizedException("Permission Denied");
-				}
-				
-				updateExpiratedDate(userSession, actualDate);
-
-			}
+//			doFilter(requestContext);
 
 		} catch (UnauthorizedException ue) {
 			requestContext.abortWith(Response.status(Status.UNAUTHORIZED).entity(new ErrorResponse(ue.getMessage())).build());
 		}
 
+	}
+
+	private void doFilter(ContainerRequestContext requestContext) {
+		String[] roles = getUserRoles(resourceInfo);
+
+		//has Roles Annotation
+		if (roles != null && roles.length > 0) {
+
+			String token = requestContext.getHeaderString(AUTHORIZATION_PROPERTY);
+			
+			//has token
+			if (token == null || token.isEmpty()) {
+				throw new UnauthorizedException("Permission Denied");
+			}
+			
+			UserSession userSession = userAuthorizationEAO.findByToken(token);
+			//has session for the token
+			if (userSession == null) {
+				throw new UnauthorizedException("Invalid Token");
+			}
+
+			Date actualDate = new Date();
+			//is session expirated
+			if (userSession.isExpired(actualDate)) {
+				throw new UnauthorizedException("Session Expired");
+			}
+
+			boolean isUserInRole = userRoleEAO.isUserInRoles(userSession.getUser(), roles);
+			
+			//is user in some role
+			if (!isUserInRole) {
+				throw new UnauthorizedException("Permission Denied");
+			}
+			
+			updateExpiratedDate(userSession, actualDate);
+
+		}
 	}
 
 	private String[] getUserRoles(ResourceInfo resourceInfo) {
@@ -86,9 +90,9 @@ public class SecurityInterceptor implements ContainerRequestFilter {
 	}
 
 	private void updateExpiratedDate(UserSession userSession, Date actualDate) {
-		Date expirateDate = userSession.getExpirateDate();
+		Date expirateDate = userSession.getExpiratedDate();
 		long newExpiratedDate = actualDate.getTime() + expirateDate.getTime();
-		userSession.setExpirateDate(new Date(newExpiratedDate));
+		userSession.setExpiratedDate(new Date(newExpiratedDate));
 	}
 
 }

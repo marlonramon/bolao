@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -61,7 +62,13 @@ public class User extends AbstractEntity {
 		this.dateInsert = dateinsert;
 		this.name = name;
 	}
-
+	
+	@PrePersist
+	private void prePersist(){
+		setDateInsert(new Date());
+		setDateLastAccess(getDateInsert());
+	}
+	
 	@Override
 	public Long getId() {
 		return idUser;

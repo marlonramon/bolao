@@ -10,7 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -22,7 +21,7 @@ public class UserSession extends AbstractEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idUserAuthorization;
+	private Long idUserSession;
 
 	@NotNull
 	@ManyToOne
@@ -34,20 +33,19 @@ public class UserSession extends AbstractEntity {
 	private Date createDate;
 
 	@NotNull
-	@Future
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date expirateDate;
+	private Date expiratedDate;
 
 	@NotNull
 	@Size(min = 36, max = 36)
 	private String token;
 
-	public Long getIdUserAuthorization() {
-		return idUserAuthorization;
+	public Long getIdUserSession() {
+		return idUserSession;
 	}
 
-	public void setIdUserAuthorization(Long idUserAuthorization) {
-		this.idUserAuthorization = idUserAuthorization;
+	public void setIdUserSession(Long idUserAuthorization) {
+		this.idUserSession = idUserAuthorization;
 	}
 
 	public User getUser() {
@@ -66,12 +64,12 @@ public class UserSession extends AbstractEntity {
 		this.createDate = createDate;
 	}
 
-	public Date getExpirateDate() {
-		return expirateDate;
+	public Date getExpiratedDate() {
+		return expiratedDate;
 	}
 
-	public void setExpirateDate(Date expirateDate) {
-		this.expirateDate = expirateDate;
+	public void setExpiratedDate(Date expirateDate) {
+		this.expiratedDate = expirateDate;
 	}
 
 	public String getToken() {
@@ -84,11 +82,11 @@ public class UserSession extends AbstractEntity {
 
 	@Override
 	public Long getId() {
-		return getIdUserAuthorization();
+		return getIdUserSession();
 	}
 
 	public boolean isExpired(Date date) {
-		return getExpirateDate().after(date);
+		return getExpiratedDate().after(date);
 	}
 
 }

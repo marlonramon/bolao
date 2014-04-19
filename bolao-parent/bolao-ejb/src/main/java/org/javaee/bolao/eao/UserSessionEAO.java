@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.ParameterExpression;
@@ -42,21 +43,34 @@ public class UserSessionEAO extends AbstractEAO<UserSession>{
 	}
 	
 	public UserSession findValidSession(String userLogin, Date date){
-		CriteriaQuery<UserSession> criteriaQuery = createCriteriaQuery();
 		
-		Root<UserSession> from = criteriaQuery.from(UserSession.class);
+		TypedQuery<UserSession> query = super.getNamedQuery("UserSession.findValidSession");
 		
-		Join<UserSession, User> joinUser = from.join(UserSession_.user);
+		if(query == null){
 		
-		Predicate equalLogin = getCriteriaBuilder().equal(joinUser.get(User_.login), userLogin);
+			CriteriaQuery<UserSession> criteriaQuery = createCriteriaQuery();
+			
+			Root<UserSession> from = criteriaQuery.from(UserSession.class);
+			
+			Join<UserSession, User> joinUser = from.join(UserSession_.user);
+			
+			Predicate equalLogin = getCriteriaBuilder().equal(joinUser.get(User_.login), userLogin);
+			
+			ParameterExpression<Date> dateParameter = getCriteriaBuilder().parameter(Date.class, "date");
+			
+			Predicate between = getCriteriaBuilder().between(dateParameter, from.get(UserSession_.createDate), from.get(UserSession_.expiratedDate));
+			
+			criteriaQuery.where(equalLogin, between);
+			
+			query = createQuery(criteriaQuery);
+			
+			super.addNamedQuery("UserSession.findValidSession", query);
 		
-		ParameterExpression<Date> dateParameter = getCriteriaBuilder().parameter(Date.class, "date");
+		}
 		
-		Predicate between = getCriteriaBuilder().between(dateParameter, from.get(UserSession_.createDate), from.get(UserSession_.expirateDate));
+		query.setParameter("date", date);
 		
-		criteriaQuery.where(equalLogin, between);
-		
-		return createQuery(criteriaQuery).setParameter("date", date).getSingleResult();
+		return super.getSingleResult(query);
 	}
 	
 	public UserSession create(User user,  long expirationTimeMillis){
@@ -68,7 +82,7 @@ public class UserSessionEAO extends AbstractEAO<UserSession>{
 		long currentTimeMillis = System.currentTimeMillis();
 		
 		userSession.setCreateDate(new Date(currentTimeMillis));
-		userSession.setExpirateDate(new Date(currentTimeMillis + expirationTimeMillis));
+		userSession.setExpiratedDate(new Date(currentTimeMillis + expirationTimeMillis));
 		
 		super.insert(userSession);
 		
