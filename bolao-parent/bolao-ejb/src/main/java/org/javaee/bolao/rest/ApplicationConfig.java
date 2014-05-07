@@ -4,6 +4,8 @@ import java.util.Set;
 
 import javax.ws.rs.core.Application;
 
+import org.javaee.bolao.rest.security.SecurityInterceptor;
+
 @javax.ws.rs.ApplicationPath("rest")
 public class ApplicationConfig extends Application {
 
@@ -23,7 +25,7 @@ public class ApplicationConfig extends Application {
     private void addRestResourceClasses(Set<Class<?>> resources) {
     	
         resources.add(UserFacadeREST.class);
-       // resources.add(CrossOriginResourceSharingFilter.class);
+        resources.add(CrossOriginResourceSharingFilter.class);
         resources.add(SecurityInterceptor.class);
     }
     

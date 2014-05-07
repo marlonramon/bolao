@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -251,5 +252,21 @@ public abstract class AbstractEAO<E extends AbstractEntity> implements Serializa
 
 	public void flush() {
 		getEntityManager().flush();
+	}
+
+	public TypedQuery<E> getNamedQuery(String nameQuery) {
+		try{
+			return getEntityManager().createNamedQuery(nameQuery, entityClass);
+		}catch(IllegalArgumentException ex){
+			return null;
+		}
+	}
+
+	private EntityManagerFactory getEntityManagerFactory() {
+		return getEntityManager().getEntityManagerFactory();
+	}
+	
+	public void addNamedQuery(String namedQuery, TypedQuery<E> typedQuery){
+		getEntityManagerFactory().addNamedQuery(namedQuery, typedQuery);
 	}
 }
