@@ -26,7 +26,7 @@ var baseUrl = 'http://localhost:8080/bolao-web/rest';
 services.factory('UsersFactory', function ($resource, $http, $cookieStore, Base64) {
     $http.defaults.headers.common['Authorization'] = 'Basic ' + Base64.encode('marlon' + ':' + '123');
     
-    return $resource(baseUrl + '/users/:id', {id: '@id'}, {});
+    return $resource(baseUrl + '/usuarios/:id', {id: '@id'}, {});
 });
 
 

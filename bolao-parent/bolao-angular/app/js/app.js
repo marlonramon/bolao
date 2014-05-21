@@ -6,9 +6,7 @@ var app = angular.module('bolao', [
   'ngRoute',
   'ngCookies',
   'restangular',
-  'bolao.filters',
   'bolao.services',
-  'bolao.directives',
   'bolao.controllers'
   
   

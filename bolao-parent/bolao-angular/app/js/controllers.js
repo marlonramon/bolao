@@ -7,7 +7,7 @@ app.controller('UserListCtrl', ['$scope', 'UsersFactory', '$location', 'Restangu
     function($scope, UsersFactory, $location, Restangular) {
 
         var reload = function() {
-            $scope.users = Restangular.all('users').getList().$object;
+            $scope.users = Restangular.all('usuarios').getList().$object;
         };
 
         $scope.editUser = function(userId) {
@@ -34,8 +34,8 @@ app.controller('UserListCtrl', ['$scope', 'UsersFactory', '$location', 'Restangu
 
     }]);
 
-app.controller('UserDetailCtrl', ['$scope', '$routeParams', 'UsersFactory', '$location',
-    function($scope, $routeParams, UsersFactory, $location) {
+app.controller('UserDetailCtrl', ['$scope', '$routeParams', 'UsersFactory', '$location', 'Restangular' ,
+    function($scope, $routeParams, UsersFactory, $location, Restangular) {
 
         $scope.save = function() {
             UsersFactory.save($scope.user, function() {
@@ -49,7 +49,8 @@ app.controller('UserDetailCtrl', ['$scope', '$routeParams', 'UsersFactory', '$lo
             $location.path('/user-list');
         };
 
-        $scope.user = UsersFactory.get({id: $routeParams.id});
+        $scope.user =  Restangular.one('usuarios',$routeParams.id);
+                
     }]);
 
 app.controller('UserCreationCtrl', ['$scope', 'UsersFactory', '$location',
