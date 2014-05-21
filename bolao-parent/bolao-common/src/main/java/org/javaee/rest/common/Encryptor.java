@@ -17,7 +17,7 @@ public class Encryptor {
 		return textEncryptor.decrypt(encrypted);
 	}
 
-	public static String encriptPassword(String userPassword) {
+	public static String encryptPassword(String userPassword) {
 		BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
 		String encryptedPassword = passwordEncryptor.encryptPassword(userPassword);
 		return encryptedPassword;
@@ -26,5 +26,11 @@ public class Encryptor {
 	public static boolean checkPassword(String inputPassword, String encryptedPassword) {
 		BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
 		return passwordEncryptor.checkPassword(inputPassword, encryptedPassword);
+	}
+	
+	public static void main(String[] args) {
+		
+		System.out.println(encryptPassword("admin"));
+		
 	}
 }

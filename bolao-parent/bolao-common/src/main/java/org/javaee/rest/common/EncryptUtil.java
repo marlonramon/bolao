@@ -13,7 +13,7 @@ public class EncryptUtil {
 		Long time = new SimpleDateFormat("dd/MM/yyyy").parse("30/10/2013").getTime();
 		
 		StrongTextEncryptor textEncryptor = new StrongTextEncryptor();
-		textEncryptor.setPassword("thiago");
+		textEncryptor.setPassword("admin");
 		
 		//textEncryptor.de
 		

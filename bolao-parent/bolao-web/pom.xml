@@ -87,13 +87,13 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>bolao-ejb</artifactId>
+            <artifactId>bolao-jpa</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>bolao-jpa</artifactId>
-            <version>${project.version}</version>
-        </dependency>        
+        	<groupId>com.googlecode.flyway</groupId>
+        	<artifactId>flyway-core</artifactId>
+        	<version>2.2</version>
+        </dependency>
     </dependencies>
 </project>
