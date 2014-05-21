@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -11,6 +12,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
 
 import org.javaee.bolao.entidades.SessaoUsuario;
 import org.javaee.bolao.entidades.Usuario;
@@ -27,8 +29,8 @@ public class UsuarioFacadeREST {
     
     @POST
     @Consumes({"application/xml", "application/json"})
-    public void insertOrUpdate(Usuario user) {
-    	usuarioFacade.insertOrUpdate(user);
+    public Usuario insertOrUpdate(Usuario usuario) {
+    	return usuarioFacade.insertOrUpdate(usuario);
     }
 
     @DELETE
@@ -45,10 +47,10 @@ public class UsuarioFacadeREST {
     }
     
     @GET
-    @Path("login/{login}")
+    @Path("email/{email}")
     @Produces({"application/xml", "application/json"})
-    public Usuario findByLogin(@PathParam("login") String login) {
-    	return usuarioFacade.findByLogin(login);
+    public Usuario findByEmail(@PathParam("email") String login) {
+    	return usuarioFacade.findByEmail(login);
     }
 
     @GET
@@ -75,16 +77,20 @@ public class UsuarioFacadeREST {
     @Path("login")
     @Consumes({"application/xml", "application/json"})
     @Produces({"application/xml", "application/json"})
-    public SessaoUsuario login(Usuario user) {
-    	return usuarioFacade.login(user);
+    public SessaoUsuario login(@NotNull Usuario user) {
+    	return usuarioFacade.login(user.getEmail(), user.getSenha());
     }
     
     @POST
     @Path("logout")
     @Consumes({"application/xml", "application/json"})
     @Produces({"application/xml", "application/json"})
-    public SessaoUsuario logout(Usuario user) {
-    	return usuarioFacade.logout(user);
+    public Response logout(@NotNull String email) {
+    	if(usuarioFacade.logout(email)){
+    		return Response.ok().build();
+    	}else{
+    		return Response.notModified().build();
+    	}
     }
     
 }

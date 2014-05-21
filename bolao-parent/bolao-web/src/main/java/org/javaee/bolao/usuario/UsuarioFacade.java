@@ -15,6 +15,7 @@ import org.javaee.bolao.eao.UsuarioEAO;
 import org.javaee.bolao.entidades.SessaoUsuario;
 import org.javaee.bolao.entidades.Usuario;
 import org.javaee.bolao.exception.ErrorResponse;
+import org.javaee.bolao.exception.NaoAutorizadoException;
 import org.javaee.rest.common.Encryptor;
 
 @ManagedBean
@@ -29,7 +30,7 @@ public class UsuarioFacade {
     @Inject
 	private SessaoUsuarioEAO sessaoUsuarioEAO ;
 
-    public void insertOrUpdate(Usuario user) {
+    public Usuario insertOrUpdate(Usuario user) {
     	
     	validarEmailDuplicado(user);
     	
@@ -41,6 +42,7 @@ public class UsuarioFacade {
     		usuarioEAO.update(user);
     	}
     	
+    	return user;
     }
 
 	private void criptografarSenha(Usuario usuario) {
@@ -85,29 +87,41 @@ public class UsuarioFacade {
         return String.valueOf(usuarioEAO.count());
     }
     
-    public SessaoUsuario login(Usuario user) {
+    public SessaoUsuario login(String email, String senha) {
     	
-    	SessaoUsuario validSession = sessaoUsuarioEAO.findSessaoValida(user.getEmail(), new Date());
+    	Usuario usuario = findByEmail(email);
+    	if(usuario == null){
+    		throw new NaoAutorizadoException("Email e/ou senha inválido.");
+    	}
+    	
+    	if (!usuarioEAO.checkPassword(usuario, senha)) {
+    		throw new NaoAutorizadoException("Email e/ou senha inválido.");
+		}
+    	
+    	SessaoUsuario validSession = sessaoUsuarioEAO.findSessaoValida(email, new Date());
     	
     	if(validSession == null){
-    		validSession = sessaoUsuarioEAO.create(user, Config.getExpirationLoginTime());
+    		validSession = sessaoUsuarioEAO.create(usuario, Config.getExpirationLoginTime());
     	}
     	
     	return validSession;
     }
     
-    public SessaoUsuario logout(Usuario user) {
+    public boolean logout(String email) {
     	Date expirateDate = new Date();
-		SessaoUsuario validSession = sessaoUsuarioEAO.findSessaoValida(user.getEmail(), expirateDate);
+    	
+    	Usuario usuario = findByEmail(email);
+    	
+		SessaoUsuario validSession = sessaoUsuarioEAO.findSessaoValida(usuario.getEmail(), expirateDate);
     	
 		if(validSession != null){
     		validSession.setDataExpiracao(expirateDate);
     	}
 		
-    	return validSession;
+		return validSession != null;
     }
 
-	public Usuario findByLogin(String login) {
+	public Usuario findByEmail(String login) {
 		return usuarioEAO.findByEmail(login);
 	}
     
