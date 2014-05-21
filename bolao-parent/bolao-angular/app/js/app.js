@@ -27,7 +27,7 @@ app.config(['$routeProvider', function($routeProvider) {
 app.config(function(RestangularProvider) {
     RestangularProvider.setDefaultHeaders({'Authorization': 'Basic 123:123'});
     
-    var baseUrl = 'http://localhost:8081/bolao-web/rest';
+    var baseUrl = 'http://localhost:8081/bolao-web';
     
     RestangularProvider.setBaseUrl(baseUrl);
     

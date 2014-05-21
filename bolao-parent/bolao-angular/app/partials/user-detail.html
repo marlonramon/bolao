@@ -1,82 +1,65 @@
 
-<div id="content-header">
-    <h1>Dashboard</h1>
-    <div class="btn-group">
-        <a class="btn btn-large tip-bottom" title="Manage Files"><i class="icon-file"></i></a>
-        <a class="btn btn-large tip-bottom" title="Manage Users"><i class="icon-user"></i></a>
-        <a class="btn btn-large tip-bottom" title="Manage Comments"><i class="icon-comment"></i><span class="label label-important">5</span></a>
-        <a class="btn btn-large tip-bottom" title="Manage Orders"><i class="icon-shopping-cart"></i></a>
+<div class="container" style="width: 380pt">
+    <div class="panel panel-default ">
+
+        <p ng-repeat="errs in errors" class="alert alert-error"><strong>Erro</strong>: {{ errs}}</p>
+
+        <div class="panel-body">
+            <form class="form-horizontal">
+
+                <fieldset> 
+                    <legend>Criar Usuário</legend>
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" for="inputEmail">E-Mail:</label>
+
+                        <div class="col-lg-8">
+                            <input class="form-control" type="text" id="inputEmail" ng-model="user.email"/>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" for="inputName">Nome:</label>
+
+                        <div class="col-lg-8">
+                            <input class="form-control" type="text" id="inputName" ng-model="user.name"/>
+                        </div>
+                    </div>
+
+                    
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" for="inputPassword">Senha:</label>
+
+                        <div class="col-lg-8">
+                            <input class="form-control" type="password" id="inputPassword" ng-model="user.password"/>
+                        </div>
+                    </div>
+                    
+                     <div class="form-group">
+                        <label class="col-lg-3 control-label" for="inputConfPassword">Confirmação:</label>
+
+                        <div class="col-lg-8">
+                            <input class="form-control" type="password" id="inputConfPassword" ng-model="user.confPassword"/>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="col-lg-8 col-lg-offset-3">
+                            <button ng-click="save()" class="btn btn-small btn-primary">Salvar</button>
+                            <a ng-click="cancel()" class="btn btn-small btn-default">Cancelar</a>
+                        </div>
+                    </div>
+
+
+                </fieldset>
+            </form>
+
+        </div>    
     </div>
 </div>
-<div id="breadcrumb">
-    <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a>
-    <a href="#" class="current">Dashboard</a>
-</div>
-
-<div class="container-fluid">
-    <div class="row">
-        <div class="span9">
-
-            <div class="widget-box">
-                <div class="widget-title">
-                    <span class="icon">
-                        <i class="icon-th"></i>
-                    </span>
-                    <h5>Criar Usuário</h5>
-                </div>
-                <p ng-repeat="errs in errors" class="alert alert-error"><strong>Erro</strong>: {{ errs }}</p>
-                <div class="widget-content nopadding">
-                    <form class="form-horizontal">
-                        
-                        <div class="control-group">
-                            <label class="control-label" for="inputLogin">Login:</label>
-
-                            <div class="controls">
-                                <input type="text" id="inputLogin" ng-model="user.login"/>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label" for="inputName">Nome:</label>
-
-                            <div class="controls">
-                                <input type="text" id="inputName" ng-model="user.name"/>
-                            </div>
-                        </div>
-                        
-                        <div class="control-group">
-                            <label class="control-label" for="inputEmail">E-Mail:</label>
-
-                            <div class="controls">
-                                <input type="text" id="inputEmail" ng-model="user.email"/>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label" for="inputPassword">Senha:</label>
-
-                            <div class="controls">
-                                <input type="password" id="inputPassword" ng-model="user.password" style="width: 30px"/>
-                            </div>
-                        </div>
-                        
-                        
-                        <div class="control-group">
-                            <div class="controls">
-                                <a ng-click="cancel()" class="btn btn-small">Cancelar</a>
-                                <a ng-click="save()" class="btn btn-small btn-primary">Salvar</a>
-                            </div>
-                        </div>
-                    </form>
-
-                </div>    
-            </div>
-
-        </div>
-    </div>
 
 
-
-
-</div>
 
 
 
