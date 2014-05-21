@@ -54,8 +54,7 @@
 		</plugins>
 	</build>
 
-	<modules>
-		<module>bolao-ejb</module>
+	<modules>		
 		<module>bolao-common</module>
 		<module>bolao-jpa</module>
 		<module>bolao-web</module>
