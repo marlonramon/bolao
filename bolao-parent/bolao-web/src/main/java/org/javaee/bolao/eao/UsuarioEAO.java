@@ -3,12 +3,10 @@ package org.javaee.bolao.eao;
 
 import javax.annotation.ManagedBean;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.javaee.bolao.entidades.Usuario;
@@ -32,31 +30,6 @@ public class UsuarioEAO extends AbstractEAO<Usuario> {
 		return entityManager;
 	}
 
-	public Usuario login(String email, String senha) {
-		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
-
-		CriteriaQuery<Usuario> cq = cb.createQuery(Usuario.class);
-
-		Root<Usuario> root = cq.from(Usuario.class);
-
-		Predicate predicateLogin = cb.equal(root.get(Usuario_.email), email);
-
-		cq = cq.where(predicateLogin);
-
-		TypedQuery<Usuario> query = getEntityManager().createQuery(cq);
-
-		try {
-			Usuario userDB = query.getSingleResult();
-			if (checkPassword(userDB, senha)) {
-				return userDB;
-			}
-			return null;
-		} catch (NoResultException e) {
-			return null;
-		}
-
-	}
-
 	public boolean checkPassword(Usuario user, String senha) {
 		user = find(user);
 		return Encryptor.checkPassword(senha, user.getSenha());
@@ -69,7 +42,7 @@ public class UsuarioEAO extends AbstractEAO<Usuario> {
 
 		Root<Usuario> root = query.from(Usuario.class);
 
-		query = query.where(criteriaBuilder.equal(root.get(Usuario_.email), email));
+		query = query.where(criteriaBuilder.equal(getCriteriaBuilder().upper(root.get(Usuario_.email)), email.toUpperCase()));
 
 		TypedQuery<Usuario> q = getEntityManager().createQuery(query);
 

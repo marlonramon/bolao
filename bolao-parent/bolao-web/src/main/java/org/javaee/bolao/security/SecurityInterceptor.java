@@ -18,6 +18,7 @@ import org.javaee.bolao.eao.SessaoUsuarioEAO;
 import org.javaee.bolao.entidades.SessaoUsuario;
 import org.javaee.bolao.entidades.Usuario.PerfilUsuario;
 import org.javaee.bolao.exception.ErrorResponse;
+import org.javaee.bolao.exception.NaoAutorizadoException;
 
 @Provider
 public class SecurityInterceptor implements ContainerRequestFilter {
