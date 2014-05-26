@@ -4,86 +4,74 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-
 import javax.inject.Inject;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.Provider;
-
 import org.javaee.bolao.eao.SessaoUsuarioEAO;
 import org.javaee.bolao.entidades.SessaoUsuario;
+import org.javaee.bolao.entidades.Usuario;
 import org.javaee.bolao.entidades.Usuario.PerfilUsuario;
-import org.javaee.bolao.exception.ErrorResponse;
 import org.javaee.bolao.exception.NaoAutorizadoException;
 
 @Provider
-public class SecurityInterceptor implements ContainerRequestFilter {
+public class SecurityInterceptor
+  implements ContainerRequestFilter
+{
+  public static final String AUTHORIZATION_PROPERTY = "Authorization";
 
-	public static final String AUTHORIZATION_PROPERTY = "Authorization";
+  @Context
+  private ResourceInfo resourceInfo;
 
-	@Context
-	private ResourceInfo resourceInfo;
+  @Inject
+  private SessaoUsuarioEAO sessaoUsuarioEAO;
 
-	@Inject
-	private SessaoUsuarioEAO sessaoUsuarioEAO;
+  public void filter(ContainerRequestContext requestContext)
+    throws IOException
+  {
+  }
 
-	@Override
-	public void filter(ContainerRequestContext requestContext) throws IOException {
-		try {
+  private void doFilter(ContainerRequestContext requestContext)
+  {
+    List perfisAutorizados = getUserRoles(this.resourceInfo);
 
-//			doFilter(requestContext);
+    if (perfisAutorizados.isEmpty())
+      return;
+    String token = requestContext.getHeaderString("Authorization");
 
-		} catch (NaoAutorizadoException ue) {
-			requestContext.abortWith(Response.status(Status.UNAUTHORIZED).entity(new ErrorResponse(ue.getMessage())).build());
-		}
+    if ((token == null) || (token.isEmpty())) {
+      throw new NaoAutorizadoException("Permissão negado para acessar o recurso.");
+    }
 
-	}
+    SessaoUsuario sessaoUsuario = this.sessaoUsuarioEAO.findByToken(token);
+    if (sessaoUsuario == null) {
+      throw new NaoAutorizadoException("Token de acesso inválido.");
+    }
 
-	private void doFilter(ContainerRequestContext requestContext) {
-		List<PerfilUsuario> perfisAutorizados = getUserRoles(resourceInfo);
+    Date dataAtual = new Date();
+    if (sessaoUsuario.isExpirado(dataAtual)) {
+      throw new NaoAutorizadoException("Sessão Expirada.");
+    }
 
-		if (!perfisAutorizados.isEmpty()) {
+    boolean isUsuarioNoPerfil = perfisAutorizados.indexOf(sessaoUsuario.getUsuario().getPerfil()) != -1;
 
-			String token = requestContext.getHeaderString(AUTHORIZATION_PROPERTY);
-			
-			if (token == null || token.isEmpty()) {
-				throw new NaoAutorizadoException("Permissão negado para acessar o recurso.");
-			}
-			
-			SessaoUsuario sessaoUsuario = sessaoUsuarioEAO.findByToken(token);
-			if (sessaoUsuario == null) {
-				throw new NaoAutorizadoException("Token de acesso inválido.");
-			}
+    if (!isUsuarioNoPerfil) {
+      throw new NaoAutorizadoException("Permissão negado para acessar o recurso.");
+    }
 
-			Date dataAtual = new Date();
-			if (sessaoUsuario.isExpirado(dataAtual)) {
-				throw new NaoAutorizadoException("Sessão Expirada.");
-			}
+    atualizarDataDeExpiracao(sessaoUsuario, dataAtual);
+  }
 
-			boolean isUsuarioNoPerfil = perfisAutorizados.indexOf(sessaoUsuario.getUsuario().getPerfil()) != -1;
-			
-			if (!isUsuarioNoPerfil) {
-				throw new NaoAutorizadoException("Permissão negado para acessar o recurso.");
-			}
-			
-			atualizarDataDeExpiracao(sessaoUsuario, dataAtual);
+  private List<Usuario.PerfilUsuario> getUserRoles(ResourceInfo resourceInfo)
+  {
+    return Arrays.asList(Usuario.PerfilUsuario.values());
+  }
 
-		}
-	}
-
-	private List<PerfilUsuario> getUserRoles(ResourceInfo resourceInfo) {
-		//TODO buscar da anotacao do metodo
-		return Arrays.asList(PerfilUsuario.values());
-	}
-
-	private void atualizarDataDeExpiracao(SessaoUsuario sessaoUsuario, Date dataAtual) {
-		Date dataExpiracao = sessaoUsuario.getDataExpiracao();
-		long novaDataExpiracao = dataAtual.getTime() + dataExpiracao.getTime();
-		sessaoUsuario.setDataExpiracao(new Date(novaDataExpiracao));
-	}
-
+  private void atualizarDataDeExpiracao(SessaoUsuario sessaoUsuario, Date dataAtual) {
+    Date dataExpiracao = sessaoUsuario.getDataExpiracao();
+    long novaDataExpiracao = dataAtual.getTime() + dataExpiracao.getTime();
+    sessaoUsuario.setDataExpiracao(new Date(novaDataExpiracao));
+  }
 }

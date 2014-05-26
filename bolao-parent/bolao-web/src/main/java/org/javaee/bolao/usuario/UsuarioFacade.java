@@ -2,13 +2,12 @@ package org.javaee.bolao.usuario;
 
 import java.util.Date;
 import java.util.List;
-
 import javax.annotation.ManagedBean;
 import javax.inject.Inject;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
-
 import org.javaee.bolao.config.Config;
 import org.javaee.bolao.eao.SessaoUsuarioEAO;
 import org.javaee.bolao.eao.UsuarioEAO;
@@ -19,110 +18,121 @@ import org.javaee.bolao.exception.NaoAutorizadoException;
 import org.javaee.rest.common.Encryptor;
 
 @ManagedBean
-public class UsuarioFacade {
-    
-	@Inject
-	private UsuarioEAO usuarioEAO;
-	
-    public UsuarioFacade() {
-    }
-    
-    @Inject
-	private SessaoUsuarioEAO sessaoUsuarioEAO ;
+public class UsuarioFacade
+{
 
-    public Usuario insertOrUpdate(Usuario user) {
-    	
-    	validarEmailDuplicado(user);
-    	
-    	criptografarSenha(user);
-    	
-    	if(!user.hasId()){
-	    	usuarioEAO.insert(user);
-    	}else{
-    		usuarioEAO.update(user);
-    	}
-    	
-    	return user;
+  @Inject
+  private UsuarioEAO usuarioEAO;
+
+  @Inject
+  private SessaoUsuarioEAO sessaoUsuarioEAO;
+
+  public Usuario insertOrUpdate(Usuario user)
+  {
+    validarEmailDuplicado(user);
+
+    criptografarSenha(user);
+
+    if (!user.hasId())
+      this.usuarioEAO.insert(user);
+    else {
+      this.usuarioEAO.update(user);
     }
 
-	private void criptografarSenha(Usuario usuario) {
-		if(usuario.hasId()){
-			if(isSenhaAlterada(usuario)){
-				usuario.setSenha(Encryptor.encryptPassword(usuario.getSenha()));
-			}
-		}else{
-			usuario.setSenha(Encryptor.encryptPassword(usuario.getSenha()));
-		}
-	}
+    return user;
+  }
 
-	private boolean isSenhaAlterada(Usuario usuario) {
-		Usuario usuarioDB = usuarioEAO.find(usuario);
-		return !usuarioDB.getSenha().equals(usuario.getSenha());
-	}
-    
-    public void validarEmailDuplicado(Usuario usuario){
-    	Usuario userDB = usuarioEAO.findByEmail(usuario.getEmail());
-    	if(userDB != null && !userDB.equals(usuario)){
-    		throw new WebApplicationException(Response.status(Status.CONFLICT).entity(new ErrorResponse("Já existe um Usuário com o Email {0}", usuario.getEmail())).build());
-    	}
+  private void criptografarSenha(Usuario usuario) {
+    if (usuario.hasId()) {
+      if (isSenhaAlterada(usuario))
+        usuario.setSenha(Encryptor.encryptPassword(usuario.getSenha()));
     }
+    else
+      usuario.setSenha(Encryptor.encryptPassword(usuario.getSenha()));
+  }
 
-    public void delete(Long id) {
-    	usuarioEAO.delete(id);
-    }
+  private boolean isSenhaAlterada(Usuario usuario)
+  {
+    Usuario usuarioDB = (Usuario)this.usuarioEAO.find(usuario);
+    return !usuarioDB.getSenha().equals(usuario.getSenha());
+  }
 
-    public Usuario find(Long id) {
-    	return usuarioEAO.find(id);
-    }
+  public void validarEmailDuplicado(Usuario usuario) {
+    Usuario userDB = this.usuarioEAO.findByEmail(usuario.getEmail());
+    if ((userDB != null) && (!userDB.equals(usuario)))
+      throw new WebApplicationException(Response.status(Response.Status.CONFLICT).entity(new ErrorResponse("Já existe um Usuário com o Email {0}", new Object[] { usuario.getEmail() })).build());
+  }
 
-    public List<Usuario> findAll() {
-    	return usuarioEAO.findAll();
-    }
+  public void delete(Long id)
+  {
+    this.usuarioEAO.delete(id);
+  }
 
-    public List<Usuario> findRange(Integer from, Integer to) {
-        return usuarioEAO.findRange(new int[]{from, to});
-    }
+  public Usuario find(Long id) {
+    return (Usuario)this.usuarioEAO.find(id);
+  }
 
-    public String count() {
-        return String.valueOf(usuarioEAO.count());
-    }
-    
-    public SessaoUsuario login(String email, String senha) {
-    	
-    	Usuario usuario = findByEmail(email);
-    	if(usuario == null){
-    		throw new NaoAutorizadoException("Email e/ou senha inválido.");
-    	}
-    	
-    	if (!usuarioEAO.checkPassword(usuario, senha)) {
-    		throw new NaoAutorizadoException("Email e/ou senha inválido.");
-		}
-    	
-    	SessaoUsuario validSession = sessaoUsuarioEAO.findSessaoValida(email, new Date());
-    	
-    	if(validSession == null){
-    		validSession = sessaoUsuarioEAO.create(usuario, Config.getExpirationLoginTime());
-    	}
-    	
-    	return validSession;
-    }
-    
-    public boolean logout(String email) {
-    	Date expirateDate = new Date();
-    	
-    	Usuario usuario = findByEmail(email);
-    	
-		SessaoUsuario validSession = sessaoUsuarioEAO.findSessaoValida(usuario.getEmail(), expirateDate);
-    	
-		if(validSession != null){
-    		validSession.setDataExpiracao(expirateDate);
-    	}
-		
-		return validSession != null;
+  public List<Usuario> findAll() {
+    return this.usuarioEAO.findAll();
+  }
+
+  public List<Usuario> findRange(Integer from, Integer to) {
+    return this.usuarioEAO.findRange(new int[] { from.intValue(), to.intValue() });
+  }
+
+  public String count() {
+    return String.valueOf(this.usuarioEAO.count());
+  }
+
+  public SessaoUsuario login(String email, String senha)
+  {
+    Usuario usuario = findByEmail(email);
+    if (usuario == null) {
+      throw new NaoAutorizadoException("Email e/ou senha inválido.");
     }
 
-	public Usuario findByEmail(String login) {
-		return usuarioEAO.findByEmail(login);
-	}
-    
+    if (!this.usuarioEAO.checkPassword(usuario, senha)) {
+      throw new NaoAutorizadoException("Email e/ou senha inválido.");
+    }
+
+    Date actualDate = new Date();
+
+    removeInvalidSessions(usuario, actualDate);
+
+    SessaoUsuario validSession = this.sessaoUsuarioEAO.findSessaoValida(email, actualDate);
+
+    if (validSession == null) {
+      validSession = this.sessaoUsuarioEAO.create(usuario, Config.getExpirationLoginTime());
+    }
+
+    return validSession;
+  }
+
+  private void removeInvalidSessions(Usuario user, Date actualDate) {
+    this.sessaoUsuarioEAO.deleteExpiratedSessions(user, actualDate);
+  }
+
+  public boolean logout(String email)
+  {
+    SessaoUsuario validSession = null;
+
+    Date expirateDate = new Date();
+
+    Usuario usuario = findByEmail(email);
+
+    if (usuario != null)
+    {
+      validSession = this.sessaoUsuarioEAO.findSessaoValida(usuario.getEmail(), expirateDate);
+
+      if (validSession != null) {
+        validSession.setDataExpiracao(expirateDate);
+      }
+    }
+
+    return validSession != null;
+  }
+
+  public Usuario findByEmail(String login) {
+    return this.usuarioEAO.findByEmail(login);
+  }
 }

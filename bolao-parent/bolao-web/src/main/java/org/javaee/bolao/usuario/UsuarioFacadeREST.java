@@ -19,78 +19,75 @@ import org.javaee.bolao.entidades.Usuario;
 
 @Stateless
 @Path("users")
-public class UsuarioFacadeREST {
-    
-	@Inject
-	private UsuarioFacade usuarioFacade;
-	
-    public UsuarioFacadeREST() {
-    }
-    
-    @POST
-    @Consumes({"application/xml", "application/json"})
-    public Usuario insertOrUpdate(Usuario usuario) {
-    	return usuarioFacade.insertOrUpdate(usuario);
-    }
+public class UsuarioFacadeREST
+{
 
-    @DELETE
-    @Path("{id}")
-    public void delete(@PathParam("id") Long id) {
-    	usuarioFacade.delete(id);
-    }
+  @Inject
+  private UsuarioFacade usuarioFacade;
 
-    @GET
-    @Path("{id}")
-    @Produces({"application/xml", "application/json"})
-    public Usuario find(@PathParam("id") Long id) {
-    	return usuarioFacade.find(id);
-    }
-    
-    @GET
-    @Path("email/{email}")
-    @Produces({"application/xml", "application/json"})
-    public Usuario findByEmail(@PathParam("email") String login) {
-    	return usuarioFacade.findByEmail(login);
-    }
+  @POST
+  @Consumes({"application/xml", "application/json"})
+  public Usuario insertOrUpdate(Usuario usuario)
+  {
+    return this.usuarioFacade.insertOrUpdate(usuario);
+  }
 
-    @GET
-    @Produces({"application/xml", "application/json"})
-    public List<Usuario> findAll() {
-    	return usuarioFacade.findAll();
-    }
+  @DELETE
+  @Path("{id}")
+  public void delete(@PathParam("id") Long id) {
+    this.usuarioFacade.delete(id);
+  }
 
-    @GET
-    @Path("{from}/{to}")
-    @Produces({"application/xml", "application/json"})
-    public List<Usuario> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return usuarioFacade.findRange(from, to);
-    }
+  @GET
+  @Path("{id}")
+  @Produces({"application/xml", "application/json"})
+  public Usuario find(@PathParam("id") Long id) {
+    return this.usuarioFacade.find(id);
+  }
 
-    @GET
-    @Path("count")
-    @Produces("text/plain")
-    public String count() {
-        return String.valueOf(usuarioFacade.count());
+  @GET
+  @Path("email/{email}")
+  @Produces({"application/xml", "application/json"})
+  public Usuario findByEmail(@PathParam("email") String login) {
+    return this.usuarioFacade.findByEmail(login);
+  }
+
+  @GET
+  @Produces({"application/xml", "application/json"})
+  public List<Usuario> findAll() {
+    return this.usuarioFacade.findAll();
+  }
+
+  @GET
+  @Path("{from}/{to}")
+  @Produces({"application/xml", "application/json"})
+  public List<Usuario> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    return this.usuarioFacade.findRange(from, to);
+  }
+
+  @GET
+  @Path("count")
+  @Produces({"text/plain"})
+  public String count() {
+    return String.valueOf(this.usuarioFacade.count());
+  }
+
+  @POST
+  @Path("login")
+  @Consumes({"application/xml", "application/json"})
+  @Produces({"application/xml", "application/json"})
+  public SessaoUsuario login(@NotNull Usuario user) {
+    return this.usuarioFacade.login(user.getEmail(), user.getSenha());
+  }
+
+  @POST
+  @Path("logout")
+  @Consumes({"application/xml", "application/json"})
+  @Produces({"application/xml", "application/json"})
+  public Response logout(@NotNull Usuario usuario) {
+    if (this.usuarioFacade.logout(usuario.getEmail())) {
+      return Response.ok().build();
     }
-    
-    @POST
-    @Path("login")
-    @Consumes({"application/xml", "application/json"})
-    @Produces({"application/xml", "application/json"})
-    public SessaoUsuario login(@NotNull Usuario user) {
-    	return usuarioFacade.login(user.getEmail(), user.getSenha());
-    }
-    
-    @POST
-    @Path("logout")
-    @Consumes({"application/xml", "application/json"})
-    @Produces({"application/xml", "application/json"})
-    public Response logout(@NotNull String email) {
-    	if(usuarioFacade.logout(email)){
-    		return Response.ok().build();
-    	}else{
-    		return Response.notModified().build();
-    	}
-    }
-    
+    return Response.notModified().build();
+  }
 }

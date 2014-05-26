@@ -14,6 +14,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Expression;
@@ -24,13 +25,14 @@ import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.SingularAttribute;
 
 import org.javaee.bolao.entidades.AbstractEntity;
+import org.javaee.bolao.entidades.SessaoUsuario;
 import org.javaee.rest.common.XmlUtil;
 
 public abstract class AbstractEAO<E extends AbstractEntity> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Logger logger = Logger.getLogger(getClass().getName());
+	protected Logger logger = Logger.getLogger(getClass().getName());
 
 	protected Class<E> entityClass;
 
@@ -255,9 +257,9 @@ public abstract class AbstractEAO<E extends AbstractEntity> implements Serializa
 	}
 
 	public TypedQuery<E> getNamedQuery(String nameQuery) {
-		try{
+		try {
 			return getEntityManager().createNamedQuery(nameQuery, entityClass);
-		}catch(IllegalArgumentException ex){
+		} catch (IllegalArgumentException ex) {
 			return null;
 		}
 	}
@@ -265,8 +267,16 @@ public abstract class AbstractEAO<E extends AbstractEntity> implements Serializa
 	private EntityManagerFactory getEntityManagerFactory() {
 		return getEntityManager().getEntityManagerFactory();
 	}
-	
-	public void addNamedQuery(String namedQuery, TypedQuery<E> typedQuery){
+
+	public void addNamedQuery(String namedQuery, TypedQuery<E> typedQuery) {
 		getEntityManagerFactory().addNamedQuery(namedQuery, typedQuery);
+	}
+
+	protected Query createQuery(CriteriaDelete<SessaoUsuario> criteriaDelete) {
+		return getEntityManager().createQuery(criteriaDelete);
+	}
+
+	protected CriteriaDelete<E> createCriteriaDelete() {
+		return getCriteriaBuilder().createCriteriaDelete(entityClass);
 	}
 }
