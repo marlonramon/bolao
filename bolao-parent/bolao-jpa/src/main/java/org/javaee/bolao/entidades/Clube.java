@@ -1,23 +1,27 @@
 package org.javaee.bolao.entidades;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 
-public class Clube
+@Entity
+public class Clube extends AbstractEntity
 {
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long idClube;
 	
 	@NotNull
-	@Max(value=80)
+	@Max(80)
 	private String nome;
 	
 	@NotNull
-	@Max(value=80)
+	@Max(80)
 	private String bandeira;
 
 	public Long getIdClube() {
@@ -42,5 +46,10 @@ public class Clube
 
 	public void setBandeira(String bandeira) {
 		this.bandeira = bandeira;
+	}
+	
+	@Override
+	public Long getId() {
+		return getIdClube();
 	}
 }

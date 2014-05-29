@@ -8,6 +8,13 @@
     
     <class>org.javaee.bolao.entidades.Usuario</class>
     <class>org.javaee.bolao.entidades.SessaoUsuario</class>
+    <class>org.javaee.bolao.entidades.Clube</class>
+    <class>org.javaee.bolao.entidades.Bolao</class>
+    <class>org.javaee.bolao.entidades.Campeonato</class>
+    <class>org.javaee.bolao.entidades.UsuarioBolao</class>
+    <class>org.javaee.bolao.entidades.Rodada</class>
+    <class>org.javaee.bolao.entidades.Partida</class>
+    <class>org.javaee.bolao.entidades.Aposta</class>
         
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     
