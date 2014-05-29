@@ -23,7 +23,7 @@ public class Partida extends AbstractEntity
 	private Long idPartida;
 	
 	@NotNull
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataPartida;
 	
 	@NotNull
@@ -42,10 +42,10 @@ public class Partida extends AbstractEntity
 	private Rodada rodada;
 	
 	@NotNull
-	private int placarMandante;
+	private Short placarMandante;
 	
 	@NotNull
-	private int placarVisitante;
+	private Short placarVisitante;
 
 	public Long getIdPartida() {
 		return idPartida;
@@ -87,19 +87,19 @@ public class Partida extends AbstractEntity
 		this.rodada = rodada;
 	}
 
-	public int getPlacarMandante() {
+	public Short getPlacarMandante() {
 		return placarMandante;
 	}
 
-	public void setPlacarMandante(int placarMandante) {
+	public void setPlacarMandante(Short placarMandante) {
 		this.placarMandante = placarMandante;
 	}
 
-	public int getPlacarVisitante() {
+	public Short getPlacarVisitante() {
 		return placarVisitante;
 	}
 
-	public void setPlacarVisitante(int placarVisitante) {
+	public void setPlacarVisitante(Short placarVisitante) {
 		this.placarVisitante = placarVisitante;
 	}
 

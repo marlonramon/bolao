@@ -18,7 +18,7 @@ public class Rodada extends AbstractEntity
 	private Long idRodada;
 	
 	@NotNull
-	private int numero;
+	private Short numero;
 	
 	@NotNull
 	@ManyToOne
@@ -33,11 +33,11 @@ public class Rodada extends AbstractEntity
 		this.idRodada = idRodada;
 	}
 
-	public int getNumero() {
+	public Short getNumero() {
 		return numero;
 	}
 
-	public void setNumero(int numero) {
+	public void setNumero(Short numero) {
 		this.numero = numero;
 	}
 

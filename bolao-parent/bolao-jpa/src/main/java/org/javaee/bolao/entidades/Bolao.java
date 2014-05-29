@@ -29,16 +29,16 @@ public class Bolao extends AbstractEntity
 	private BigDecimal contribuicaoPorRodada;
 	
 	@NotNull
-	private int pontosPlacarExato;
+	private Short pontosPlacarExato;
 	
 	@NotNull
-	private int pontosResultadoEPlacar;
+	private Short pontosResultadoEPlacar;
 	
 	@NotNull
-	private int pontosResultado;
+	private Short pontosResultado;
 	
 	@NotNull
-	private int pontosPlacar;
+	private Short pontosPlacar;
 	
 	@NotNull
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -69,35 +69,35 @@ public class Bolao extends AbstractEntity
 		this.contribuicaoPorRodada = contribuicaoPorRodada;
 	}
 
-	public int getPontosPlacarExato() {
+	public Short getPontosPlacarExato() {
 		return pontosPlacarExato;
 	}
 
-	public void setPontosPlacarExato(int pontosPlacarExato) {
+	public void setPontosPlacarExato(Short pontosPlacarExato) {
 		this.pontosPlacarExato = pontosPlacarExato;
 	}
 
-	public int getPontosResultadoEPlacar() {
+	public Short getPontosResultadoEPlacar() {
 		return pontosResultadoEPlacar;
 	}
 
-	public void setPontosResultadoEPlacar(int pontosResultadoEPlacar) {
+	public void setPontosResultadoEPlacar(Short pontosResultadoEPlacar) {
 		this.pontosResultadoEPlacar = pontosResultadoEPlacar;
 	}
 
-	public int getPontosResultado() {
+	public Short getPontosResultado() {
 		return pontosResultado;
 	}
 
-	public void setPontosResultado(int pontosResultado) {
+	public void setPontosResultado(Short pontosResultado) {
 		this.pontosResultado = pontosResultado;
 	}
 
-	public int getPontosPlacar() {
+	public Short getPontosPlacar() {
 		return pontosPlacar;
 	}
 
-	public void setPontosPlacar(int pontosPlacar) {
+	public void setPontosPlacar(Short pontosPlacar) {
 		this.pontosPlacar = pontosPlacar;
 	}
 

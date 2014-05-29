@@ -20,7 +20,7 @@ ENGINE = InnoDB;
 CREATE  TABLE IF NOT EXISTS `Clube` (
   `idClube` INT NOT NULL AUTO_INCREMENT ,
   `nome` VARCHAR(80) NULL ,
-  `bandeira` BLOB NULL ,
+  `bandeira` VARCHAR(80) NULL ,
   PRIMARY KEY (`idClube`) )
 ENGINE = InnoDB;
 

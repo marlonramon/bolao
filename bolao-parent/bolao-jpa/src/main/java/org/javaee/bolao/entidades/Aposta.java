@@ -19,10 +19,10 @@ public class Aposta extends AbstractEntity
 	private Long idAposta;
 	
 	@NotNull
-	private int placarMandante;
+	private Short placarMandante;
 	
 	@NotNull
-	private int placarVisitante;
+	private Short placarVisitante;
 	
 	@NotNull
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -30,7 +30,7 @@ public class Aposta extends AbstractEntity
 	private Partida partida;
 	
 	@NotNull
-	private int pontuacao;
+	private Integer pontuacao;
 	
 	@NotNull
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -45,19 +45,19 @@ public class Aposta extends AbstractEntity
 		this.idAposta = idAposta;
 	}
 
-	public int getPlacarMandante() {
+	public Short getPlacarMandante() {
 		return placarMandante;
 	}
 
-	public void setPlacarMandante(int placarMandante) {
+	public void setPlacarMandante(Short placarMandante) {
 		this.placarMandante = placarMandante;
 	}
 
-	public int getPlacarVisitante() {
+	public Short getPlacarVisitante() {
 		return placarVisitante;
 	}
 
-	public void setPlacarVisitante(int placarVisitante) {
+	public void setPlacarVisitante(Short placarVisitante) {
 		this.placarVisitante = placarVisitante;
 	}
 
@@ -69,11 +69,11 @@ public class Aposta extends AbstractEntity
 		this.partida = partida;
 	}
 
-	public int getPontuacao() {
+	public Integer getPontuacao() {
 		return pontuacao;
 	}
 
-	public void setPontuacao(int pontuacao) {
+	public void setPontuacao(Integer pontuacao) {
 		this.pontuacao = pontuacao;
 	}
 
