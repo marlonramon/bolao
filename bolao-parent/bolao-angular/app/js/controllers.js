@@ -52,6 +52,7 @@ app.controller('UserEditCtrl', ['$scope', '$routeParams', '$location', 'Restangu
 
 app.controller('UserCreationCtrl', ['$scope', '$location', 'Restangular',
     function($scope, $location, Restangular) {
+        $scope.usuario = {};
 
         $scope.save = function() {
             Restangular.all('usuarios').post($scope.usuario).then(function() {
@@ -73,6 +74,9 @@ app.controller('LoginCtrl', ['$scope', '$cookieStore', 'Restangular',
             Restangular.all('usuarios/login').post($scope.usuario).then(function(sessaoUsuario) {
                 $scope.sessaoUsuario = sessaoUsuario;
                 $cookieStore.put('sessaoUsuario', $scope.sessaoUsuario);
+                    
+                Restangular.setDefaultHeaders({'Authorization': $cookieStore.get('sessaoUsuario').token});
+                
             });
         };
 

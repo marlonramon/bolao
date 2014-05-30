@@ -27,7 +27,7 @@ app.config(function(RestangularProvider) {
     
 //    var sessaoUsuario = $cookieStore.get('sessaoUsuario');
     
-    RestangularProvider.setDefaultHeaders({'Authorization': '123456789'});
+//    RestangularProvider.setDefaultHeaders({'Authorization': '123456789'});
 
     var baseUrl = 'http://localhost:8080/bolao-web/app';
 
