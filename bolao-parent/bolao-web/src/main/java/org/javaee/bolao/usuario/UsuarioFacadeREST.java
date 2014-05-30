@@ -18,7 +18,7 @@ import org.javaee.bolao.entidades.SessaoUsuario;
 import org.javaee.bolao.entidades.Usuario;
 
 @Stateless
-@Path("users")
+@Path("usuarios")
 public class UsuarioFacadeREST
 {
 
