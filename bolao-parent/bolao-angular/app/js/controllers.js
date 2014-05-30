@@ -3,45 +3,36 @@
 var app = angular.module('bolao.controllers', []);
 
 
-app.controller('UserListCtrl', ['$scope', 'UsersFactory', '$location', 'Restangular' ,
-    function($scope, UsersFactory, $location, Restangular) {
+app.controller('UserListCtrl', ['$scope', '$location', 'Restangular',
+    function($scope, $location, Restangular) {
 
-        var reload = function() {
-            $scope.users = Restangular.all('usuarios').getList().$object;
-        };
+        var usuariosRest = Restangular.all('usuarios');
 
-        $scope.editUser = function(userId) {
-            $location.path('/user-detail/' + userId);
-        };
+        usuariosRest.getList().then(function(usuarios) {
+            $scope.usuarios = usuarios;
+        });
 
-        $scope.deleteUser = function(userId) {
-
-            var confirmation = confirm('Are you sure you want to delete this user?');
-            if (confirmation === true) {
-                UsersFactory.delete({id: userId}, function() {
-                    reload();
-                }, function(error) {
-                    $scope.errors = error.data;
-                });
-            }
+        $scope.editUser = function(idUsuario) {
+            $location.path('/user-detail/' + idUsuario);
         };
 
         $scope.newUser = function() {
             $location.path('/user-creation');
         };
-
-        reload();
-
     }]);
 
-app.controller('UserDetailCtrl', ['$scope', '$routeParams', 'UsersFactory', '$location', 'Restangular' ,
-    function($scope, $routeParams, UsersFactory, $location, Restangular) {
+app.controller('UserEditCtrl', ['$scope', '$routeParams', '$location', 'Restangular',
+    function($scope, $routeParams, $location, Restangular) {
+
+        var usuariosRest = Restangular.one('usuarios', $routeParams.id);
+
+        usuariosRest.get().then(function(usuario) {
+            $scope.usuario = usuario;
+        });
 
         $scope.save = function() {
-            UsersFactory.save($scope.user, function() {
-                $location.path('/user-list');
-            }, function(error) {
-                $scope.errors = error.data;
+            Restangular.all('usuarios').post($scope.usuario).then(function() {
+                $scope.cancel();
             });
         };
 
@@ -49,25 +40,46 @@ app.controller('UserDetailCtrl', ['$scope', '$routeParams', 'UsersFactory', '$lo
             $location.path('/user-list');
         };
 
-        $scope.user =  Restangular.one('usuarios',$routeParams.id);
-                
+        $scope.deleteUser = function(idUsuario) {
+            var confirmation = confirm('Confirma a exclusão do Usuário?');
+            if (confirmation === true) {
+                Restangular.one('usuarios', idUsuario).remove().then(function() {
+                    $scope.cancel();
+                });
+            }
+        };
     }]);
 
-app.controller('UserCreationCtrl', ['$scope', 'UsersFactory', '$location',
-    function($scope, UsersFactory, $location) {
+app.controller('UserCreationCtrl', ['$scope', '$location', 'Restangular',
+    function($scope, $location, Restangular) {
 
-        /* callback for ng-click 'createNewUser': */
         $scope.save = function() {
-            UsersFactory.save($scope.user, function() {
-                $location.path('/user-list');
-            }, function(error) {
-                $scope.errors = error.data;
+            Restangular.all('usuarios').post($scope.usuario).then(function() {
+                $scope.cancel();
             });
         };
 
         $scope.cancel = function() {
             $location.path('/user-list');
         };
+    }]);
 
+app.controller('LoginCtrl', ['$scope', '$cookieStore', 'Restangular',
+    function($scope, $cookieStore, Restangular) {
+        
+        $scope.sessaoUsuario = $cookieStore.get('sessaoUsuario');
+        
+        $scope.login = function() {
+            Restangular.all('usuarios/login').post($scope.usuario).then(function(sessaoUsuario) {
+                $scope.sessaoUsuario = sessaoUsuario;
+                $cookieStore.put('sessaoUsuario', $scope.sessaoUsuario);
+            });
+        };
 
+        $scope.logout = function() {
+            Restangular.all('usuarios/logout').post($scope.sessaoUsuario.usuario).then(function(data) {
+                $scope.sessaoUsuario = null;
+                $cookieStore.remove('sessaoUsuario');
+            });
+        };
     }]);
