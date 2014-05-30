@@ -17,14 +17,13 @@
                     </tr>
                 </thead>
 
-                <tr ng-repeat="user in users| filter:filter">
-                    <td>{{user.idUsuario}}</td>
-                    <td>{{user.nome}}</td>
-                    <td>{{user.email}}</td>
-                    <td>{{user.dataCadastro| date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                <tr ng-repeat="usuario in usuarios| filter:filter">
+                    <td>{{usuario.idUsuario}}</td>
+                    <td>{{usuario.nome}}</td>
+                    <td>{{usuario.email}}</td>
+                    <td>{{usuario.dataCadastro| date:'dd/MM/yyyy HH:mm:ss'}}</td>
                     <td>
-                        <a ng-click="editUser(user.idUsuario)" class="btn btn-primary">Editar</a>
-                        <a ng-click="deleteUser(user.idUsuario)" class="btn btn-danger">Excluir</a>
+                        <a ng-click="editUser(usuario.idUsuario)" class="btn btn-primary">Editar</a>
                     </td>
                 </tr>
             </table>
