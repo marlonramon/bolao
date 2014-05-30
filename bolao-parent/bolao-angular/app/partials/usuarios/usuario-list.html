@@ -23,7 +23,7 @@
                     <td>{{usuario.email}}</td>
                     <td>{{usuario.dataCadastro| date:'dd/MM/yyyy HH:mm:ss'}}</td>
                     <td>
-                        <a ng-click="editUser(usuario.idUsuario)" class="btn btn-primary">Editar</a>
+                        <a ng-click="edit(usuario.idUsuario)" class="btn btn-primary">Editar</a>
                     </td>
                 </tr>
             </table>
@@ -33,7 +33,7 @@
 
     </div>
 
-    <a ng-click="newUser()" class="btn btn-primary">Novo</a>
+    <a ng-click="new()" class="btn btn-primary">Novo</a>
     Total: {{users.length}}
 </div>
 

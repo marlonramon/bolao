@@ -2,12 +2,12 @@ package org.javaee.bolao.usuario;
 
 import java.util.Date;
 import java.util.List;
+
 import javax.annotation.ManagedBean;
 import javax.inject.Inject;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
-import javax.ws.rs.core.Response.Status;
+
 import org.javaee.bolao.config.Config;
 import org.javaee.bolao.eao.SessaoUsuarioEAO;
 import org.javaee.bolao.eao.UsuarioEAO;
@@ -74,14 +74,6 @@ public class UsuarioFacade
 
   public List<Usuario> findAll() {
     return this.usuarioEAO.findAll();
-  }
-
-  public List<Usuario> findRange(Integer from, Integer to) {
-    return this.usuarioEAO.findRange(new int[] { from.intValue(), to.intValue() });
-  }
-
-  public String count() {
-    return String.valueOf(this.usuarioEAO.count());
   }
 
   public SessaoUsuario login(String email, String senha)

@@ -16,62 +16,58 @@ import org.javaee.bolao.entidades.Usuario;
 import org.javaee.bolao.entidades.Usuario.PerfilUsuario;
 import org.javaee.bolao.exception.NaoAutorizadoException;
 
-//@Provider
-public class SecurityInterceptor
-  implements ContainerRequestFilter
-{
-  public static final String AUTHORIZATION_PROPERTY = "Authorization";
+@Provider
+public class SecurityInterceptor implements ContainerRequestFilter {
+	public static final String AUTHORIZATION_PROPERTY = "Authorization";
 
-  @Context
-  private ResourceInfo resourceInfo;
+	@Context
+	private ResourceInfo resourceInfo;
 
-  @Inject
-  private SessaoUsuarioEAO sessaoUsuarioEAO;
+	@Inject
+	private SessaoUsuarioEAO sessaoUsuarioEAO;
 
-  public void filter(ContainerRequestContext requestContext)
-    throws IOException
-  {
-  }
+	public void filter(ContainerRequestContext requestContext) throws IOException {
+		System.out.println("Authorization: " + requestContext.getHeaderString("Authorization"));
+	}
 
-  private void doFilter(ContainerRequestContext requestContext)
-  {
-    List perfisAutorizados = getUserRoles(this.resourceInfo);
+	private void doFilter(ContainerRequestContext requestContext) {
+		
+		List<PerfilUsuario> perfisAutorizados = getUserRoles(this.resourceInfo);
 
-    if (perfisAutorizados.isEmpty())
-      return;
-    String token = requestContext.getHeaderString("Authorization");
+		if (perfisAutorizados.isEmpty())
+			return;
+		String token = requestContext.getHeaderString("Authorization");
 
-    if ((token == null) || (token.isEmpty())) {
-      throw new NaoAutorizadoException("Permissão negado para acessar o recurso.");
-    }
+		if ((token == null) || (token.isEmpty())) {
+			throw new NaoAutorizadoException("Permissão negado para acessar o recurso.");
+		}
 
-    SessaoUsuario sessaoUsuario = this.sessaoUsuarioEAO.findByToken(token);
-    if (sessaoUsuario == null) {
-      throw new NaoAutorizadoException("Token de acesso inválido.");
-    }
+		SessaoUsuario sessaoUsuario = this.sessaoUsuarioEAO.findByToken(token);
+		if (sessaoUsuario == null) {
+			throw new NaoAutorizadoException("Token de acesso inválido.");
+		}
 
-    Date dataAtual = new Date();
-    if (sessaoUsuario.isExpirado(dataAtual)) {
-      throw new NaoAutorizadoException("Sessão Expirada.");
-    }
+		Date dataAtual = new Date();
+		if (sessaoUsuario.isExpirado(dataAtual)) {
+			throw new NaoAutorizadoException("Sessão Expirada.");
+		}
 
-    boolean isUsuarioNoPerfil = perfisAutorizados.indexOf(sessaoUsuario.getUsuario().getPerfil()) != -1;
+		boolean isUsuarioNoPerfil = perfisAutorizados.indexOf(sessaoUsuario.getUsuario().getPerfil()) != -1;
 
-    if (!isUsuarioNoPerfil) {
-      throw new NaoAutorizadoException("Permissão negado para acessar o recurso.");
-    }
+		if (!isUsuarioNoPerfil) {
+			throw new NaoAutorizadoException("Permissão negado para acessar o recurso.");
+		}
 
-    atualizarDataDeExpiracao(sessaoUsuario, dataAtual);
-  }
+		atualizarDataDeExpiracao(sessaoUsuario, dataAtual);
+	}
 
-  private List<Usuario.PerfilUsuario> getUserRoles(ResourceInfo resourceInfo)
-  {
-    return Arrays.asList(Usuario.PerfilUsuario.values());
-  }
+	private List<PerfilUsuario> getUserRoles(ResourceInfo resourceInfo) {
+		return Arrays.asList(Usuario.PerfilUsuario.values());
+	}
 
-  private void atualizarDataDeExpiracao(SessaoUsuario sessaoUsuario, Date dataAtual) {
-    Date dataExpiracao = sessaoUsuario.getDataExpiracao();
-    long novaDataExpiracao = dataAtual.getTime() + dataExpiracao.getTime();
-    sessaoUsuario.setDataExpiracao(new Date(novaDataExpiracao));
-  }
+	private void atualizarDataDeExpiracao(SessaoUsuario sessaoUsuario, Date dataAtual) {
+		Date dataExpiracao = sessaoUsuario.getDataExpiracao();
+		long novaDataExpiracao = dataAtual.getTime() + dataExpiracao.getTime();
+		sessaoUsuario.setDataExpiracao(new Date(novaDataExpiracao));
+	}
 }

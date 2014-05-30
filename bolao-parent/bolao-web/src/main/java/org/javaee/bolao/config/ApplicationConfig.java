@@ -4,6 +4,8 @@ import java.util.Set;
 
 import javax.ws.rs.core.Application;
 
+import org.javaee.bolao.campeonato.CampeonatoFacadeREST;
+import org.javaee.bolao.security.SecurityInterceptor;
 import org.javaee.bolao.usuario.UsuarioFacadeREST;
 
 @javax.ws.rs.ApplicationPath("/app")
@@ -26,7 +28,8 @@ public class ApplicationConfig extends Application {
     	
         resources.add(UsuarioFacadeREST.class);
         resources.add(CrossOriginResourceSharingFilter.class);
-//        resources.add(SecurityInterceptor.class);
+        resources.add(SecurityInterceptor.class);
+        resources.add(CampeonatoFacadeREST.class);
     }
     
 }

@@ -7,17 +7,25 @@ var app = angular.module('bolao', [
     'ngCookies',
     'restangular',
     'bolao.services',
-    'bolao.controllers'
+    'bolao.usuarioController',
+    'bolao.campeonatoController'
 
 
 ]);
 
 
 app.config(['$routeProvider', function($routeProvider) {
-        $routeProvider.when('/user-list', {templateUrl: 'partials/user-list.html', controller: 'UserListCtrl'});
-        $routeProvider.when('/user-creation', {templateUrl: 'partials/user-creation.html', controller: 'UserCreationCtrl'});
-        $routeProvider.when('/user-detail/:id', {templateUrl: 'partials/user-detail.html', controller: 'UserEditCtrl'});
-        $routeProvider.when('/user-login', {templateUrl: 'partials/user-login.html', controller: 'LoginCtrl'});
+        //usuarios
+        $routeProvider.when('/usuario-list', {templateUrl: 'partials/usuarios/usuario-list.html', controller: 'UserListCtrl'});        
+        $routeProvider.when('/usuario-edit', {templateUrl: 'partials/usuarios/usuario-edit.html', controller: 'UserEditCtrl'});
+        $routeProvider.when('/usuario-edit/:id', {templateUrl: 'partials/usuarios/usuario-edit.html', controller: 'UserEditCtrl'});
+        $routeProvider.when('/usuario-login', {templateUrl: 'partials/usuarios/usuario-login.html', controller: 'LoginCtrl'});
+        
+        //campenatos
+        $routeProvider.when('/campeonato-list', {templateUrl: 'partials/campeonato/campeonato-list.html', controller: 'CampeonatoListCtrl'});
+        $routeProvider.when('/campeonato-edit', {templateUrl: 'partials/campeonato/campeonato-edit.html', controller: 'CampeonatoEditCtrl'});
+        $routeProvider.when('/campeonato-edit/:id', {templateUrl: 'partials/campeonato/campeonato-edit.html', controller: 'CampeonatoEditCtrl'});
+        
         $routeProvider.otherwise({redirectTo: '/index'});
 
     }]);

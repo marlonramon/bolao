@@ -30,9 +30,9 @@ public class UsuarioEAO extends AbstractEAO<Usuario> {
 		return entityManager;
 	}
 
-	public boolean checkPassword(Usuario user, String senha) {
-		user = find(user);
-		return Encryptor.checkPassword(senha, user.getSenha());
+	public boolean checkPassword(Usuario usuario, String senha) {
+		usuario = find(usuario);
+		return Encryptor.checkPassword(senha, usuario.getSenha());
 	}
 
 	public Usuario findByEmail(String email) {

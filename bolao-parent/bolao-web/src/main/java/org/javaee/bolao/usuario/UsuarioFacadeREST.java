@@ -58,19 +58,19 @@ public class UsuarioFacadeREST
     return this.usuarioFacade.findAll();
   }
 
-  @GET
-  @Path("{from}/{to}")
-  @Produces({"application/xml", "application/json"})
-  public List<Usuario> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-    return this.usuarioFacade.findRange(from, to);
-  }
-
-  @GET
-  @Path("count")
-  @Produces({"text/plain"})
-  public String count() {
-    return String.valueOf(this.usuarioFacade.count());
-  }
+//  @GET
+//  @Path("{from}/{to}")
+//  @Produces({"application/xml", "application/json"})
+//  public List<Usuario> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+//    return this.usuarioFacade.findRange(from, to);
+//  }
+//
+//  @GET
+//  @Path("count")
+//  @Produces({"text/plain"})
+//  public String count() {
+//    return String.valueOf(this.usuarioFacade.count());
+//  }
 
   @POST
   @Path("login")
