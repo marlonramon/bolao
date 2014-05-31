@@ -66,6 +66,10 @@ app.controller('LoginCtrl', ['$scope', '$cookieStore', 'Restangular',
 
             });
         };
+        
+        $scope.isAdm = function () {
+           return $scope.sessaoUsuario.usuario.perfil === "ADMINISTRADOR";  
+        };
 
         $scope.logout = function() {
             Restangular.all('usuarios/logout').post($scope.sessaoUsuario.usuario).then(function(data) {
