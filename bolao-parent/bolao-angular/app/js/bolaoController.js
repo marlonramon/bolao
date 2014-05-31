@@ -31,8 +31,6 @@ app.controller('BolaoEditCtrl', ['$scope', '$routeParams', '$location', 'Restang
 
         $scope.save = function() {
             
-            console.log('descricao: '+$scope.bolao.descricao);
-            
             Restangular.all('boloes').post($scope.bolao).then(function() {
                 $scope.cancel();
             });

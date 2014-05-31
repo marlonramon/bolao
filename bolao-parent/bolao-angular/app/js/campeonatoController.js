@@ -31,8 +31,6 @@ app.controller('CampeonatoEditCtrl', ['$scope', '$routeParams', '$location', 'Re
 
         $scope.save = function() {
             
-            console.log('descricao: '+$scope.campeonato.descricao);
-            
             Restangular.all('campeonatos').post($scope.campeonato).then(function() {
                 $scope.cancel();
             });

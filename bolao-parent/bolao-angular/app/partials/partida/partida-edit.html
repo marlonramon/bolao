@@ -1,0 +1,95 @@
+
+<div class="container" style="width: 380pt">
+    <div class="panel panel-default ">
+
+        <p ng-repeat="errs in errors" class="alert alert-error"><strong>Erro</strong>: {{ errs}}</p>
+
+        <div class="panel-body">
+            <form class="form-horizontal">
+
+                <fieldset> 
+                    <legend ng-show="partida.idPartida">Alterar Partida</legend>
+                    <legend ng-show="!partida.idPartida">Incluir Partida</legend>
+                    
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" for="inputCampeonato">Campeonato</label>
+
+                        <div class="col-lg-8">
+                            <select class="form-control" id="inputCampeonato" ng-model="campeonato" ng-options="campeonato.descricao for campeonato in campeonatos track by campeonato.idCampeonato"  title="Campeonato">
+                                <option value="">Selecione o Campeonato</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" for="inputRodada">Campeonato</label>
+
+                        <div class="col-lg-8">
+                            <select class="form-control" id="inputRodada" ng-model="partida.rodada" ng-options="rodada.numero for rodada in rodadas track by rodada.idRodada"  title="Rodada">
+                                <option value="">Selecione a Rodada</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" for="inputNumero">Data</label>
+
+                        <div class="col-lg-8">
+                            <input class="form-control" type="text" id="inputNumero" ng-model="partida.dataPartida"/>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" for="inputClubeMandante">Clube Mandate</label>
+
+                        <div class="col-lg-8">
+                            <select class="form-control" id="inputClubeMandante" ng-model="partida.clubeMandante" ng-options="clube.nome for clube in clubes track by clube.idClube"  title="Clube Mandante">
+                                <option value="">Selecione o Clube Mandante</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" for="inputClubeVisitante">Clube Mandate</label>
+
+                        <div class="col-lg-8">
+                            <select class="form-control" id="inputClubeVisitante" ng-model="partida.clubeVisitante" ng-options="clube.nome for clube in clubes track by clube.idClube"  title="Clube Visitante">
+                                <option value="">Selecione o Clube Visitante</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" for="inputPlacarMandante">{{partida.clubeMandante.nome}}</label>
+
+                        <div class="col-lg-2">
+                            <input class="form-control" type="text" id="inputPlacarMandante" ng-model="partida.placarMandante"/>
+                        </div>
+                        <label class="col-lg-1 control-label">X</label>
+                        <div class="col-lg-2">
+                            <input class="form-control" type="text" id="inputPlacarVisitante" ng-model="partida.placarVisitante"/>
+                        </div>
+                        <label class="col-lg-3 control-label" for="inputPlacarVisitante">{{partida.clubeVisitante.nome}}</label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="col-lg-8 col-lg-offset-3">
+                            <button ng-click="save()" class="btn btn-small btn-primary">Salvar</button>
+                            <button ng-show="partida.idPartida" ng-click="delete(partida.idPartida)" class="btn btn-small btn-danger">Excluir</button>
+                            <a ng-click="cancel()" class="btn btn-small btn-default">Cancelar</a>
+                            
+                        </div>
+                    </div>
+
+
+                </fieldset>
+            </form>
+
+        </div>    
+    </div>
+</div>
+
+
+
+
+
