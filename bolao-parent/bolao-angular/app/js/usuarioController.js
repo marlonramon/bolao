@@ -72,6 +72,9 @@ app.controller('LoginCtrl', ['$scope', '$cookieStore', 'Restangular',
         };
 
         $scope.logout = function() {
+            
+            console.log('h udhasidsuai');
+            
             Restangular.all('usuarios/logout').post($scope.sessaoUsuario.usuario).then(function(data) {
                 $scope.sessaoUsuario = null;
                 $cookieStore.remove('sessaoUsuario');

@@ -1,6 +1,10 @@
 'use strict';
 
 
+var baseUrl = 'http://localhost:8080/bolao-web/app';
+
+var baseUrlImages = 'http://localhost:8080/bolao-web/resources/images';
+
 // Declare app level module which depends on filters, and services
 var app = angular.module('bolao', [
     'ngRoute',
@@ -52,15 +56,16 @@ app.config(['$routeProvider', function($routeProvider) {
         $routeProvider.otherwise({redirectTo: '/index'});
 
     }]);
-    
+
+app.run(function($rootScope) {
+    $rootScope.baseUrlImages = baseUrlImages;
+});
 
 app.config(function(RestangularProvider) {
     
 //    var sessaoUsuario = $cookieStore.get('sessaoUsuario');
     
 //    RestangularProvider.setDefaultHeaders({'Authorization': '123456789'});
-
-    var baseUrl = 'http://localhost:8080/bolao-web/app';
 
     RestangularProvider.setBaseUrl(baseUrl);
 
