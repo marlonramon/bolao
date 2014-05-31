@@ -4,8 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Clube extends AbstractEntity
@@ -17,11 +17,11 @@ public class Clube extends AbstractEntity
 	private Long idClube;
 	
 	@NotNull
-	@Max(80)
+	@Size(max=80)
 	private String nome;
 	
 	@NotNull
-	@Max(80)
+	@Size(max=80)
 	private String bandeira;
 
 	public Long getIdClube() {

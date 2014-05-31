@@ -1,10 +1,14 @@
 package org.javaee.bolao.config;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import javax.ws.rs.core.Application;
 
+import org.javaee.bolao.bolao.BolaoFacadeREST;
 import org.javaee.bolao.campeonato.CampeonatoFacadeREST;
+import org.javaee.bolao.exception.ConstraintViolationExceptionMapper;
 import org.javaee.bolao.security.SecurityInterceptor;
 import org.javaee.bolao.usuario.UsuarioFacadeREST;
 
@@ -30,6 +34,17 @@ public class ApplicationConfig extends Application {
         resources.add(CrossOriginResourceSharingFilter.class);
         resources.add(SecurityInterceptor.class);
         resources.add(CampeonatoFacadeREST.class);
+        resources.add(BolaoFacadeREST.class);
+        resources.add(ConstraintViolationExceptionMapper.class);
+    }
+    
+    @Override
+    public Map<String, Object> getProperties() {
+    	
+    	Map<String, Object> properties = new HashMap<>();
+    	
+    	
+    	return super.getProperties();
     }
     
 }

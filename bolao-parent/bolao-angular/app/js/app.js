@@ -8,7 +8,8 @@ var app = angular.module('bolao', [
     'restangular',
     'bolao.services',
     'bolao.usuarioController',
-    'bolao.campeonatoController'
+    'bolao.campeonatoController',
+    'bolao.bolaoController'
 
 
 ]);
@@ -25,6 +26,11 @@ app.config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/campeonato-list', {templateUrl: 'partials/campeonato/campeonato-list.html', controller: 'CampeonatoListCtrl'});
         $routeProvider.when('/campeonato-edit', {templateUrl: 'partials/campeonato/campeonato-edit.html', controller: 'CampeonatoEditCtrl'});
         $routeProvider.when('/campeonato-edit/:id', {templateUrl: 'partials/campeonato/campeonato-edit.html', controller: 'CampeonatoEditCtrl'});
+        
+        //boloes
+        $routeProvider.when('/bolao-list', {templateUrl: 'partials/bolao/bolao-list.html', controller: 'BolaoListCtrl'});
+        $routeProvider.when('/bolao-edit', {templateUrl: 'partials/bolao/bolao-edit.html', controller: 'BolaoEditCtrl'});
+        $routeProvider.when('/bolao-edit/:id', {templateUrl: 'partials/bolao/bolao-edit.html', controller: 'BolaoEditCtrl'});
         
         $routeProvider.otherwise({redirectTo: '/index'});
 

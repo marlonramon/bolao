@@ -1,0 +1,92 @@
+
+<div class="container" style="width: 380pt">
+    <div class="panel panel-default ">
+
+        <p ng-repeat="errs in errors" class="alert alert-error"><strong>Erro</strong>: {{ errs}}</p>
+
+        <div class="panel-body">
+            <form class="form-horizontal">
+
+                <fieldset> 
+                    <legend ng-show="bolao.idBolao">Alterar Bolão</legend>
+                    <legend ng-show="!bolao.idBolao">Incluir Bolão</legend>
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" for="inputDescricao">Descrição</label>
+
+                        <div class="col-lg-8">
+                            <input class="form-control" type="text" id="inputDescricao" ng-model="bolao.descricao"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" for="inputCampeonato">Campeonato</label>
+
+                        <div class="col-lg-8">
+                            <select class="form-control" id="inputCampeonato" ng-model="bolao.campeonato" ng-options="campeonato.descricao for campeonato in campeonatos"  title="Campeonato">
+                                <option value="">Selecione o Campeonato</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" for="inputContribuicaoRodada">Contribuição por Rodada</label>
+
+                        <div class="col-lg-8">
+                            <input class="form-control" type="text" id="inputContribuicaoRodada" ng-model="bolao.contribuicaoPorRodada"/>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" for="inputPontosPlacarExato">Pontos (placar exato)</label>
+
+                        <div class="col-lg-8">
+                            <input class="form-control" type="text" id="inputPontosPlacarExato" ng-model="bolao.pontosPlacarExato"/>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" for="inputPontosResultadoEPlacar">Pontos (resultado e placar)</label>
+
+                        <div class="col-lg-8">
+                            <input class="form-control" type="text" id="inputPontosResultadoEPlacar" ng-model="bolao.pontosResultadoEPlacar"/>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" for="inputPontosResultado">Pontos (resultado)</label>
+
+                        <div class="col-lg-8">
+                            <input class="form-control" type="text" id="inputPontosResultado" ng-model="bolao.pontosResultado"/>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" for="inputPontosPlacar">Pontos (placar)</label>
+
+                        <div class="col-lg-8">
+                            <input class="form-control" type="text" id="inputPontosPlacar" ng-model="bolao.pontosPlacar"/>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="col-lg-8 col-lg-offset-3">
+                            <button ng-click="save()" class="btn btn-small btn-primary">Salvar</button>
+                            <button ng-show="bolao.idBolao" ng-click="delete(bolao.idBolao)" class="btn btn-small btn-danger">Excluir</button>
+                            <a ng-click="cancel()" class="btn btn-small btn-default">Cancelar</a>
+                            
+                        </div>
+                    </div>
+
+
+                </fieldset>
+            </form>
+
+        </div>    
+    </div>
+</div>
+
+
+
+
+

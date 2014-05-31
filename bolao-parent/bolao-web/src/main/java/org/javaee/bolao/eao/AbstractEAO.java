@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,6 +24,8 @@ import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.SingularAttribute;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 
 import org.javaee.bolao.entidades.AbstractEntity;
 import org.javaee.bolao.entidades.SessaoUsuario;
@@ -44,12 +47,37 @@ public abstract class AbstractEAO<E extends AbstractEntity> implements Serializa
 
 	public void insert(E entity) {
 
-		logger.log(Level.INFO, "Insert: {0}", XmlUtil.toString(entity, true));
-		getEntityManager().persist(entity);
+		logger.log(Level.INFO, "Insert {0}: {1}", new Object[]{entityClass.getSimpleName(), XmlUtil.toString(entity, true)});
+		try{
+			getEntityManager().persist(entity);
+		}catch(Exception e){
+			throw convertException(e);
+		}
+	}
+
+	private RuntimeException convertException(Exception e) {
+		
+		RuntimeException re = new RuntimeException(e);
+		
+		if(e instanceof ConstraintViolationException){
+			ConstraintViolationException  cve = (ConstraintViolationException) e;
+			Set<ConstraintViolation<?>> constraintViolations = cve.getConstraintViolations();
+			for (ConstraintViolation<?> constraintViolation : constraintViolations) {
+				StringBuilder sb = new StringBuilder();
+				sb.append("ConstraintViolationException");
+				sb.append("\nInvalidValue: "+constraintViolation.getInvalidValue());
+				sb.append("\nProperty: "+constraintViolation.getPropertyPath());
+				sb.append("\nMessage: "+constraintViolation.getMessage());
+				logger.severe(sb.toString());
+			}
+		}
+		
+		
+		return re;
 	}
 
 	public void delete(Long id) {
-		logger.log(Level.INFO, "Delete Id: {0}", id);
+		logger.log(Level.INFO, "Delete {0} Id: {1}", new Object[]{entityClass.getSimpleName(), id});
 		if (id != null) {
 			E entity = getEntityManager().getReference(entityClass, id);
 			getEntityManager().remove(entity);
@@ -61,12 +89,16 @@ public abstract class AbstractEAO<E extends AbstractEntity> implements Serializa
 	}
 
 	public E update(E entity) {
-		logger.log(Level.INFO, "Update: {0}", XmlUtil.toString(entity, true));
-		return getEntityManager().merge(entity);
+		logger.log(Level.INFO, "Update {0}: {1}", new Object[]{entityClass.getSimpleName(), XmlUtil.toString(entity, true)});
+		try{
+			return getEntityManager().merge(entity);
+		}catch(Exception e){
+			throw convertException(e);
+		}
 	}
 
 	public E find(Long id) {
-		logger.log(Level.INFO, "Find Id: {0}", id);
+		logger.log(Level.INFO, "Find {0} Id: {1}", new Object[]{entityClass.getSimpleName(), id});
 		if (id == null) {
 			return null;
 		}
@@ -115,7 +147,7 @@ public abstract class AbstractEAO<E extends AbstractEntity> implements Serializa
 
 		List<E> resultList = query.getResultList();
 
-		logger.log(Level.INFO, "FindAll Total: {0}", resultList.size());
+		logger.log(Level.INFO, "FindAll {0} Total: {1}", new Object[]{entityClass.getSimpleName(), resultList.size()});
 
 		return resultList;
 	}

@@ -1,0 +1,48 @@
+
+
+<div class="container">
+    <div class="panel  panel-default">
+
+
+        <div class="panel-heading">Bolões</div>
+        <div class="panel-body">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Descrição</th>
+                        <th>Campeonato</th>
+                        <th>Contrinuição rodada</th>
+                        <th>Pontos (placar exato)</th>
+                        <th>Pontos (resultado e placar)</th>
+                        <th>Pontos (resultado)</th>
+                        <th>Pontos (placar)</th>
+                    </tr>
+                </thead>
+
+                <tr ng-repeat="bolao in boloes| filter:filter">
+                    <td>{{bolao.idBolao}}</td>
+                    <td>{{bolao.descricao}}</td>
+                    <td>{{bolao.campeonato.descricao}}</td>
+                    <td>{{bolao.contribuicaoPorRodada}}</td>
+                    <td>{{bolao.pontosPlacarExato}}</td>
+                    <td>{{bolao.pontosResultadoEPlacar}}</td>
+                    <td>{{bolao.pontosResultado}}</td>
+                    <td>{{bolao.pontosPlacar}}</td>
+                    <td>
+                        <a ng-click="edit(bolao.idBolao)" class="btn btn-primary">Editar</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+
+
+    </div>
+
+    <a ng-click="new()" class="btn btn-primary">Novo</a>
+    Total: {{boloes.length}}
+</div>
+
+
+
