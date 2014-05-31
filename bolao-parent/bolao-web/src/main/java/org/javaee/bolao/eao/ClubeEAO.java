@@ -10,7 +10,6 @@ import org.javaee.bolao.entidades.Clube;
 
 @ManagedBean
 public class ClubeEAO extends AbstractEAO<Clube> {
-	private static final long serialVersionUID = 1L;
         
 	public ClubeEAO() {
 		super(Clube.class);

@@ -10,7 +10,6 @@ import org.javaee.bolao.entidades.Bolao;
 
 @ManagedBean
 public class BolaoEAO extends AbstractEAO<Bolao> {
-	private static final long serialVersionUID = 1L;
         
 	public BolaoEAO() {
 		super(Bolao.class);

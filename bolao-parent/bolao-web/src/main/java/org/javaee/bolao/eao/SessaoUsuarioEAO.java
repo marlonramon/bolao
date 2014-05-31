@@ -2,19 +2,19 @@ package org.javaee.bolao.eao;
 
 import java.util.Date;
 import java.util.UUID;
-import java.util.logging.Logger;
+
 import javax.annotation.ManagedBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+
 import org.javaee.bolao.entidades.SessaoUsuario;
 import org.javaee.bolao.entidades.SessaoUsuario_;
 import org.javaee.bolao.entidades.Usuario;
@@ -23,8 +23,6 @@ import org.javaee.bolao.entidades.Usuario_;
 @ManagedBean
 public class SessaoUsuarioEAO extends AbstractEAO<SessaoUsuario>
 {
-  private static final long serialVersionUID = 1L;
-
   @PersistenceContext
   private EntityManager entityManager;
 

@@ -10,7 +10,6 @@ import org.javaee.bolao.entidades.Rodada;
 
 @ManagedBean
 public class RodadaEAO extends AbstractEAO<Rodada> {
-	private static final long serialVersionUID = 1L;
         
 	public RodadaEAO() {
 		super(Rodada.class);

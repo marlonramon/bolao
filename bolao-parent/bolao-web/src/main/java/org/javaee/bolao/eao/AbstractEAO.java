@@ -1,6 +1,5 @@
 package org.javaee.bolao.eao;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -31,10 +30,8 @@ import org.javaee.bolao.entidades.AbstractEntity;
 import org.javaee.bolao.entidades.SessaoUsuario;
 import org.javaee.rest.common.XmlUtil;
 
-public abstract class AbstractEAO<E extends AbstractEntity> implements Serializable {
-
-	private static final long serialVersionUID = 1L;
-
+public abstract class AbstractEAO<E extends AbstractEntity>
+{
 	protected Logger logger = Logger.getLogger(getClass().getName());
 
 	protected Class<E> entityClass;

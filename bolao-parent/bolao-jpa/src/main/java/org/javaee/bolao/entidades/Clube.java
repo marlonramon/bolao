@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.javaee.bolao.vo.ClubeVO;
+
 @Entity
 public class Clube extends AbstractEntity
 {
@@ -51,5 +53,16 @@ public class Clube extends AbstractEntity
 	@Override
 	public Long getId() {
 		return getIdClube();
+	}
+	
+	public ClubeVO getClubeVO()
+	{
+		ClubeVO clubeVO = new ClubeVO();
+		
+		clubeVO.setIdClube(getId());
+		clubeVO.setNome(getNome());
+		clubeVO.setBandeira(getBandeira());
+		
+		return clubeVO;
 	}
 }
