@@ -31,8 +31,6 @@ app.controller('ClubeEditCtrl', ['$scope', '$routeParams', '$location', 'Restang
 
         $scope.save = function() {
             
-            console.log('descricao: '+$scope.clube.descricao);
-            
             Restangular.all('clubes').post($scope.clube).then(function() {
                 $scope.cancel();
             });

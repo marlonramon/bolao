@@ -10,7 +10,9 @@ var app = angular.module('bolao', [
     'bolao.usuarioController',
     'bolao.campeonatoController',
     'bolao.bolaoController',
-    'bolao.clubeController'
+    'bolao.clubeController',
+    'bolao.rodadaController',
+    'bolao.partidaController'
 
 ]);
 
@@ -37,10 +39,20 @@ app.config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/clube-edit', {templateUrl: 'partials/clube/clube-edit.html', controller: 'ClubeEditCtrl'});
         $routeProvider.when('/clube-edit/:id', {templateUrl: 'partials/clube/clube-edit.html', controller: 'ClubeEditCtrl'});
         
+        //rodadas
+        $routeProvider.when('/rodada-list', {templateUrl: 'partials/rodada/rodada-list.html', controller: 'RodadaListCtrl'});
+        $routeProvider.when('/rodada-edit', {templateUrl: 'partials/rodada/rodada-edit.html', controller: 'RodadaEditCtrl'});
+        $routeProvider.when('/rodada-edit/:id', {templateUrl: 'partials/rodada/rodada-edit.html', controller: 'RodadaEditCtrl'});
+        
+        //partidas
+        $routeProvider.when('/partida-list', {templateUrl: 'partials/partida/partida-list.html', controller: 'PartidaListCtrl'});
+        $routeProvider.when('/partida-edit', {templateUrl: 'partials/partida/partida-edit.html', controller: 'PartidaEditCtrl'});
+        $routeProvider.when('/partida-edit/:id', {templateUrl: 'partials/partida/partida-edit.html', controller: 'PartidaEditCtrl'});
+        
         $routeProvider.otherwise({redirectTo: '/index'});
 
     }]);
-
+    
 
 app.config(function(RestangularProvider) {
     

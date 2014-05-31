@@ -23,7 +23,7 @@
                         <label class="col-lg-3 control-label" for="inputCampeonato">Campeonato</label>
 
                         <div class="col-lg-8">
-                            <select class="form-control" id="inputCampeonato" ng-model="bolao.campeonato" ng-options="campeonato.descricao for campeonato in campeonatos"  title="Campeonato">
+                            <select class="form-control" id="inputCampeonato" ng-model="bolao.campeonato" ng-options="campeonato.descricao for campeonato in campeonatos track by campeonato.idCampeonato"  title="Campeonato">
                                 <option value="">Selecione o Campeonato</option>
                             </select>
                         </div>

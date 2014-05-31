@@ -1,0 +1,52 @@
+
+<div class="container" style="width: 380pt">
+    <div class="panel panel-default ">
+
+        <p ng-repeat="errs in errors" class="alert alert-error"><strong>Erro</strong>: {{ errs}}</p>
+
+        <div class="panel-body">
+            <form class="form-horizontal">
+
+                <fieldset> 
+                    <legend ng-show="rodada.idRodada">Alterar Rodada</legend>
+                    <legend ng-show="!rodada.idRodada">Incluir Rodada</legend>
+                    
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" for="inputCampeonato">Campeonato</label>
+
+                        <div class="col-lg-8">
+                            <select class="form-control" id="inputCampeonato" ng-disabled="rodada.campeonato" ng-model="rodada.campeonato" ng-options="campeonato.descricao for campeonato in campeonatos track by campeonato.idCampeonato"  title="Campeonato">
+                                <option value="">Selecione o Campeonato</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" for="inputNumero">Número da Rodada</label>
+
+                        <div class="col-lg-8">
+                            <input class="form-control" type="text" id="inputNumero" ng-model="rodada.numero"/>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="col-lg-8 col-lg-offset-3">
+                            <button ng-click="save()" class="btn btn-small btn-primary">Salvar</button>
+                            <button ng-show="rodada.idRodada" ng-click="delete(rodada.idRodada)" class="btn btn-small btn-danger">Excluir</button>
+                            <a ng-click="cancel()" class="btn btn-small btn-default">Cancelar</a>
+                            
+                        </div>
+                    </div>
+
+
+                </fieldset>
+            </form>
+
+        </div>    
+    </div>
+</div>
+
+
+
+
+
