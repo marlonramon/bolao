@@ -63,21 +63,31 @@ app.controller('LoginCtrl', ['$scope', '$cookieStore', 'Restangular',
                 $cookieStore.put('sessaoUsuario', $scope.sessaoUsuario);
 
                 Restangular.setDefaultHeaders({'Authorization': $cookieStore.get('sessaoUsuario').token});
-
+                dialog.close();
             });
         };
         
         $scope.isAdm = function () {
-           return $scope.sessaoUsuario.usuario.perfil === "ADMINISTRADOR";  
+           var sessaoUsuario = $scope.sessaoUsuario;
+           
+           if(eval(sessaoUsuario)) {
+               return  sessaoUsuario.usuario.perfil === "ADMINISTRADOR";
+           } else {
+               return false;
+           }
+           
+             
         };
 
         $scope.logout = function() {
-            
-            console.log('h udhasidsuai');
-            
             Restangular.all('usuarios/logout').post($scope.sessaoUsuario.usuario).then(function(data) {
                 $scope.sessaoUsuario = null;
                 $cookieStore.remove('sessaoUsuario');
+                console.log(data.status);
+            }, function(error){
+                $scope.sessaoUsuario = null;
+                $cookieStore.remove('sessaoUsuario');
+                console.log(error.status);
             });
         };
     }]);
