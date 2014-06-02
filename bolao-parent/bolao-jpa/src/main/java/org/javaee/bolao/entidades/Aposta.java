@@ -8,10 +8,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
+import org.javaee.bolao.enuns.EnumResultado;
 
 @Entity
-public class Aposta extends AbstractEntity
-{
+public class Aposta extends AbstractResultado {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -89,4 +89,8 @@ public class Aposta extends AbstractEntity
 	public Long getId() {
 		return getIdAposta();
 	}
+        
+        
+        
+        
 }

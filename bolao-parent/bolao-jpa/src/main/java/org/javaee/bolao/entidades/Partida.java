@@ -16,108 +16,110 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Partida extends AbstractEntity
-{
-	private static final long serialVersionUID = 1L;
+public class Partida extends AbstractResultado {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long idPartida;
-	
-	@NotNull
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date dataPartida;
-	
-	@NotNull
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="idClubeMandante")
-	private Clube clubeMandante;
-	
-	@NotNull
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="idClubeVisitante")
-	private Clube clubeVisitante;
+    private static final long serialVersionUID = 1L;
 
-	@NotNull
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="idRodada")
-	private Rodada rodada;
-	
-	@NotNull
-	private Short placarMandante;
-	
-	@NotNull
-	private Short placarVisitante;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idPartida;
 
-	@OneToMany(mappedBy="partida", fetch=FetchType.LAZY)
-	private Set<Aposta> apostas;
-	
-	public Long getIdPartida() {
-		return idPartida;
-	}
+    @NotNull
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataPartida;
 
-	public void setIdPartida(Long idPartida) {
-		this.idPartida = idPartida;
-	}
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idClubeMandante")
+    private Clube clubeMandante;
 
-	public Date getDataPartida() {
-		return dataPartida;
-	}
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idClubeVisitante")
+    private Clube clubeVisitante;
 
-	public void setDataPartida(Date dataPartida) {
-		this.dataPartida = dataPartida;
-	}
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idRodada")
+    private Rodada rodada;
 
-	public Clube getClubeMandante() {
-		return clubeMandante;
-	}
+    @NotNull
+    private Short placarMandante;
 
-	public void setClubeMandante(Clube clubeMandante) {
-		this.clubeMandante = clubeMandante;
-	}
+    @NotNull
+    private Short placarVisitante;
 
-	public Clube getClubeVisitante() {
-		return clubeVisitante;
-	}
+    @OneToMany(mappedBy = "partida", fetch = FetchType.LAZY)
+    private Set<Aposta> apostas;
 
-	public void setClubeVisitante(Clube clubeVisitante) {
-		this.clubeVisitante = clubeVisitante;
-	}
+    public Long getIdPartida() {
+        return idPartida;
+    }
 
-	public Rodada getRodada() {
-		return rodada;
-	}
+    public void setIdPartida(Long idPartida) {
+        this.idPartida = idPartida;
+    }
 
-	public void setRodada(Rodada rodada) {
-		this.rodada = rodada;
-	}
+    public Date getDataPartida() {
+        return dataPartida;
+    }
 
-	public Short getPlacarMandante() {
-		return placarMandante;
-	}
+    public void setDataPartida(Date dataPartida) {
+        this.dataPartida = dataPartida;
+    }
 
-	public void setPlacarMandante(Short placarMandante) {
-		this.placarMandante = placarMandante;
-	}
+    public Clube getClubeMandante() {
+        return clubeMandante;
+    }
 
-	public Short getPlacarVisitante() {
-		return placarVisitante;
-	}
+    public void setClubeMandante(Clube clubeMandante) {
+        this.clubeMandante = clubeMandante;
+    }
 
-	public void setPlacarVisitante(Short placarVisitante) {
-		this.placarVisitante = placarVisitante;
-	}
+    public Clube getClubeVisitante() {
+        return clubeVisitante;
+    }
 
-	public Set<Aposta> getApostas() {
-		return apostas;
-	}
-	
-	public void setApostas(Set<Aposta> apostas) {
-		this.apostas = apostas;
-	}
-	
-	@Override
-	public Long getId() {
-		return getIdPartida();
-	}
+    public void setClubeVisitante(Clube clubeVisitante) {
+        this.clubeVisitante = clubeVisitante;
+    }
+
+    public Rodada getRodada() {
+        return rodada;
+    }
+
+    public void setRodada(Rodada rodada) {
+        this.rodada = rodada;
+    }
+
+    public Short getPlacarMandante() {
+        return placarMandante;
+    }
+
+    public void setPlacarMandante(Short placarMandante) {
+        this.placarMandante = placarMandante;
+    }
+
+    public Short getPlacarVisitante() {
+        return placarVisitante;
+    }
+
+    public void setPlacarVisitante(Short placarVisitante) {
+        this.placarVisitante = placarVisitante;
+    }
+
+    public Set<Aposta> getApostas() {
+        return apostas;
+    }
+
+    public void setApostas(Set<Aposta> apostas) {
+        this.apostas = apostas;
+    }
+
+    @Override
+    public Long getId() {
+        return getIdPartida();
+    }
+
+    
 }
