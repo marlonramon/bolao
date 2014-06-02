@@ -23,9 +23,9 @@ public class PartidaFacade {
             this.partidaEAO.insert(partida);
         } else {
             this.partidaEAO.update(partida);
-        }/*
-         /
-         */
+        }
+        
+        encerrarPartida(partida);
 
         return partida;
     }
@@ -44,23 +44,26 @@ public class PartidaFacade {
 
     public void encerrarPartida(Partida partida) {
 
-        partida = partidaEAO.find(partida.getIdPartida());
-
-        Set<Aposta> listApostas = partida.getApostas();
-
-        for (Aposta aposta : listApostas) {
-
-            Bolao bolao = aposta.getUsuarioBolao().getBolao();
-
-            // if(aposta.getPlacarMandante().equals(partida.getPlacarMandante()))
-        }
+    	partida = partidaEAO.find(partida.getIdPartida());
+    	
+    	if(partida.isEncerrada()){
+	
+	        Set<Aposta> listApostas = partida.getApostas();
+	
+	        for (Aposta aposta : listApostas) {
+	
+	            Bolao bolao = aposta.getUsuarioBolao().getBolao();
+	
+	            // if(aposta.getPlacarMandante().equals(partida.getPlacarMandante()))
+	        }
+    	}
 
     }
 
     private Integer getPontuacaoAposta(Aposta aposta, Partida partida, Bolao bolao) {
         Integer totalAposta = 0;
         
-        if (isApostaCerteira(partida, aposta)) {
+        if (isPlacarCerteiro(partida, aposta)) {
             totalAposta += bolao.getPontosPlacarExato();
         } else if(isResultadoCerteiro(partida, aposta)) {
             totalAposta += bolao.getPontosResultado();
@@ -69,12 +72,12 @@ public class PartidaFacade {
         return 0;
     }
 
-    private boolean isApostaCerteira(Partida partida, Aposta aposta) {
-        return partida.getPlacarMandante().equals(aposta.getPlacarMandante()) && partida.getPlacarVisitante().equals(aposta.getPlacarVisitante());
+    private boolean isPlacarCerteiro(Partida partida, Aposta aposta) {
+        return partida.getPlacar().isIgual(aposta.getPlacar());
     }
     
     private boolean isResultadoCerteiro(Partida partida, Aposta aposta) {
-        return partida.getResultado().equals(aposta.getResultado());
+        return partida.getPlacar().getResultado().equals(aposta.getPlacar().getResultado());
     }
     
 

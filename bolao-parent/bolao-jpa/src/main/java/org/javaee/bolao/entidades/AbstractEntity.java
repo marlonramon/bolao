@@ -1,15 +1,12 @@
 package org.javaee.bolao.entidades;
 
 
-import java.io.Serializable;
 
-public abstract class AbstractEntity implements Serializable {
+public abstract class AbstractEntity implements IEntity {
 	private static final long serialVersionUID = 1L;
 
 	public AbstractEntity() {
 	}
-
-	public abstract Long getId();
 
 	@Override
 	public boolean equals(Object obj) {
@@ -21,7 +18,7 @@ public abstract class AbstractEntity implements Serializable {
 			return false;
 		}
 
-		AbstractEntity other = (AbstractEntity) obj;
+		IEntity other = (IEntity) obj;
 
 		Long myId = getId();
 		Long otherId = other.getId();

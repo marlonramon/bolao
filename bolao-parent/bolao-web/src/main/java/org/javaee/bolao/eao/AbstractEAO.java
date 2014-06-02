@@ -26,11 +26,11 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
-import org.javaee.bolao.entidades.AbstractEntity;
+import org.javaee.bolao.entidades.IEntity;
 import org.javaee.bolao.entidades.SessaoUsuario;
 import org.javaee.rest.common.XmlUtil;
 
-public abstract class AbstractEAO<E extends AbstractEntity>
+public abstract class AbstractEAO<E extends IEntity>
 {
 	protected Logger logger = Logger.getLogger(getClass().getName());
 

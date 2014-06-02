@@ -15,6 +15,7 @@
     <class>org.javaee.bolao.entidades.Rodada</class>
     <class>org.javaee.bolao.entidades.Partida</class>
     <class>org.javaee.bolao.entidades.Aposta</class>
+    <class>org.javaee.bolao.entidades.Placar</class>
         
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     

@@ -1,5 +1,6 @@
 package org.javaee.bolao.entidades;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -8,21 +9,18 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
-import org.javaee.bolao.enuns.EnumResultado;
 
 @Entity
-public class Aposta extends AbstractResultado {
+public class Aposta extends AbstractEntity {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long idAposta;
 	
+	@Embedded
 	@NotNull
-	private Short placarMandante;
-	
-	@NotNull
-	private Short placarVisitante;
+	private Placar placar;
 	
 	@NotNull
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -43,22 +41,6 @@ public class Aposta extends AbstractResultado {
 
 	public void setIdAposta(Long idAposta) {
 		this.idAposta = idAposta;
-	}
-
-	public Short getPlacarMandante() {
-		return placarMandante;
-	}
-
-	public void setPlacarMandante(Short placarMandante) {
-		this.placarMandante = placarMandante;
-	}
-
-	public Short getPlacarVisitante() {
-		return placarVisitante;
-	}
-
-	public void setPlacarVisitante(Short placarVisitante) {
-		this.placarVisitante = placarVisitante;
 	}
 
 	public Partida getPartida() {
@@ -85,12 +67,17 @@ public class Aposta extends AbstractResultado {
 		this.usuarioBolao = usuarioBolao;
 	}
 	
+	public Placar getPlacar() {
+		return placar;
+	}
+	
+	public void setPlacar(Placar placar) {
+		this.placar = placar;
+	}
+	
 	@Override
 	public Long getId() {
 		return getIdAposta();
 	}
-        
-        
-        
         
 }

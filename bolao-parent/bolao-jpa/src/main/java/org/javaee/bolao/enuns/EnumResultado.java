@@ -9,7 +9,9 @@ package org.javaee.bolao.enuns;
 public enum EnumResultado {
     
     MANDANTE,
-    VISITANTE,
-    EMPATE;
+    VISITANTE,    
+    EMPATE,
+    NAO_DEFINIDO;
+    
     
 }
