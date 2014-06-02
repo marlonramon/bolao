@@ -1,8 +1,10 @@
 package org.javaee.bolao.entidades;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -16,8 +18,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Partida extends AbstractResultado {
-
+public class Partida extends AbstractEntity {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -43,14 +44,11 @@ public class Partida extends AbstractResultado {
     @JoinColumn(name = "idRodada")
     private Rodada rodada;
 
-    @NotNull
-    private Short placarMandante;
-
-    @NotNull
-    private Short placarVisitante;
+    @Embedded
+    private Placar placar;
 
     @OneToMany(mappedBy = "partida", fetch = FetchType.LAZY)
-    private Set<Aposta> apostas;
+    private Set<Aposta> apostas = new HashSet<>();
 
     public Long getIdPartida() {
         return idPartida;
@@ -92,28 +90,24 @@ public class Partida extends AbstractResultado {
         this.rodada = rodada;
     }
 
-    public Short getPlacarMandante() {
-        return placarMandante;
-    }
-
-    public void setPlacarMandante(Short placarMandante) {
-        this.placarMandante = placarMandante;
-    }
-
-    public Short getPlacarVisitante() {
-        return placarVisitante;
-    }
-
-    public void setPlacarVisitante(Short placarVisitante) {
-        this.placarVisitante = placarVisitante;
-    }
-
     public Set<Aposta> getApostas() {
         return apostas;
     }
 
     public void setApostas(Set<Aposta> apostas) {
         this.apostas = apostas;
+    }
+    
+    public Placar getPlacar() {
+		return placar;
+	}
+    
+    public void setPlacar(Placar placar) {
+		this.placar = placar;
+	}
+    
+    public boolean isEncerrada(){
+    	return getPlacar() != null && getPlacar().isResultadoDefinido();
     }
 
     @Override

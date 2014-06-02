@@ -15,7 +15,7 @@
                         <label class="col-lg-3 control-label" for="inputCampeonato">Campeonato</label>
 
                         <div class="col-lg-8">
-                            <select class="form-control" id="inputCampeonato" ng-model="campeonato" ng-options="campeonato.descricao for campeonato in campeonatos track by campeonato.idCampeonato"  title="Campeonato">
+                            <select required="true" class="form-control" id="inputCampeonato" ng-model="campeonato" ng-options="campeonato.descricao for campeonato in campeonatos track by campeonato.idCampeonato"  title="Campeonato">
                                 <option value="">Selecione o Campeonato</option>
                             </select>
                         </div>
@@ -25,7 +25,7 @@
                         <label class="col-lg-3 control-label" for="inputRodada">Rodada</label>
 
                         <div class="col-lg-8">
-                            <select class="form-control" id="inputRodada" ng-model="partida.rodada" ng-options="rodada.numero for rodada in rodadas track by rodada.idRodada"  title="Rodada">
+                            <select required="true" class="form-control" id="inputRodada" ng-model="partida.rodada" ng-options="rodada.numero for rodada in rodadas track by rodada.idRodada"  title="Rodada">
                                 <option value="">Selecione a Rodada</option>
                             </select>
                         </div>
@@ -35,15 +35,15 @@
                         <label class="col-lg-3 control-label" for="inputDataPartida">Data</label>
 
                         <div class="col-lg-8">
-                            <input class="form-control" type="text" id="inputDataPartida" ng-model="partida.dataPartida"/>
+                            <input required="true" class="form-control" type="datetime-local" id="inputDataPartida" ng-model="partida.dataPartida"/>
                         </div>
                     </div>
                     
                     <div class="form-group">
-                        <label class="col-lg-3 control-label" for="inputClubeMandante">Clube Mandate</label>
+                        <label class="col-lg-3 control-label" for="inputClubeMandante">Clube Mandante</label>
 
                         <div class="col-lg-8">
-                            <select class="form-control" id="inputClubeMandante" ng-model="partida.clubeMandante" ng-options="clube.nome for clube in clubes track by clube.idClube"  title="Clube Mandante">
+                            <select required="true" class="form-control" id="inputClubeMandante" ng-model="partida.clubeMandante" ng-options="clube.nome for clube in clubes track by clube.idClube"  title="Clube Mandante">
                                 <option value="">Selecione o Clube Mandante</option>
                             </select>
                         </div>
@@ -62,16 +62,16 @@
                     <div class="form-group">
                         <label class="col-lg-3 control-label" for="inputPlacarMandante">Placar Mandante</label>
 
-                        <div class="col-lg-2">
-                            <input class="form-control" type="text" id="inputPlacarMandante" ng-model="partida.placarMandante"/>
+                        <div class="col-lg-3">
+                            <input class="form-control" type="number" ng- min="0"  max="99" id="inputPlacarMandante" ng-model="partida.placarMandante"/>
                         </div>
                     </div>
                     
                     <div class="form-group">
                         <label class="col-lg-3 control-label" for="inputPlacarVisitante">Placar Visitante</label>
 
-                        <div class="col-lg-2">
-                            <input class="form-control" type="text" id="inputPlacarVisitante" ng-model="partida.placarVisitante"/>
+                        <div class="col-lg-3">
+                            <input class="form-control" type="number" min="0"  max="99" id="inputPlacarVisitante" ng-model="partida.placarVisitante"/>
                         </div>
                     </div>
                     

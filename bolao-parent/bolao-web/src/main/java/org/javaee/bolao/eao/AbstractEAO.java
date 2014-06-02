@@ -1,5 +1,6 @@
 package org.javaee.bolao.eao;
 
+import java.text.MessageFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -26,11 +28,11 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
-import org.javaee.bolao.entidades.AbstractEntity;
+import org.javaee.bolao.entidades.IEntity;
 import org.javaee.bolao.entidades.SessaoUsuario;
 import org.javaee.rest.common.XmlUtil;
 
-public abstract class AbstractEAO<E extends AbstractEntity>
+public abstract class AbstractEAO<E extends IEntity>
 {
 	protected Logger logger = Logger.getLogger(getClass().getName());
 
@@ -97,14 +99,21 @@ public abstract class AbstractEAO<E extends AbstractEntity>
 	public E find(Long id) {
 		logger.log(Level.INFO, "Find {0} Id: {1}", new Object[]{entityClass.getSimpleName(), id});
 		if (id == null) {
-			return null;
+			throw new IllegalArgumentException("ID não pode ser NULL");
 		}
-		return getEntityManager().find(entityClass, id);
+		
+		E entity = getEntityManager().find(entityClass, id);
+		
+		if(entity == null){
+			throw new EntityNotFoundException(MessageFormat.format("Não foi possível localizar a entidade {0} para o ID {1}", entityClass.getSimpleName(), id));
+		}
+		
+		return entity;
 	}
 
 	public E find(E entity) {
-		if (entity == null || entity.getId() == null) {
-			return null;
+		if (entity == null) {
+			throw new IllegalArgumentException("Entidade não pode ser NULL");
 		}
 		return find(entity.getId());
 	}

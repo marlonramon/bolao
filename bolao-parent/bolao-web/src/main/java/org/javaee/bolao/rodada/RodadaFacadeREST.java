@@ -13,6 +13,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import org.javaee.bolao.entidades.Rodada;
+import org.javaee.bolao.vo.RankingRodadaVO;
 
 @Stateless
 @Path("rodadas")
@@ -47,4 +48,12 @@ public class RodadaFacadeREST
   public List<Rodada> findAll() {
     return this.rodadaFacade.findAll();
   }
+  
+  @GET
+  @Path("{id}/ranking/{limite}")
+  @Produces({"application/xml", "application/json"})
+  public List<RankingRodadaVO> ranking(@PathParam("id") Long id, @PathParam("limite") Integer limite) {
+    return this.rodadaFacade.ranking(id, limite);
+  }
+  
 }
