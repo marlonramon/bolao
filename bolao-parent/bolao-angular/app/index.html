@@ -86,6 +86,9 @@
                         <h1 class="text-center">Entrar</h1>
                     </div>
                     <div class="modal-body">
+                        
+                        <p ng-repeat="errs in errors" class="alert alert-error"><strong>Erro</strong>: {{ errs}}</p>
+                        
                         <form class="form center-block">
                             <div class="form-group">
                                 <input ng-model="usuario.email" class="form-control input-lg" placeholder="Email" type="text">
@@ -97,7 +100,7 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button ng-click="login()" data-dismiss="modal" class="btn btn-primary btn-lg btn-block">Entrar</button>                                
+                        <button ng-click="login()" class="btn btn-primary btn-lg btn-block">Entrar</button>                                
                     </div>
                 </div>
             </div>

@@ -69,8 +69,18 @@ app.config(function(RestangularProvider) {
 
     RestangularProvider.setBaseUrl(baseUrl);
 
-    RestangularProvider.setErrorInterceptor(function(response) {
-        //stopLoading();
+    RestangularProvider.setErrorInterceptor(function(response,$scope) {
+        console.log('deu erro: ' + response.data);
+        if(eval(response.message)) {
+            $scope.errors = response.data;
+        } else {
+            $scope.errors = {"errors": "Houve um erro"};
+        }
+        
+        
+        
+        
+        
         //displayError();
     });
 
