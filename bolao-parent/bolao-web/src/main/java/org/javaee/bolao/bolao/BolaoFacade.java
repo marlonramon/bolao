@@ -7,6 +7,7 @@ import javax.inject.Inject;
 
 import org.javaee.bolao.eao.BolaoEAO;
 import org.javaee.bolao.entidades.Bolao;
+import org.javaee.bolao.vo.RankingBolaoVO;
 
 @ManagedBean
 public class BolaoFacade
@@ -19,9 +20,9 @@ public class BolaoFacade
   {
 
     if (!bolao.hasId())
-      this.bolaoEAO.insert(bolao);
+      bolaoEAO.insert(bolao);
     else {
-      this.bolaoEAO.update(bolao);
+      bolaoEAO.update(bolao);
     }
 
     return bolao;
@@ -30,14 +31,20 @@ public class BolaoFacade
   
   public void delete(Long id)
   {
-    this.bolaoEAO.delete(id);
+    bolaoEAO.delete(id);
   }
 
   public Bolao find(Long id) {
-    return this.bolaoEAO.find(id);
+    return bolaoEAO.find(id);
   }
 
   public List<Bolao> findAll() {
-    return this.bolaoEAO.findAll();
-  }  
+    return bolaoEAO.findAll();
+  }
+
+
+public List<RankingBolaoVO> ranking(Long id, Integer limite) {
+	Bolao bolao = bolaoEAO.find(id);
+	return bolaoEAO.ranking(bolao, limite);
+}  
 }

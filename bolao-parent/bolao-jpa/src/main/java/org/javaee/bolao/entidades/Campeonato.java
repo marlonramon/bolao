@@ -1,9 +1,13 @@
 package org.javaee.bolao.entidades;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -22,6 +26,9 @@ public class Campeonato extends AbstractEntity
 	@Size(max=80)
 	private String descricao;
 
+	@OneToMany(mappedBy="campeonato")
+	private Set<Rodada> rodadas = new HashSet<>();
+	
 	public Long getIdCampeonato() {
 		return idCampeonato;
 	}
@@ -36,6 +43,14 @@ public class Campeonato extends AbstractEntity
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+	
+	public Set<Rodada> getRodadas() {
+		return rodadas;
+	}
+	
+	public void setRodadas(Set<Rodada> rodadas) {
+		this.rodadas = rodadas;
 	}
 	
 	@Override

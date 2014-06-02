@@ -13,38 +13,44 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import org.javaee.bolao.entidades.Bolao;
+import org.javaee.bolao.vo.RankingBolaoVO;
 
 @Stateless
 @Path("boloes")
-public class BolaoFacadeREST
-{
+public class BolaoFacadeREST {
 
-  @Inject
-  private BolaoFacade bolaoFacade;
+	@Inject
+	private BolaoFacade bolaoFacade;
 
-  @POST
-  @Consumes({"application/xml", "application/json"})
-  public Bolao insertOrUpdate(Bolao bolao)
-  {
-    return this.bolaoFacade.insertOrUpdate(bolao);
-  }
+	@POST
+	@Consumes({ "application/xml", "application/json" })
+	public Bolao insertOrUpdate(Bolao bolao) {
+		return bolaoFacade.insertOrUpdate(bolao);
+	}
 
-  @DELETE
-  @Path("{id}")
-  public void delete(@PathParam("id") Long id) {
-    this.bolaoFacade.delete(id);
-  }
+	@DELETE
+	@Path("{id}")
+	public void delete(@PathParam("id") Long id) {
+		bolaoFacade.delete(id);
+	}
 
-  @GET
-  @Path("{id}")
-  @Produces({"application/xml", "application/json"})
-  public Bolao find(@PathParam("id") Long id) {
-    return this.bolaoFacade.find(id);
-  }
+	@GET
+	@Path("{id}")
+	@Produces({ "application/xml", "application/json" })
+	public Bolao find(@PathParam("id") Long id) {
+		return bolaoFacade.find(id);
+	}
 
-  @GET
-  @Produces({"application/xml", "application/json"})
-  public List<Bolao> findAll() {
-    return this.bolaoFacade.findAll();
-  }
+	@GET
+	@Produces({ "application/xml", "application/json" })
+	public List<Bolao> findAll() {
+		return bolaoFacade.findAll();
+	}
+
+	@GET
+	@Path("{id}/ranking/{limite}")
+	@Produces({ "application/xml", "application/json" })
+	public List<RankingBolaoVO> ranking(@PathParam("id") Long id, @PathParam("limite") Integer limite) {
+		return bolaoFacade.ranking(id, limite);
+	}
 }
