@@ -5,7 +5,7 @@
         <p ng-repeat="errs in errors" class="alert alert-error"><strong>Erro</strong>: {{ errs}}</p>
 
         <div class="panel-body">
-            <form class="form-horizontal">
+            <form class="form-horizontal" id="formUsuario">
 
                 <fieldset> 
                     <legend ng-show="usuario.id">Alterar Usuário</legend>
@@ -15,7 +15,7 @@
                         <label class="col-lg-3 control-label" for="inputEmail">E-Mail:</label>
 
                         <div class="col-lg-8">
-                            <input class="form-control" type="text" id="inputEmail" ng-model="usuario.email"/>
+                            <input class="form-control" type="email" id="inputEmail" ng-model="usuario.email" required="true"/>
                         </div>
                     </div>
                     
@@ -23,7 +23,7 @@
                         <label class="col-lg-3 control-label" for="inputName">Nome:</label>
 
                         <div class="col-lg-8">
-                            <input class="form-control" type="text" id="inputName" ng-model="usuario.nome"/>
+                            <input class="form-control" type="text" id="inputName" ng-model="usuario.nome" required="true"/>
                         </div>
                     </div>
 
@@ -32,7 +32,7 @@
                         <label class="col-lg-3 control-label" for="inputPassword">Senha:</label>
 
                         <div class="col-lg-8">
-                            <input class="form-control" type="password" id="inputPassword" ng-model="usuario.senha"/>
+                            <input class="form-control" type="password" id="inputPassword" ng-model="usuario.senha" required="true"/>
                         </div>
                     </div>
                     
@@ -40,7 +40,7 @@
                         <label class="col-lg-3 control-label" for="inputConfPassword">Confirmação:</label>
 
                         <div class="col-lg-8">
-                            <input class="form-control" type="password" id="inputConfPassword" ng-model="usuario.senha"/>
+                            <input class="form-control" type="password" id="inputConfPassword" ng-model="confirmarSenha" match="usuario.senha" required="true"/>
                         </div>
                     </div>
 
