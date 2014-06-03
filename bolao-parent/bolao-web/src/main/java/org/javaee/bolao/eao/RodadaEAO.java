@@ -18,6 +18,8 @@ import javax.persistence.criteria.SetJoin;
 
 import org.javaee.bolao.entidades.Aposta;
 import org.javaee.bolao.entidades.Aposta_;
+import org.javaee.bolao.entidades.Campeonato;
+import org.javaee.bolao.entidades.Campeonato_;
 import org.javaee.bolao.entidades.Partida;
 import org.javaee.bolao.entidades.Partida_;
 import org.javaee.bolao.entidades.Placar;
@@ -93,6 +95,40 @@ public class RodadaEAO extends AbstractEAO<Rodada> {
 		
 		return typedQuery.getResultList();
 		
+	}
+	
+	public Rodada findByCampeonatoAndNumero(Campeonato campeonato, Short numero){
+		CriteriaQuery<Rodada> criteriaQuery = super.createCriteriaQuery();
+		
+		Root<Rodada> from = criteriaQuery.from(Rodada.class);
+		
+		Join<Rodada, Campeonato> joinCampeonato = from.join(Rodada_.campeonato);
+		
+		Predicate equalCampeonato = getCriteriaBuilder().equal(joinCampeonato, campeonato);
+		
+		Predicate equalNumero = getCriteriaBuilder().equal(from.get(Rodada_.numero), numero);
+		
+		criteriaQuery.where(equalCampeonato, equalNumero);
+		
+		return super.getSingleResult(criteriaQuery);
+		
+	}
+
+	public List<Rodada> findByCampeonato(Long idCampeonato) {
+		
+		CriteriaQuery<Rodada> criteriaQuery = super.createCriteriaQuery();
+		
+		Root<Rodada> from = criteriaQuery.from(Rodada.class);
+		
+		Join<Rodada, Campeonato> joinCampeonato = from.join(Rodada_.campeonato);
+		
+		Predicate equalIdCampeonato = getCriteriaBuilder().equal(joinCampeonato.get(Campeonato_.idCampeonato), idCampeonato);
+		
+		criteriaQuery.where(equalIdCampeonato);
+		
+		criteriaQuery.orderBy(getCriteriaBuilder().asc(from.get(Rodada_.numero)));
+		
+		return super.createQuery(criteriaQuery).getResultList();
 	}
 	
 }

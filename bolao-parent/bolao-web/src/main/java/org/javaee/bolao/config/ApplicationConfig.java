@@ -33,7 +33,7 @@ public class ApplicationConfig extends Application {
     	
         resources.add(UsuarioFacadeREST.class);
         resources.add(CrossOriginResourceSharingFilter.class);
-        resources.add(SecurityInterceptor.class);
+//        resources.add(SecurityInterceptor.class);
         resources.add(CampeonatoFacadeREST.class);
         resources.add(BolaoFacadeREST.class);        
         resources.add(PartidaFacadeREST.class);

@@ -17,7 +17,6 @@ import javax.ws.rs.core.Response;
 import org.javaee.bolao.entidades.SessaoUsuario;
 import org.javaee.bolao.entidades.Usuario;
 
-@Stateless
 @Path("usuarios")
 public class UsuarioFacadeREST
 {

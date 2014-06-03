@@ -3,7 +3,7 @@ package org.javaee.bolao.usuario;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.ManagedBean;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
@@ -17,7 +17,7 @@ import org.javaee.bolao.exception.ErrorResponse;
 import org.javaee.bolao.exception.NaoAutorizadoException;
 import org.javaee.rest.common.Encryptor;
 
-@ManagedBean
+@Stateless
 public class UsuarioFacade
 {
 

@@ -6,10 +6,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.javaee.bolao.vo.ClubeVO;
 
 @Entity
+@XmlRootElement
 public class Clube extends AbstractEntity
 {
 	private static final long serialVersionUID = 1L;
