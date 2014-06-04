@@ -16,8 +16,8 @@ var app = angular.module('bolao', [
     'bolao.bolaoController',
     'bolao.clubeController',
     'bolao.rodadaController',
-    'bolao.partidaController'
-
+    'bolao.partidaController',
+    'bolao.rankingController'
 ]);
 
 
@@ -53,6 +53,13 @@ app.config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/partida-edit', {templateUrl: 'partials/partida/partida-edit.html', controller: 'PartidaEditCtrl'});
         $routeProvider.when('/partida-edit/:id', {templateUrl: 'partials/partida/partida-edit.html', controller: 'PartidaEditCtrl'});
         
+        //Aposta
+        $routeProvider.when('/aposta-list', {templateUrl: 'partials/aposta/aposta-list.html'});
+        
+        
+        $routeProvider.when('/ranking-bolao/:id', {templateUrl: 'partials/ranking/ranking-bolao.html', controller: 'RankingBolaoCtrl'});
+        $routeProvider.when('/ranking-rodada/:id', {templateUrl: 'partials/ranking/ranking-rodada.html', controller: 'RankingRodadaCtrl'});
+        
         $routeProvider.otherwise({redirectTo: '/index'});
 
     }]);
@@ -67,17 +74,31 @@ app.config(function(RestangularProvider) {
     
 //    RestangularProvider.setDefaultHeaders({'Authorization': '123456789'});
 
-    RestangularProvider.setBaseUrl(baseUrl);  
-});
+    RestangularProvider.setBaseUrl(baseUrl);
 
-app.config(function($provide){
- 
-    $provide.decorator("$exceptionHandler", function($delegate, $injector){
-        return function(exception, cause){
-            var $rootScope = $injector.get("$rootScope");
-            $rootScope.addError({message:"Exception", reason:exception});
-            $delegate(exception, cause);
-        };
+    RestangularProvider.setErrorInterceptor(function(response,$scope) {
+        console.log('deu erro: ' + response.data);
+        if(eval(response.message)) {
+            $scope.errors = response.data;
+        } else {
+            $scope.errors = {"errors": "Houve um erro"};
+        }
+        
+        
+        
+        
+        
+        //displayError();
     });
- 
+
+    RestangularProvider.setResponseInterceptor(function(data, operation, what) {
+        //stopLoading();
+        return data;
+    });
+
+    RestangularProvider.setRequestInterceptor(function(elem) {
+        //startLoading();
+        return elem;
+    });
+
 });

@@ -10,10 +10,14 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Campeonato extends AbstractEntity
 {
 	private static final long serialVersionUID = 1L;
@@ -27,6 +31,7 @@ public class Campeonato extends AbstractEntity
 	private String descricao;
 
 	@OneToMany(mappedBy="campeonato")
+	@XmlTransient
 	private Set<Rodada> rodadas = new HashSet<>();
 	
 	public Long getIdCampeonato() {

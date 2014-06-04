@@ -9,8 +9,12 @@ app.controller('BolaoListCtrl', ['$scope', '$location', 'Restangular',
             $scope.boloes = boloes;
         });
 
-        $scope.edit = function(idUsuario) {
-            $location.path('/bolao-edit/' + idUsuario);
+        $scope.edit = function(id) {
+            $location.path('/bolao-edit/' + id);
+        };
+
+        $scope.ranking = function(id) {
+            $location.path('/ranking-bolao/' + id);
         };
 
         $scope.new = function() {

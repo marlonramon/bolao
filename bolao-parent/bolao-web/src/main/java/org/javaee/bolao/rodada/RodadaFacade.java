@@ -61,10 +61,8 @@ public class RodadaFacade {
 		return rodadaEAO.findAll();
 	}
 
-	public List<RankingRodadaVO> ranking(Long id, int limite) {
-		
+	public RankingRodadaVO ranking(Long id, int limite) {
 		Rodada rodada = find(id);
-		
 		return rodadaEAO.ranking(rodada, limite);
 	}
 }

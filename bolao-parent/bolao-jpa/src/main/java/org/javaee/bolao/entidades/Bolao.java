@@ -1,16 +1,17 @@
 package org.javaee.bolao.entidades;
 
 import java.math.BigDecimal;
+import java.util.Set;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 public class Bolao extends AbstractEntity
@@ -41,9 +42,12 @@ public class Bolao extends AbstractEntity
 	private Short pontosPlacar;
 	
 	@NotNull
-	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="idCampeonato")
 	private Campeonato campeonato;
+	
+	@OneToMany(mappedBy="bolao")
+	@XmlTransient
+	private Set<UsuarioBolao> usuariosBolao;
 	
 	public Long getIdBolao() {
 		return idBolao;
@@ -107,6 +111,14 @@ public class Bolao extends AbstractEntity
 	
 	public void setCampeonato(Campeonato campeonato) {
 		this.campeonato = campeonato;
+	}
+	
+	public Set<UsuarioBolao> getUsuariosBolao() {
+		return usuariosBolao;
+	}
+	
+	public void setUsuariosBolao(Set<UsuarioBolao> usuariosBolao) {
+		this.usuariosBolao = usuariosBolao;
 	}
 	
 	@Override

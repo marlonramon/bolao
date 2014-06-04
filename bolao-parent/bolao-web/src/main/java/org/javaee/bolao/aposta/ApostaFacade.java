@@ -1,19 +1,23 @@
 package org.javaee.bolao.aposta;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.ManagedBean;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import org.javaee.bolao.eao.ApostaEAO;
 import org.javaee.bolao.eao.PartidaEAO;
+import org.javaee.bolao.eao.RodadaEAO;
+import org.javaee.bolao.eao.UsuarioBolaoEAO;
+import org.javaee.bolao.entidades.Aposta;
 import org.javaee.bolao.entidades.Partida;
+import org.javaee.bolao.entidades.Placar;
 import org.javaee.bolao.entidades.Rodada;
 import org.javaee.bolao.entidades.UsuarioBolao;
 import org.javaee.bolao.vo.ApostaVO;
 
-@ManagedBean
+@Stateless
 public class ApostaFacade {
 	@Inject
 	private ApostaEAO apostaEAO;
@@ -21,35 +25,49 @@ public class ApostaFacade {
 	@Inject
 	private PartidaEAO partidaEAO;
 
-	public List<ApostaVO> findApostas(UsuarioBolao usuario, Rodada rodada) {
-		List<Partida> partidas = partidaEAO.findPartida(usuario, rodada);
-		return createApostaVOList(partidas);
+	@Inject
+	private UsuarioBolaoEAO usuarioBolaoEAO;
+	
+	@Inject
+	private RodadaEAO rodadaEAO;
+	
+	public List<Aposta> findApostas(Long idUsuarioBolao, Long idRodada) {
+		
+		Rodada rodada = rodadaEAO.find(idRodada);
+		
+		UsuarioBolao usuarioBolao = usuarioBolaoEAO.find(idUsuarioBolao);
+		
+		return findApostas(usuarioBolao, rodada);
+	}
+	
+	public List<Aposta> findApostas(UsuarioBolao usuarioBolao, Rodada rodada) {
+		List<Partida> partidas = partidaEAO.findByRodada(rodada);
+		return createApostaList(usuarioBolao, partidas);
 	}
 
-	private List<ApostaVO> createApostaVOList(List<Partida> partidas) {
-		List<ApostaVO> result = Collections.emptyList();
+	private List<Aposta> createApostaList(UsuarioBolao usuarioBolao, List<Partida> partidas) {
+		List<Aposta> apostas = new ArrayList<>();
 
 		for (Partida partida : partidas) {
-			result.add(createApostaVO(partida));
+			Aposta aposta = apostaEAO.findByPartida(usuarioBolao, partida);
+			
+			if(aposta == null){
+				aposta = createAposta(partida, usuarioBolao);
+			}
+			
+			apostas.add(aposta);
 		}
 
-		return result;
+		return apostas;
 	}
 
-	private ApostaVO createApostaVO(Partida partida) {
-		ApostaVO apostaVO = new ApostaVO();
-
+	private Aposta createAposta(Partida partida, UsuarioBolao usuarioBolao) {
+		Aposta aposta = new Aposta();
+		aposta.setPartida(partida);
+		aposta.setPlacar(new Placar());
+		aposta.setUsuarioBolao(usuarioBolao);
 		
-		
-		
-	//	apostaVO.setIdAposta();
-	//	apostaVO.setPartida(partida);
-	//	apostaVO.setPlacarMandante(placarMandante);
-	//	apostaVO.setPlacarVistante(placarVistante);
-	//	apostaVO.setPontuacao(pontuacao);
-	//  glassfish 4.0.1 night build.
-		
-		return apostaVO;
+		return aposta;
 	}
 
 	public List<ApostaVO> persitApostas(List<ApostaVO> apostaList) {

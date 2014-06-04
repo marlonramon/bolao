@@ -1,25 +1,15 @@
 package org.javaee.bolao.vo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RankingBolaoVO {
 
 	private Long idBolao;
 
-	private Long idUsuario;
-
-	private String nomeUsuario;
-
-	private Integer pontuacao;
-
-	public RankingBolaoVO() {
-	}
-
-	public RankingBolaoVO(Long idBolao, Long idUsuario, String nomeUsuario, Integer pontuacao) {
-		super();
-		this.idBolao = idBolao;
-		this.idUsuario = idUsuario;
-		this.nomeUsuario = nomeUsuario;
-		this.pontuacao = pontuacao;
-	}
+	private String descricao;
+	
+	private List<RankingUsuarioVO> usuarios = new ArrayList<RankingUsuarioVO>();
 
 	public Long getIdBolao() {
 		return idBolao;
@@ -29,28 +19,27 @@ public class RankingBolaoVO {
 		this.idBolao = idBolao;
 	}
 
-	public Long getIdUsuario() {
-		return idUsuario;
+	public String getDescricao() {
+		return descricao;
 	}
 
-	public void setIdUsuario(Long idUsuario) {
-		this.idUsuario = idUsuario;
+	public void setDescricao(String descricaoBolao) {
+		this.descricao = descricaoBolao;
 	}
 
-	public String getNomeUsuario() {
-		return nomeUsuario;
+	public List<RankingUsuarioVO> getUsuarios() {
+		return usuarios;
 	}
 
-	public void setNomeUsuario(String nomeUsuario) {
-		this.nomeUsuario = nomeUsuario;
+	public void setUsuarios(List<RankingUsuarioVO> rankingUsuarios) {
+		this.usuarios = rankingUsuarios;
 	}
-
-	public Integer getPontuacao() {
-		return pontuacao;
+	
+	public void addUsuario(RankingUsuarioVO rankingUsuarioVO){
+		usuarios.add(rankingUsuarioVO);
 	}
-
-	public void setPontuacao(Integer pontuacao) {
-		this.pontuacao = pontuacao;
-	}
+	
+	
+	
 
 }
