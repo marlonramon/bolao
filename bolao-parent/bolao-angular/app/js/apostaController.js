@@ -1,24 +1,27 @@
 'use strict';
 
-var app = angular.module('bolao.bolaoController', []);
+var app = angular.module('bolao.apostaController', []);
 
-app.controller('BolaoListCtrl', ['$scope', '$location', 'Restangular',
-    function($scope, $location, Restangular) {
+app.controller('ApostaListCtrl', ['$scope', '$cookieStore', 'Restangular', 'usuarioService',
+    function($scope, $cookieStore, Restangular, usuarioService) {
 
-        $scope.list = function() {
+        // $scope.list = function() {
+
+        var sessaoUsuario = $cookieStore.get('sessaoUsuario');
+
+        if (eval(sessaoUsuario)) {
+
+            var idUsuarioBolao = usuarioService.getBolaoSelecionado();
             
-            if (eval($scope.sessaoUsuario)) {
+            Restangular.one('apostas').one('usuariobolao', idUsuarioBolao.idUsuarioBolao).one("rodada", 1).get().then(function(boloesUsuario) {
+//                        $scope.boloesUsuario = boloesUsuario;
+//                        $scope.setBolaoSelecionado(boloesUsuario[0]);
 
-                var idUsuario = $scope.sessaoUsuario.usuario.idUsuario;
-                
-                if (idUsuario) {
-                    Restangular.one('usuarios', idUsuario).one('boloes').get().then(function(boloesUsuario) {
-                        $scope.boloesUsuario = boloesUsuario;
-                        $scope.setBolaoSelecionado(boloesUsuario[0]);
-                    });
-                }
-            }
+                console.log('deu certo');
+            });
 
-        };
+        }
+
+        //  };
 
     }]);
