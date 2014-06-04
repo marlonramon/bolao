@@ -46,7 +46,7 @@
 
                     <ul class="nav navbar-nav">
                         <li class="dropdown" ng-show="isAdm()">
-                            <a id="menuAdm" class="dropdown-toggle" data-toggle="dropdown">
+                            <a id="menuAdm" href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 Administrador
                                 <span class="caret"></span>
                             </a>
@@ -76,13 +76,20 @@
             </div>            
         </div>
 
+        <p ng-repeat="errs in errors" class="alert alert-error"><strong>Erro</strong>: {{ errs}}</p>
+        
         <div id="content" ng-view class="container-fluid" style="padding: 60px" >
+            
+            
 
 
         </div>
 
         <!--login modal-->
         <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            
+            <p ng-repeat="errs in errors" class="alert alert-error"><strong>Erro</strong>: {{ errs}}</p>
+            
             <div class="modal-dialog" style="width: 300pt">
                 <div class="modal-content">
                     <div class="modal-header">

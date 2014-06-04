@@ -62,8 +62,9 @@ app.controller('LoginCtrl', ['$scope', '$cookieStore', 'Restangular',
                 $scope.sessaoUsuario = sessaoUsuario;
                 $cookieStore.put('sessaoUsuario', $scope.sessaoUsuario);
 
-                Restangular.setDefaultHeaders({'Authorization': $cookieStore.get('sessaoUsuario').token});
-                dialog.close();
+                Restangular.setDefaultHeaders({'Authorization': $cookieStore.get('sessaoUsuario').token});               
+            }, function (response) {
+                console.log('errrrroooo' + response.status);
             });
         };
         

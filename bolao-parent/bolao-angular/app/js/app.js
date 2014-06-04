@@ -67,21 +67,17 @@ app.config(function(RestangularProvider) {
     
 //    RestangularProvider.setDefaultHeaders({'Authorization': '123456789'});
 
-    RestangularProvider.setBaseUrl(baseUrl);
+    RestangularProvider.setBaseUrl(baseUrl);  
+});
 
-    RestangularProvider.setErrorInterceptor(function(response) {
-        //stopLoading();
-        //displayError();
+app.config(function($provide){
+ 
+    $provide.decorator("$exceptionHandler", function($delegate, $injector){
+        return function(exception, cause){
+            var $rootScope = $injector.get("$rootScope");
+            $rootScope.addError({message:"Exception", reason:exception});
+            $delegate(exception, cause);
+        };
     });
-
-    RestangularProvider.setResponseInterceptor(function(data, operation, what) {
-        //stopLoading();
-        return data;
-    });
-
-    RestangularProvider.setRequestInterceptor(function(elem) {
-        //startLoading();
-        return elem;
-    });
-
+ 
 });
