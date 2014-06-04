@@ -2,7 +2,6 @@ package org.javaee.bolao.usuario;
 
 import java.util.List;
 
-import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
@@ -16,6 +15,7 @@ import javax.ws.rs.core.Response;
 
 import org.javaee.bolao.entidades.SessaoUsuario;
 import org.javaee.bolao.entidades.Usuario;
+import org.javaee.bolao.entidades.UsuarioBolao;
 
 @Path("usuarios")
 public class UsuarioFacadeREST
@@ -88,5 +88,12 @@ public class UsuarioFacadeREST
       return Response.ok().build();
     }
     return Response.notModified().build();
+  }
+  
+  @GET
+  @Path("{idUsuario}/boloes")
+  @Produces({"application/xml", "application/json"})
+  public List<UsuarioBolao> findBoloes(@PathParam("idUsuario") Long idUsuario) {
+    return this.usuarioFacade.findBoloes(idUsuario);
   }
 }

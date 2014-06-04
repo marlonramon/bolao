@@ -59,7 +59,13 @@
                                 <li><a href="#/partida-list">Partidas</a></li>
                                 <li><a href="#/usuario-list">Usuários</a></li>
                             </ul>
-
+                            
+                            <div class="col-lg-8" ng-show="isUsuarioLogado()">
+                                <select class="form-control" id="inputRodada" ng-model="bolaoSelecionado" ng-options="bolaoUsuario.bolao.descricao for bolaoUsuario in boloesUsuario track by bolaoUsuario.idbolaoUsuario"  title="Bolões">
+                                    <option value="">Selecione a Bolão</option>
+                                </select>
+                            </div>
+                            
                         </li>
 
                     </ul>
@@ -67,10 +73,10 @@
 
                     <ul class="nav navbar-nav navbar-right">
 
-                        <li ng-show="!sessaoUsuario" ><a href="#/usuario-edit">Participar!</a></li>
-                        <li ng-show="sessaoUsuario" class="navbar-text">Bem vindo {{sessaoUsuario.usuario.nome}}</li>
-                        <li ng-show="!sessaoUsuario"><a data-toggle="modal" data-target="#loginModal">Entrar</a></li>
-                        <li ng-show="sessaoUsuario"><a href="#" ng-click="logout()">Sair</a></li>
+                        <li ng-show="!isUsuarioLogado()" ><a href="#/usuario-edit">Participar!</a></li>
+                        <li ng-show="isUsuarioLogado()" class="navbar-text">Bem vindo {{sessaoUsuario.usuario.nome}}</li>
+                        <li ng-show="!isUsuarioLogado()"><a data-toggle="modal" data-target="#loginModal">Entrar</a></li>
+                        <li ng-show="isUsuarioLogado()"><a href="#" ng-click="logout()">Sair</a></li>
 
                     </ul>
 

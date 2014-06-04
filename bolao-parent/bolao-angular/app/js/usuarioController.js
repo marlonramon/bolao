@@ -55,28 +55,45 @@ app.controller('UserEditCtrl', ['$scope', '$routeParams', '$location', 'Restangu
 app.controller('LoginCtrl', ['$scope', '$cookieStore', 'Restangular',
     function($scope, $cookieStore, Restangular) {
 
+        $scope.boloesUsuario = {};
         $scope.sessaoUsuario = $cookieStore.get('sessaoUsuario');
-
+        
         $scope.login = function() {
             Restangular.all('usuarios/login').post($scope.usuario).then(function(sessaoUsuario) {
                 $scope.sessaoUsuario = sessaoUsuario;
                 $cookieStore.put('sessaoUsuario', $scope.sessaoUsuario);
 
                 Restangular.setDefaultHeaders({'Authorization': $cookieStore.get('sessaoUsuario').token});
+                
+                $scope.atualizar();
+                
                 dialog.close();
             });
         };
+
+        $scope.atualizar = function() {
+            var idUsuario = $scope.sessaoUsuario.usuario.idUsuario;
+            if (idUsuario) {
+                Restangular.one('usuarios', idUsuario).one('boloes').get().then(function(boloesUsuario) {
+                    $scope.boloesUsuario = boloesUsuario;
+                });
+            }
+        };
         
-        $scope.isAdm = function () {
-           var sessaoUsuario = $scope.sessaoUsuario;
-           
-           if(eval(sessaoUsuario)) {
-               return  sessaoUsuario.usuario.perfil === "ADMINISTRADOR";
-           } else {
-               return false;
-           }
-           
-             
+        $scope.atualizar();
+        
+        $scope.isAdm = function() {
+            var sessaoUsuario = $scope.sessaoUsuario;
+
+            if (eval(sessaoUsuario)) {
+                return  sessaoUsuario.usuario.perfil === "ADMINISTRADOR";
+            } else {
+                return false;
+            }
+        };
+
+        $scope.isUsuarioLogado = function() {
+            return $scope.sessaoUsuario;
         };
 
         $scope.logout = function() {
@@ -84,7 +101,7 @@ app.controller('LoginCtrl', ['$scope', '$cookieStore', 'Restangular',
                 $scope.sessaoUsuario = null;
                 $cookieStore.remove('sessaoUsuario');
                 console.log(data.status);
-            }, function(error){
+            }, function(error) {
                 $scope.sessaoUsuario = null;
                 $cookieStore.remove('sessaoUsuario');
                 console.log(error.status);
