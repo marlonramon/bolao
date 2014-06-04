@@ -9,6 +9,7 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
 import org.javaee.bolao.config.Config;
+import org.javaee.bolao.eao.BolaoEAO;
 import org.javaee.bolao.eao.SessaoUsuarioEAO;
 import org.javaee.bolao.eao.UsuarioBolaoEAO;
 import org.javaee.bolao.eao.UsuarioEAO;
@@ -31,6 +32,9 @@ public class UsuarioFacade {
 
 	@Inject
 	private UsuarioBolaoEAO usuarioBolaoEAO;
+	
+	@Inject
+	private BolaoEAO bolaoEAO;
 
 	public Usuario insertOrUpdate(Usuario user) {
 		validarEmailDuplicado(user);
@@ -136,5 +140,28 @@ public class UsuarioFacade {
 	public List<UsuarioBolao> findBoloes(Long idUsuario) {
 		Usuario usuario = find(idUsuario);
 		return usuarioBolaoEAO.finBoloes(usuario);
+	}
+
+	public boolean vincularUsuarioBolao(Long idUsuario, Long idBolao) {
+		
+		Usuario usuario = usuarioEAO.find(idUsuario);
+		
+		Bolao bolao = bolaoEAO.find(idBolao);
+		
+		if(!isUsuarioVinculadoBolao(usuario, bolao)){
+			UsuarioBolao usuarioBolao = new UsuarioBolao();
+			usuarioBolao.setUsuario(usuario);
+			usuarioBolao.setBolao(bolao);
+			
+			usuarioBolaoEAO.insert(usuarioBolao);
+			
+			return true;
+		}
+		
+		return false;
+	}
+
+	private boolean isUsuarioVinculadoBolao(Usuario usuario, Bolao bolao) {
+		return usuarioBolaoEAO.findByUsuarioAndBolao(usuario, bolao) != null;
 	}
 }
