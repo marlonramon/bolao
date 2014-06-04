@@ -14,40 +14,36 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
-public class Bolao extends AbstractEntity
-{
+public class Bolao extends AbstractEntity {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idBolao;
 
 	@NotNull
-	@Size(max=80)
+	@Size(max = 80)
 	private String descricao;
-	
+
 	@NotNull
 	private BigDecimal contribuicaoPorRodada;
-	
+
 	@NotNull
 	private Short pontosPlacarExato;
-	
+
 	@NotNull
 	private Short pontosResultadoEPlacar;
-	
+
 	@NotNull
 	private Short pontosResultado;
-	
+
 	@NotNull
 	private Short pontosPlacar;
-	
+
 	@NotNull
-	@JoinColumn(name="idCampeonato")
+	@JoinColumn(name = "idCampeonato")
 	private Campeonato campeonato;
-	
-	@OneToMany(mappedBy="bolao")
-	@XmlTransient
-	private Set<UsuarioBolao> usuariosBolao;
+
 	
 	public Long getIdBolao() {
 		return idBolao;
@@ -108,19 +104,13 @@ public class Bolao extends AbstractEntity
 	public Campeonato getCampeonato() {
 		return campeonato;
 	}
-	
+
 	public void setCampeonato(Campeonato campeonato) {
 		this.campeonato = campeonato;
 	}
-	
-	public Set<UsuarioBolao> getUsuariosBolao() {
-		return usuariosBolao;
-	}
-	
-	public void setUsuariosBolao(Set<UsuarioBolao> usuariosBolao) {
-		this.usuariosBolao = usuariosBolao;
-	}
-	
+
+
+
 	@Override
 	public Long getId() {
 		return getIdBolao();
