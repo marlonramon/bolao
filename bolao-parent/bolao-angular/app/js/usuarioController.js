@@ -52,12 +52,12 @@ app.controller('UserEditCtrl', ['$scope', '$routeParams', '$location', 'Restangu
         };
     }]);
 
-app.controller('LoginCtrl', ['$scope', '$cookieStore', 'Restangular',
-    function($scope, $cookieStore, Restangular) {
+app.controller('LoginCtrl', ['$scope', '$cookieStore', 'Restangular', 'usuarioService',
+    function($scope, $cookieStore, Restangular, usuarioService) {
 
         $scope.boloesUsuario = {};
         $scope.sessaoUsuario = $cookieStore.get('sessaoUsuario');
-        
+
         $scope.login = function() {
             Restangular.all('usuarios/login').post($scope.usuario).then(function(sessaoUsuario) {
                 $scope.sessaoUsuario = sessaoUsuario;
@@ -65,27 +65,30 @@ app.controller('LoginCtrl', ['$scope', '$cookieStore', 'Restangular',
 
                 Restangular.setDefaultHeaders({'Authorization': $cookieStore.get('sessaoUsuario').token});
                 
-                $scope.atualizar();
-                
-                dialog.close();
+                $scope.atualizar();                
             });
         };
 
         $scope.atualizar = function() {
-            var idUsuario = $scope.sessaoUsuario.usuario.idUsuario;
-            if (idUsuario) {
-                Restangular.one('usuarios', idUsuario).one('boloes').get().then(function(boloesUsuario) {
-                    $scope.boloesUsuario = boloesUsuario;
-                });
+
+            if (eval($scope.sessaoUsuario)) {
+                
+                var idUsuario = $scope.sessaoUsuario.usuario.idUsuario;
+                if (idUsuario) {
+                    Restangular.one('usuarios', idUsuario).one('boloes').get().then(function(boloesUsuario) {
+                        $scope.boloesUsuario = boloesUsuario;
+                        $scope.setBolaoSelecionado(boloesUsuario[0]);
+                    });
+                }
             }
         };
-        
+
         $scope.atualizar();
-        
+
         $scope.isAdm = function() {
             var sessaoUsuario = $scope.sessaoUsuario;
 
-            if (eval(sessaoUsuario)) {
+            if ($scope.isUsuarioLogado()) {
                 return  sessaoUsuario.usuario.perfil === "ADMINISTRADOR";
             } else {
                 return false;
@@ -107,4 +110,13 @@ app.controller('LoginCtrl', ['$scope', '$cookieStore', 'Restangular',
                 console.log(error.status);
             });
         };
+        
+        $scope.setBolaoSelecionado = function (usuarioBolao){
+            usuarioService.setBolaoSelecionado(usuarioBolao); 
+        };
+        
+        $scope.getBolaoSelecionado = function (){
+            return usuarioService.getBolaoSelecionado();
+        };
+        
     }]);

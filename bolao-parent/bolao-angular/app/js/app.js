@@ -18,7 +18,7 @@ var app = angular.module('bolao', [
     'bolao.rodadaController',
     'bolao.partidaController',
     'bolao.rankingController',
-    'bolao.usuarioBolaoController'
+    'bolao.apostaController'
 ]);
 
 
@@ -55,14 +55,11 @@ app.config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/partida-edit/:id', {templateUrl: 'partials/partida/partida-edit.html', controller: 'PartidaEditCtrl'});
         
         //Aposta
-        $routeProvider.when('/aposta-list', {templateUrl: 'partials/aposta/aposta-list.html'});
+        $routeProvider.when('/aposta-list', {templateUrl: 'partials/aposta/aposta-list.html', controller: 'ApostaListCtrl'});
         
         
         $routeProvider.when('/ranking-bolao/:id', {templateUrl: 'partials/ranking/ranking-bolao.html', controller: 'RankingBolaoCtrl'});
         $routeProvider.when('/ranking-rodada/:id', {templateUrl: 'partials/ranking/ranking-rodada.html', controller: 'RankingRodadaCtrl'});
-        
-        
-        $routeProvider.when('/usuariobolao-list', {templateUrl: 'partials/usuariobolao/usuariobolao-list.html', controller: 'UsuarioBolaoCtrl'});
         
         $routeProvider.otherwise({redirectTo: '/index'});
 
@@ -73,36 +70,6 @@ app.run(function($rootScope) {
 });
 
 app.config(function(RestangularProvider) {
-    
-//    var sessaoUsuario = $cookieStore.get('sessaoUsuario');
-    
-//    RestangularProvider.setDefaultHeaders({'Authorization': '123456789'});
-
     RestangularProvider.setBaseUrl(baseUrl);
-
-    RestangularProvider.setErrorInterceptor(function(response,$scope) {
-        console.log('deu erro: ' + response.data);
-        if(eval(response.message)) {
-            $scope.errors = response.data;
-        } else {
-            $scope.errors = {"errors": "Houve um erro"};
-        }
-        
-        
-        
-        
-        
-        //displayError();
-    });
-
-    RestangularProvider.setResponseInterceptor(function(data, operation, what) {
-        //stopLoading();
-        return data;
-    });
-
-    RestangularProvider.setRequestInterceptor(function(elem) {
-        //startLoading();
-        return elem;
-    });
-
+    //RestangularProvider.setDefaultHttpFields({withCredentials: true});
 });
