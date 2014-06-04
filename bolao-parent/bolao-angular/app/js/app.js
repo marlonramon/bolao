@@ -53,6 +53,11 @@ app.config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/partida-edit', {templateUrl: 'partials/partida/partida-edit.html', controller: 'PartidaEditCtrl'});
         $routeProvider.when('/partida-edit/:id', {templateUrl: 'partials/partida/partida-edit.html', controller: 'PartidaEditCtrl'});
         
+        //Aposta
+        $routeProvider.when('/aposta-list', {templateUrl: 'partials/aposta/aposta-list.html'});
+        
+        
+        
         $routeProvider.otherwise({redirectTo: '/index'});
 
     }]);
