@@ -3,7 +3,7 @@ package org.javaee.bolao.aposta;
 import java.util.Collections;
 import java.util.List;
 
-import javax.annotation.ManagedBean;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import org.javaee.bolao.eao.ApostaEAO;
@@ -13,7 +13,7 @@ import org.javaee.bolao.entidades.Rodada;
 import org.javaee.bolao.entidades.UsuarioBolao;
 import org.javaee.bolao.vo.ApostaVO;
 
-@ManagedBean
+@Stateless
 public class ApostaFacade {
 	@Inject
 	private ApostaEAO apostaEAO;

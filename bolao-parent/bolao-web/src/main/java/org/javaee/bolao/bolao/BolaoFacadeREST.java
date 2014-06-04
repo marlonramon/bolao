@@ -50,7 +50,7 @@ public class BolaoFacadeREST {
 	@GET
 	@Path("{id}/ranking/{limite}")
 	@Produces({ "application/xml", "application/json" })
-	public List<RankingBolaoVO> ranking(@PathParam("id") Long id, @PathParam("limite") Integer limite) {
+	public RankingBolaoVO ranking(@PathParam("id") Long id, @PathParam("limite") Integer limite) {
 		return bolaoFacade.ranking(id, limite);
 	}
 }

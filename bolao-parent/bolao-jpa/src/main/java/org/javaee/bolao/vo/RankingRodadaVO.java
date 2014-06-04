@@ -1,27 +1,19 @@
 package org.javaee.bolao.vo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RankingRodadaVO {
 
 	private Long idRodada;
 
-	private Short numeroRodada;
+	private Short numero;
+	
+	private String campeonato;
 
-	private Long idUsuario;
-
-	private String nomeUsuario;
-
-	private Integer pontuacao;
-
+	private List<RankingUsuarioVO> usuarios = new ArrayList<RankingUsuarioVO>();
+	
 	public RankingRodadaVO() {
-	}
-
-	public RankingRodadaVO(Long idRodada, Short numeroRodada, Long idUsuario, String nomeUsuario, Integer pontuacao) {
-		super();
-		this.idRodada = idRodada;
-		this.numeroRodada = numeroRodada;
-		this.idUsuario = idUsuario;
-		this.nomeUsuario = nomeUsuario;
-		this.pontuacao = pontuacao;
 	}
 
 	public Long getIdRodada() {
@@ -32,36 +24,32 @@ public class RankingRodadaVO {
 		this.idRodada = idRodada;
 	}
 
-	public Short getNumeroRodada() {
-		return numeroRodada;
+	public Short getNumero() {
+		return numero;
 	}
 
-	public void setNumeroRodada(Short numeroRodada) {
-		this.numeroRodada = numeroRodada;
+	public void setNumero(Short numeroRodada) {
+		this.numero = numeroRodada;
 	}
 
-	public Long getIdUsuario() {
-		return idUsuario;
+	public List<RankingUsuarioVO> getUsuarios() {
+		return usuarios;
 	}
-
-	public void setIdUsuario(Long idUsuario) {
-		this.idUsuario = idUsuario;
+	
+	public void setUsuarios(List<RankingUsuarioVO> usuarios) {
+		this.usuarios = usuarios;
 	}
-
-	public String getNomeUsuario() {
-		return nomeUsuario;
+	
+	public void addUsuario(RankingUsuarioVO rankingUsuarioVO){
+		usuarios.add(rankingUsuarioVO);
 	}
-
-	public void setNomeUsuario(String nomeUsuario) {
-		this.nomeUsuario = nomeUsuario;
+	
+	public String getCampeonato() {
+		return campeonato;
 	}
-
-	public Integer getPontuacao() {
-		return pontuacao;
+	
+	public void setCampeonato(String campeonato) {
+		this.campeonato = campeonato;
 	}
-
-	public void setPontuacao(Integer pontuacao) {
-		this.pontuacao = pontuacao;
-	}
-
+	
 }

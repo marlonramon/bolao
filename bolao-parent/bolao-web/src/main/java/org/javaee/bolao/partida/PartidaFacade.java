@@ -44,18 +44,20 @@ public class PartidaFacade {
 
     public void encerrarPartida(Partida partida) {
 
-    	partida = partidaEAO.find(partida.getIdPartida());
-    	
-    	if(partida.isEncerrada()){
-	
-	        Set<Aposta> listApostas = partida.getApostas();
-	
-	        for (Aposta aposta : listApostas) {
-	
-	            Bolao bolao = aposta.getUsuarioBolao().getBolao();
-	
-	            // if(aposta.getPlacarMandante().equals(partida.getPlacarMandante()))
-	        }
+    	if(partida.hasId()){
+	    	partida = partidaEAO.find(partida.getIdPartida());
+	    	
+	    	if(partida.isEncerrada()){
+		
+		        Set<Aposta> listApostas = partida.getApostas();
+		
+		        for (Aposta aposta : listApostas) {
+		
+		            Bolao bolao = aposta.getUsuarioBolao().getBolao();
+		
+		            // if(aposta.getPlacarMandante().equals(partida.getPlacarMandante()))
+		        }
+	    	}
     	}
 
     }

@@ -43,7 +43,7 @@ public class BolaoFacade
   }
 
 
-public List<RankingBolaoVO> ranking(Long id, Integer limite) {
+public RankingBolaoVO ranking(Long id, Integer limite) {
 	Bolao bolao = bolaoEAO.find(id);
 	return bolaoEAO.ranking(bolao, limite);
 }  

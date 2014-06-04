@@ -2,6 +2,7 @@ package org.javaee.bolao.rodada;
 
 import java.util.List;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -13,7 +14,7 @@ import javax.ws.rs.Produces;
 
 import org.javaee.bolao.entidades.Rodada;
 import org.javaee.bolao.vo.RankingRodadaVO;
-
+@RequestScoped
 @Path("rodadas")
 public class RodadaFacadeREST
 {
@@ -50,7 +51,7 @@ public class RodadaFacadeREST
   @GET
   @Path("{id}/ranking/{limite}")
   @Produces({"application/xml", "application/json"})
-  public List<RankingRodadaVO> ranking(@PathParam("id") Long id, @PathParam("limite") Integer limite) {
+  public RankingRodadaVO ranking(@PathParam("id") Long id, @PathParam("limite") Integer limite) {
     return this.rodadaFacade.ranking(id, limite);
   }
   
