@@ -19,7 +19,7 @@
                 <tr ng-repeat="clube in clubes| filter:filter">
                     <td>{{clube.idClube}}</td>
                     <td>{{clube.nome}}</td>
-                    <td><img ng-src="{{baseUrlImages + '/'+clube.bandeira}}" style="height: 30px; width: 40px"/></td>                    
+                    <td><img ng-src="{{baseUrlImages + '/'+clube.bandeira}}" style="height: 30px; width: 40px;"/></td>                    
                     <td>
                         <a ng-click="edit(clube.idClube)" class="btn btn-primary">Editar</a>
                     </td>

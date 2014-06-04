@@ -53,6 +53,10 @@ app.config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/partida-edit', {templateUrl: 'partials/partida/partida-edit.html', controller: 'PartidaEditCtrl'});
         $routeProvider.when('/partida-edit/:id', {templateUrl: 'partials/partida/partida-edit.html', controller: 'PartidaEditCtrl'});
         
+        //Aposta
+        $routeProvider.when('/aposta-list', {templateUrl: 'partials/aposta/aposta-list.html'});
+        
+        
         $routeProvider.when('/ranking-bolao/:id', {templateUrl: 'partials/ranking/ranking-bolao.html', controller: 'RankingBolaoCtrl'});
         $routeProvider.when('/ranking-rodada/:id', {templateUrl: 'partials/ranking/ranking-rodada.html', controller: 'RankingRodadaCtrl'});
         
@@ -72,8 +76,18 @@ app.config(function(RestangularProvider) {
 
     RestangularProvider.setBaseUrl(baseUrl);
 
-    RestangularProvider.setErrorInterceptor(function(response) {
-        //stopLoading();
+    RestangularProvider.setErrorInterceptor(function(response,$scope) {
+        console.log('deu erro: ' + response.data);
+        if(eval(response.message)) {
+            $scope.errors = response.data;
+        } else {
+            $scope.errors = {"errors": "Houve um erro"};
+        }
+        
+        
+        
+        
+        
         //displayError();
     });
 

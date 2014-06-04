@@ -21,7 +21,6 @@
 
         <script src="js/app.js"></script>
         <script src="js/services.js"></script>
-        <script src="js/match.js"></script>        
 
         <script src="js/campeonatoController.js"></script>
         <script src="js/usuarioController.js"></script>
@@ -98,6 +97,9 @@
                         <h1 class="text-center">Entrar</h1>
                     </div>
                     <div class="modal-body">
+                        
+                        <p ng-repeat="errs in errors" class="alert alert-error"><strong>Erro</strong>: {{ errs}}</p>
+                        
                         <form class="form center-block">
                             <div class="form-group">
                                 <input focus-me ng-model="usuario.email" class="form-control input-lg" placeholder="Email" type="text">
@@ -109,7 +111,7 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button ng-click="login()" data-dismiss="modal" class="btn btn-primary btn-lg btn-block">Entrar</button>                                
+                        <button ng-click="login()" class="btn btn-primary btn-lg btn-block">Entrar</button>                                
                     </div>
                 </div>
             </div>
