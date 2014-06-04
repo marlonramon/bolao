@@ -13,6 +13,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import org.javaee.bolao.entidades.Campeonato;
+import org.javaee.bolao.entidades.Rodada;
 
 @Stateless
 @Path("campeonatos")
@@ -30,21 +31,28 @@ public class CampeonatoFacadeREST
   }
 
   @DELETE
-  @Path("{id}")
-  public void delete(@PathParam("id") Long id) {
-    this.campeonatoFacade.delete(id);
+  @Path("{idCampeonato}")
+  public void delete(@PathParam("idCampeonato") Long idCampeonato) {
+    campeonatoFacade.delete(idCampeonato);
   }
 
   @GET
-  @Path("{id}")
+  @Path("{idCampeonato}")
   @Produces({"application/xml", "application/json"})
-  public Campeonato find(@PathParam("id") Long id) {
-    return this.campeonatoFacade.find(id);
+  public Campeonato find(@PathParam("idCampeonato") Long idCampeonato) {
+    return campeonatoFacade.find(idCampeonato);
+  }
+  
+  @GET
+  @Path("{idCampeonato}/rodadas")
+  @Produces({"application/xml", "application/json"})
+  public List<Rodada> findRodadas(@PathParam("idCampeonato") Long idCampeonato) {
+    return campeonatoFacade.findRodadas(idCampeonato);
   }
 
   @GET
   @Produces({"application/xml", "application/json"})
   public List<Campeonato> findAll() {
-    return this.campeonatoFacade.findAll();
+    return campeonatoFacade.findAll();
   }
 }

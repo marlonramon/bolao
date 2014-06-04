@@ -317,4 +317,8 @@ public abstract class AbstractEAO<E extends IEntity>
 	protected CriteriaDelete<E> createCriteriaDelete() {
 		return getCriteriaBuilder().createCriteriaDelete(entityClass);
 	}
+
+	public E getSingleResult(CriteriaQuery<E> criteriaQuery) {
+		return getSingleResult(createQuery(criteriaQuery));
+	}
 }

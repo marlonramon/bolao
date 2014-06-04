@@ -2,7 +2,6 @@ package org.javaee.bolao.rodada;
 
 import java.util.List;
 
-import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -15,7 +14,6 @@ import javax.ws.rs.Produces;
 import org.javaee.bolao.entidades.Rodada;
 import org.javaee.bolao.vo.RankingRodadaVO;
 
-@Stateless
 @Path("rodadas")
 public class RodadaFacadeREST
 {
@@ -46,7 +44,7 @@ public class RodadaFacadeREST
   @GET
   @Produces({"application/xml", "application/json"})
   public List<Rodada> findAll() {
-    return this.rodadaFacade.findAll();
+    return rodadaFacade.findAll();
   }
   
   @GET

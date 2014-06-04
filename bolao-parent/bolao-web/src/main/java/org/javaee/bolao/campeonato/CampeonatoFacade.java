@@ -6,38 +6,43 @@ import javax.annotation.ManagedBean;
 import javax.inject.Inject;
 
 import org.javaee.bolao.eao.CampeonatoEAO;
+import org.javaee.bolao.eao.RodadaEAO;
 import org.javaee.bolao.entidades.Campeonato;
+import org.javaee.bolao.entidades.Rodada;
 
 @ManagedBean
-public class CampeonatoFacade
-{
+public class CampeonatoFacade {
 
-  @Inject
-  private CampeonatoEAO campeonatoEAO;
+	@Inject
+	private CampeonatoEAO campeonatoEAO;
 
-  public Campeonato insertOrUpdate(Campeonato campeonato)
-  {
+	@Inject
+	private RodadaEAO rodadaEAO;
+	
+	public Campeonato insertOrUpdate(Campeonato campeonato) {
 
-    if (!campeonato.hasId())
-      this.campeonatoEAO.insert(campeonato);
-    else {
-      this.campeonatoEAO.update(campeonato);
-    }
+		if (!campeonato.hasId())
+			campeonatoEAO.insert(campeonato);
+		else {
+			campeonatoEAO.update(campeonato);
+		}
 
-    return campeonato;
-  }
+		return campeonato;
+	}
 
-  
-  public void delete(Long id)
-  {
-    this.campeonatoEAO.delete(id);
-  }
+	public void delete(Long id) {
+		campeonatoEAO.delete(id);
+	}
 
-  public Campeonato find(Long id) {
-    return this.campeonatoEAO.find(id);
-  }
+	public Campeonato find(Long id) {
+		return campeonatoEAO.find(id);
+	}
 
-  public List<Campeonato> findAll() {
-    return this.campeonatoEAO.findAll();
-  }  
+	public List<Campeonato> findAll() {
+		return campeonatoEAO.findAll();
+	}
+
+	public List<Rodada> findRodadas(Long idCampeonato) {
+		return rodadaEAO.findByCampeonato(idCampeonato);
+	}
 }
