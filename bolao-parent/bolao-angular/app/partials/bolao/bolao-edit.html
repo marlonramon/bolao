@@ -15,7 +15,7 @@
                         <label class="col-lg-3 control-label" for="inputDescricao">Descrição</label>
 
                         <div class="col-lg-8">
-                            <input class="form-control" type="text" id="inputDescricao" ng-model="bolao.descricao" required="true"/>
+                            <input autofocus="true" class="form-control" type="text" id="inputDescricao" ng-model="bolao.descricao" required="true"/>
                         </div>
                     </div>
 
@@ -41,7 +41,7 @@
                         <label class="col-lg-3 control-label" for="inputPontosPlacarExato">Pontos (placar exato)</label>
 
                         <div class="col-lg-8">
-                            <input class="form-control" type="text" id="inputPontosPlacarExato" ng-model="bolao.pontosPlacarExato" required="true"/>
+                            <input class="form-control" type="number" max="99" id="inputPontosPlacarExato" ng-model="bolao.pontosPlacarExato"/>
                         </div>
                     </div>
                     
@@ -49,7 +49,7 @@
                         <label class="col-lg-3 control-label" for="inputPontosResultadoEPlacar">Pontos (resultado e placar)</label>
 
                         <div class="col-lg-8">
-                            <input class="form-control" type="text" id="inputPontosResultadoEPlacar" ng-model="bolao.pontosResultadoEPlacar" required="true"/>
+                            <input class="form-control" type="number" max="99" id="inputPontosResultadoEPlacar" ng-model="bolao.pontosResultadoEPlacar"/>
                         </div>
                     </div>
                     
@@ -57,7 +57,7 @@
                         <label class="col-lg-3 control-label" for="inputPontosResultado">Pontos (resultado)</label>
 
                         <div class="col-lg-8">
-                            <input class="form-control" type="text" id="inputPontosResultado" ng-model="bolao.pontosResultado" required="true"/>
+                            <input class="form-control" type="number" max="99" id="inputPontosResultado" ng-model="bolao.pontosResultado"/>
                         </div>
                     </div>
                     
@@ -65,6 +65,7 @@
                         <label class="col-lg-3 control-label" for="inputPontosPlacar">Pontos (placar)</label>
 
                         <div class="col-lg-8">
+                            <input class="form-control" type="number" max="99" id="inputPontosPlacar" ng-model="bolao.pontosPlacar"/>
                             <input class="form-control" type="text" id="inputPontosPlacar" ng-model="bolao.pontosPlacar" required="true"/>
                         </div>
                     </div>
