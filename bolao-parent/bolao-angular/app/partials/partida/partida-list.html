@@ -15,7 +15,7 @@
                         <th>Data Partida</th>
                         <th>Clube Mandante</th>
                         <th>Placar Mandante</th>
-                        <th></th>
+                        <th>X</th>
                         <th>Placar Visitante</th>
                         <th>Clube Visitante</th>                        
                     </tr>
@@ -25,12 +25,11 @@
                     <td>{{partida.idPartida}}</td>
                     <td>{{partida.rodada.campeonato.descricao}}</td>
                     <td>{{partida.rodada.numero}}</td>
-                    <td>{{partida.dataPartida}}</td>
-                    <td>{{partida.dataPartida}}</td>
+                    <td>{{partida.dataPartida | date:'MM/dd/yyyy HH:mm'}}</td>
                     <td>{{partida.clubeMandante.nome}}</td>
-                    <td>{{partida.placarMandante}}</td>
+                    <td>{{partida.placar.placarMandante}}</td>
                     <td>X</td>
-                    <td>{{partida.placarVisitant}}</td>
+                    <td>{{partida.placar.placarVisitante}}</td>
                     <td>{{partida.clubeVisitante.nome}}</td>
                     <td>
                         <a ng-click="edit(partida.idPartida)" class="btn btn-primary">Editar</a>

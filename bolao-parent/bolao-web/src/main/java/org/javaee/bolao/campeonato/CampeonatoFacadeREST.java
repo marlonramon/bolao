@@ -2,7 +2,6 @@ package org.javaee.bolao.campeonato;
 
 import java.util.List;
 
-import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -15,7 +14,6 @@ import javax.ws.rs.Produces;
 import org.javaee.bolao.entidades.Campeonato;
 import org.javaee.bolao.entidades.Rodada;
 
-@Stateless
 @Path("campeonatos")
 public class CampeonatoFacadeREST
 {
@@ -53,6 +51,18 @@ public class CampeonatoFacadeREST
   @GET
   @Produces({"application/xml", "application/json"})
   public List<Campeonato> findAll() {
-    return campeonatoFacade.findAll();
+    List<Campeonato> campeonatos = campeonatoFacade.findAll();
+    
+    //return Response.ok().entity(new GenericEntity<List<Campeonato>>(campeonatos) {}, 
+//	new Annotation[]{CampeonatoView.Factory.get()}).build();
+    
+	return campeonatos;
   }
+  
+	@GET
+	@Path("count")
+	@Produces({ "text/plain" })
+	public String count() {
+		return String.valueOf(this.campeonatoFacade.count());
+	}
 }

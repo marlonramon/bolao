@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @XmlRootElement
@@ -31,6 +32,7 @@ public class Rodada extends AbstractEntity {
 	private Campeonato campeonato;
 
 	@OneToMany(mappedBy = "rodada")
+	@XmlTransient
 	private Set<Partida> partidas = new HashSet<>();
 
 	public Long getIdRodada() {

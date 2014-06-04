@@ -2,7 +2,7 @@ package org.javaee.bolao.campeonato;
 
 import java.util.List;
 
-import javax.annotation.ManagedBean;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import org.javaee.bolao.eao.CampeonatoEAO;
@@ -10,7 +10,7 @@ import org.javaee.bolao.eao.RodadaEAO;
 import org.javaee.bolao.entidades.Campeonato;
 import org.javaee.bolao.entidades.Rodada;
 
-@ManagedBean
+@Stateless
 public class CampeonatoFacade {
 
 	@Inject
@@ -44,5 +44,9 @@ public class CampeonatoFacade {
 
 	public List<Rodada> findRodadas(Long idCampeonato) {
 		return rodadaEAO.findByCampeonato(idCampeonato);
+	}
+
+	public int count() {
+		return campeonatoEAO.count();
 	}
 }

@@ -16,8 +16,8 @@ var app = angular.module('bolao', [
     'bolao.bolaoController',
     'bolao.clubeController',
     'bolao.rodadaController',
-    'bolao.partidaController'
-
+    'bolao.partidaController',
+    'bolao.rankingController'
 ]);
 
 
@@ -57,6 +57,8 @@ app.config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/aposta-list', {templateUrl: 'partials/aposta/aposta-list.html'});
         
         
+        $routeProvider.when('/ranking-bolao/:id', {templateUrl: 'partials/ranking/ranking-bolao.html', controller: 'RankingBolaoCtrl'});
+        $routeProvider.when('/ranking-rodada/:id', {templateUrl: 'partials/ranking/ranking-rodada.html', controller: 'RankingRodadaCtrl'});
         
         $routeProvider.otherwise({redirectTo: '/index'});
 
