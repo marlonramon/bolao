@@ -4,11 +4,11 @@
         <title>Bolão</title>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-       
-        
+
+
         <link rel="stylesheet" href="css/bootstrap.min.css" />
         <link rel="stylesheet" href="css/bootstrap.css" />
-        
+
         <!-- include javascript, jQuery FIRST -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>  
@@ -57,14 +57,20 @@
                                 <li><a href="#/clube-list">Clubes</a></li>
                                 <li><a href="#/partida-list">Partidas</a></li>
                                 <li><a href="#/usuario-list">Usuários</a></li>
+                                <li><a href="#/aposta-list">Apostas</a></li>
                             </ul>
-                            
-                            <div class="col-lg-8" ng-show="isUsuarioLogado()">
-                                <select class="form-control" id="inputRodada" ng-model="bolaoSelecionado" ng-options="bolaoUsuario.bolao.descricao for bolaoUsuario in boloesUsuario track by bolaoUsuario.idbolaoUsuario"  title="Bolões">
-                                    <option value="">Selecione a Bolão</option>
-                                </select>
-                            </div>
-                            
+
+                        </li> 
+                        <li class="dropdown" ng-show="isUsuarioLogado()">                            
+                            <a id="menuBoloes" class="dropdown-toggle" data-toggle="dropdown">
+                                {{ getBolaoSelecionado().bolao.descricao}}
+                                <span class="caret"></span>
+                            </a>
+
+                            <ul id="bolao" class="dropdown-menu" aria-labelledby="menuBoloes">
+                                <li ng-repeat="usuarioBolao in boloesUsuario"><a ng-click="" >{{usuarioBolao.bolao.descricao}}</a></li>                                
+                            </ul>                           
+
                         </li>
 
                     </ul>
@@ -97,22 +103,26 @@
                         <h1 class="text-center">Entrar</h1>
                     </div>
                     <div class="modal-body">
-                        
+
                         <p ng-repeat="errs in errors" class="alert alert-error"><strong>Erro</strong>: {{ errs}}</p>
-                        
+
                         <form class="form center-block">
                             <div class="form-group">
-                                <input focus-me ng-model="usuario.email" class="form-control input-lg" placeholder="Email" type="text">
+                                <input focus-me ng-model="usuario.email" class="form-control input-lg" placeholder="Email" type="text" mandatory="true">
                             </div>
                             <div class="form-group">
-                                <input ng-model="usuario.senha" class="form-control input-lg" placeholder="Senha" type="password">
+                                <input ng-model="usuario.senha" class="form-control input-lg" placeholder="Senha" type="password" mandatory="true">
+                            </div>
+
+                            <div class="modal-footer">
+                                <button ng-click="login()" class="btn btn-primary btn-lg btn-block" data-dismiss="modal">Entrar</button>                                
                             </div>
 
                         </form>
                     </div>
-                    <div class="modal-footer">
-                        <button ng-click="login()" class="btn btn-primary btn-lg btn-block">Entrar</button>                                
-                    </div>
+
+
+
                 </div>
             </div>
         </div>

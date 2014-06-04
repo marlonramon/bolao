@@ -69,36 +69,6 @@ app.run(function($rootScope) {
 });
 
 app.config(function(RestangularProvider) {
-    
-//    var sessaoUsuario = $cookieStore.get('sessaoUsuario');
-    
-//    RestangularProvider.setDefaultHeaders({'Authorization': '123456789'});
-
     RestangularProvider.setBaseUrl(baseUrl);
-
-    RestangularProvider.setErrorInterceptor(function(response,$scope) {
-        console.log('deu erro: ' + response.data);
-        if(eval(response.message)) {
-            $scope.errors = response.data;
-        } else {
-            $scope.errors = {"errors": "Houve um erro"};
-        }
-        
-        
-        
-        
-        
-        //displayError();
-    });
-
-    RestangularProvider.setResponseInterceptor(function(data, operation, what) {
-        //stopLoading();
-        return data;
-    });
-
-    RestangularProvider.setRequestInterceptor(function(elem) {
-        //startLoading();
-        return elem;
-    });
-
+    //RestangularProvider.setDefaultHttpFields({withCredentials: true});
 });
