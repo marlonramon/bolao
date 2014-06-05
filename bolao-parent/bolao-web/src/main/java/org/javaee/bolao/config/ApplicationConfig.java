@@ -5,12 +5,12 @@ import java.util.Set;
 
 import javax.ws.rs.core.Application;
 
+import org.javaee.bolao.aposta.ApostaFacadeREST;
 import org.javaee.bolao.bolao.BolaoFacadeREST;
 import org.javaee.bolao.campeonato.CampeonatoFacadeREST;
 import org.javaee.bolao.clube.ClubeFacadeREST;
 import org.javaee.bolao.partida.PartidaFacadeREST;
 import org.javaee.bolao.rodada.RodadaFacadeREST;
-import org.javaee.bolao.security.SecurityInterceptor;
 import org.javaee.bolao.usuario.UsuarioFacadeREST;
 import org.javaee.bolao.usuariobolao.UsuarioBolaoFacadeREST;
 
@@ -41,6 +41,7 @@ public class ApplicationConfig extends Application {
         resources.add(RodadaFacadeREST.class);
         resources.add(ClubeFacadeREST.class);
         resources.add(UsuarioBolaoFacadeREST.class);
+        resources.add(ApostaFacadeREST.class);
     }
     
     @Override

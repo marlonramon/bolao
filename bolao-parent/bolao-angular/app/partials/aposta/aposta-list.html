@@ -1,24 +1,75 @@
 
 
-<div class="container" style="width: 500px" >
+<div class="container" style="width: 800px" >
     <div class="panel panel-default">
 
-        <div class="panel-heading text-center">Rodada</div>
+        <div class="panel-heading text-center">Bolões</div>
 
         <div class="panel-body">
 
             <div class="row">
 
-                <div class="col-md-4 text-right">Santos</div>
-                <div class="col-md-4 text-center">
-                    <input type="text" style="width: 40px;margin-right: 10px" />X<input type="text" style="width: 40px;margin-left: 10px" /> 
+                <div class="col-lg-10">
+                    <select ng-change="getRodadas()" autofocus="true" class="form-control" id="inputCampeonato" ng-model="usuarioBolaoSelecionado" ng-options="usuarioBolao.bolao.descricao for usuarioBolao in usuarioBoloes track by usuarioBolao.idUsuarioBolao"  title="Bolões">
+                        <option value="">Selecione o Bolão</option>
+                    </select>
                 </div>
-                <div class="col-md-4 text-left">Coritiba</div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-heading text-center">Rodadas</div>
+
+        <div class="panel-body">
+            <div class="row text-center">
+
+                <div class="col-lg-8" ng-repeat="rodada in rodadas">
+                    <a ng-click="getApostas(rodada)" class="btn btn-primary">{{rodada.numero}}</a>
+                </div>
 
             </div>
         </div>
 
     </div>
 
+
+    <div class="panel  panel-default">
+
+
+        <div class="panel-heading">Apostas</div>
+        <div class="panel-body">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Data Partida</th>
+                        <th>Clube Mandante</th>
+                        <th>Placar Mandante</th>
+                        <th>X</th>
+                        <th>Placar Visitante</th>
+                        <th>Clube Visitante</th>                        
+                    </tr>
+                </thead>
+
+                <tr ng-repeat="aposta in apostas">
+                    <td>{{aposta.partida.dataPartida| date:'MM/dd/yyyy HH:mm'}}</td>
+                    <td>{{aposta.partida.clubeMandante.nome}}</td>
+                    <td><div class="col-lg-3">
+                            <input class="form-control" type="number" min="0"  max="99" id="inputPlacarMandante" ng-model="aposta.placar.placarMandante"/>
+                        </div>
+                    </td>
+                    <td>X</td>
+                    <td><div class="col-lg-3">
+                            <input class="form-control" type="number" min="0"  max="99" id="inputPlacarVisitante" ng-model="aposta.placar.placarVisitante"/>
+                        </div>
+                    </td>
+                    <td>{{aposta.partida.clubeVisitante.nome}}</td>
+                </tr>
+            </table>
+        </div>
+
+        <a ng-click="salvar()" class="btn btn-primary">Salvar Palpites</a>
+
+    </div>
 
 </div>

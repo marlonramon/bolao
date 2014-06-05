@@ -1,18 +1,19 @@
 package org.javaee.bolao.entidades;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class UsuarioBolao extends AbstractEntity {
 	private static final long serialVersionUID = 1L;
 
@@ -21,15 +22,13 @@ public class UsuarioBolao extends AbstractEntity {
 	private Long idUsuarioBolao;
 
 	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "idUsuario")
-	@XmlTransient
 	private Usuario usuario;
 
 	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "idBolao")
-	@XmlTransient
 	private Bolao bolao;
 
 	public Long getIdUsuarioBolao() {

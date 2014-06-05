@@ -2,26 +2,40 @@
 
 var app = angular.module('bolao.apostaController', []);
 
-app.controller('ApostaListCtrl', ['$scope', '$cookieStore', 'Restangular', 'usuarioService',
-    function($scope, $cookieStore, Restangular, usuarioService) {
+app.controller('ApostaListCtrl', ['$scope', 'Restangular',
+    function($scope, Restangular) {
 
-        // $scope.list = function() {
+        var sessaoUsuario = $scope.sessaoUsuario;
+        
+        if (sessaoUsuario) {
 
-        var sessaoUsuario = $cookieStore.get('sessaoUsuario');
-
-        if (eval(sessaoUsuario)) {
-
-            var idUsuarioBolao = usuarioService.getBolaoSelecionado();
+            var idUsuario = $scope.sessaoUsuario.usuario.idUsuario;
             
-            Restangular.one('apostas').one('usuariobolao', idUsuarioBolao.idUsuarioBolao).one("rodada", 1).get().then(function(boloesUsuario) {
-//                        $scope.boloesUsuario = boloesUsuario;
-//                        $scope.setBolaoSelecionado(boloesUsuario[0]);
-
-                console.log('deu certo');
-            });
-
+            $scope.usuarioBoloes = Restangular.one('usuarios', idUsuario).one('boloes').getList().$object;
         }
 
-        //  };
+        $scope.getRodadas = function() {
+            if ($scope.usuarioBolaoSelecionado) {
+                $scope.rodadas = Restangular.one("campeonatos", $scope.usuarioBolaoSelecionado.bolao.campeonato.idCampeonato).all("rodadas").getList().$object;
+            } else {
+                $scope.rodadas = {};
+            }
+        };
+        
+        $scope.getApostas = function(rodada) {
+            if (rodada) {
+                $scope.apostas = Restangular.one('apostas').one('usuariobolao', $scope.usuarioBolaoSelecionado.idUsuarioBolao).one("rodada", rodada.idRodada).getList().$object;
+            } else {
+                $scope.apostas = {};
+            }
+        };
+        
+        $scope.salvar = function() {
+            if($scope.apostas){
+                Restangular.all("apostas").post($scope.apostas).then(function(){
+                    
+                });
+            }
+        };
 
     }]);
