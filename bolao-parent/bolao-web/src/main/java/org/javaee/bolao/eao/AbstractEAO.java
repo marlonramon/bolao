@@ -1,17 +1,14 @@
 package org.javaee.bolao.eao;
 
-import java.text.MessageFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -25,11 +22,10 @@ import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.SingularAttribute;
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
 
 import org.javaee.bolao.entidades.IEntity;
 import org.javaee.bolao.entidades.SessaoUsuario;
+import org.javaee.bolao.exception.BolaoRuntimeException;
 import org.javaee.rest.common.XmlUtil;
 
 public abstract class AbstractEAO<E extends IEntity>
@@ -50,30 +46,30 @@ public abstract class AbstractEAO<E extends IEntity>
 		try{
 			getEntityManager().persist(entity);
 		}catch(Exception e){
-			throw convertException(e);
+			throw new BolaoRuntimeException(e);
 		}
 	}
 
-	private RuntimeException convertException(Exception e) {
-		
-		RuntimeException re = new RuntimeException(e);
-		
-		if(e instanceof ConstraintViolationException){
-			ConstraintViolationException  cve = (ConstraintViolationException) e;
-			Set<ConstraintViolation<?>> constraintViolations = cve.getConstraintViolations();
-			for (ConstraintViolation<?> constraintViolation : constraintViolations) {
-				StringBuilder sb = new StringBuilder();
-				sb.append("ConstraintViolationException");
-				sb.append("\nInvalidValue: "+constraintViolation.getInvalidValue());
-				sb.append("\nProperty: "+constraintViolation.getPropertyPath());
-				sb.append("\nMessage: "+constraintViolation.getMessage());
-				logger.severe(sb.toString());
-			}
-		}
-		
-		
-		return re;
-	}
+//	private RuntimeException convertException(Exception e) {
+//		
+//		RuntimeException re = new RuntimeException(e);
+//		
+//		if(e instanceof ConstraintViolationException){
+//			ConstraintViolationException  cve = (ConstraintViolationException) e;
+//			Set<ConstraintViolation<?>> constraintViolations = cve.getConstraintViolations();
+//			for (ConstraintViolation<?> constraintViolation : constraintViolations) {
+//				StringBuilder sb = new StringBuilder();
+//				sb.append("ConstraintViolationException");
+//				sb.append("\nInvalidValue: "+constraintViolation.getInvalidValue());
+//				sb.append("\nProperty: "+constraintViolation.getPropertyPath());
+//				sb.append("\nMessage: "+constraintViolation.getMessage());
+//				logger.severe(sb.toString());
+//			}
+//		}
+//		
+//		
+//		return re;
+//	}
 
 	public void delete(Long id) {
 		logger.log(Level.INFO, "Delete {0} Id: {1}", new Object[]{entityClass.getSimpleName(), id});
@@ -92,20 +88,20 @@ public abstract class AbstractEAO<E extends IEntity>
 		try{
 			return getEntityManager().merge(entity);
 		}catch(Exception e){
-			throw convertException(e);
+			throw new BolaoRuntimeException(e);
 		}
 	}
 
 	public E find(Long id) {
 		logger.log(Level.INFO, "Find {0} Id: {1}", new Object[]{entityClass.getSimpleName(), id});
 		if (id == null) {
-			throw new IllegalArgumentException("ID não pode ser NULL");
+			throw new BolaoRuntimeException("ID não pode ser NULL");
 		}
 		
 		E entity = getEntityManager().find(entityClass, id);
 		
 		if(entity == null){
-			throw new EntityNotFoundException(MessageFormat.format("Não foi possível localizar a entidade {0} para o ID {1}", entityClass.getSimpleName(), id));
+			throw new BolaoRuntimeException("Não foi possível localizar a entidade {0} para o ID {1}", entityClass.getSimpleName(), id);
 		}
 		
 		return entity;
@@ -113,7 +109,7 @@ public abstract class AbstractEAO<E extends IEntity>
 
 	public E find(E entity) {
 		if (entity == null) {
-			throw new IllegalArgumentException("Entidade não pode ser NULL");
+			throw new BolaoRuntimeException("Entidade não pode ser NULL");
 		}
 		return find(entity.getId());
 	}
@@ -183,14 +179,6 @@ public abstract class AbstractEAO<E extends IEntity>
 		TypedQuery<E> query = getEntityManager().createQuery(criteriaQuery);
 
 		return query.getResultList();
-	}
-
-	public E createIntance() {
-		try {
-			return entityClass.newInstance();
-		} catch (Exception e) {
-			throw new RuntimeException("Erro ao instanciar a classe: " + entityClass.getSimpleName(), e);
-		}
 	}
 
 	protected CriteriaQuery<E> createCriteriaQuery() {

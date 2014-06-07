@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -37,11 +38,13 @@ public class Usuario extends AbstractEntity {
 	@Size(min = 1, max = 80)
 	private String senha;
 	
+	@Transient
 	@NotNull
+	private String confirmarSenha;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataCadastro;
 	
-	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataUltimoAcesso;
 	
@@ -126,5 +129,13 @@ public class Usuario extends AbstractEntity {
 	
 	public void setPerfil(PerfilUsuario perfil) {
 		this.perfil = perfil;
+	}
+	
+	public String getConfirmarSenha() {
+		return confirmarSenha;
+	}
+	
+	public void setConfirmarSenha(String confirmarSenha) {
+		this.confirmarSenha = confirmarSenha;
 	}
 }

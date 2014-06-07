@@ -66,9 +66,9 @@ public class PartidaFacade {
         Integer totalAposta = 0;
         
         if (isPlacarCerteiro(partida, aposta)) {
-            totalAposta += bolao.getPontosPlacarExato();
+            totalAposta += bolao.getPontosAcertoDoisPlacares();
         } else if(isResultadoCerteiro(partida, aposta)) {
-            totalAposta += bolao.getPontosResultado();
+            totalAposta += bolao.getPontosAcertoResultado();
         }
 
         return 0;

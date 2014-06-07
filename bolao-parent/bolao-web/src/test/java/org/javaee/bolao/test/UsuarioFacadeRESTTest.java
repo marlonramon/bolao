@@ -17,6 +17,7 @@ import org.javaee.bolao.entidades.Usuario;
 import org.javaee.bolao.entidades.Usuario.PerfilUsuario;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -25,7 +26,7 @@ import org.junit.runners.JUnit4;
 public class UsuarioFacadeRESTTest {
 
 	private static final String EMAIL_TEST = "teste@test.com.br";
-	private static final String uriBase = "http://localhost:8080/bolao-web/";
+	private static final String uriBase = "http://localhost:8080/bolao-web/app";
 
 	public UsuarioFacadeRESTTest() {
 	}
@@ -39,9 +40,11 @@ public class UsuarioFacadeRESTTest {
 
 		Client client = ClientBuilder.newClient();
 
-		WebTarget target = client.target(UriBuilder.fromPath(uriBase).path("users/email").path(EMAIL_TEST));
+		WebTarget target = client.target(UriBuilder.fromPath(uriBase)
+				.path("usuarios/email").path(EMAIL_TEST));
 
-		Usuario user = target.request(MediaType.APPLICATION_XML_TYPE).get(Usuario.class);
+		Usuario user = target.request(MediaType.APPLICATION_XML_TYPE).get(
+				Usuario.class);
 
 		client.close();
 
@@ -51,11 +54,13 @@ public class UsuarioFacadeRESTTest {
 	private Usuario insert(Usuario usuario) {
 		Client client = ClientBuilder.newClient();
 
-		WebTarget target = client.target(UriBuilder.fromPath(uriBase).path("users"));
+		WebTarget target = client.target(UriBuilder.fromPath(uriBase).path(
+				"usuarios"));
 
 		Entity<Usuario> xml = Entity.xml(usuario);
 
-		usuario = target.request(MediaType.APPLICATION_XML_TYPE).post(xml, Usuario.class);
+		usuario = target.request(MediaType.APPLICATION_XML_TYPE).post(xml,
+				Usuario.class);
 
 		client.close();
 
@@ -66,11 +71,13 @@ public class UsuarioFacadeRESTTest {
 	private Usuario update(Usuario usuario) {
 		Client client = ClientBuilder.newClient();
 
-		WebTarget target = client.target(UriBuilder.fromPath(uriBase).path("users"));
+		WebTarget target = client.target(UriBuilder.fromPath(uriBase).path(
+				"usuarios"));
 
 		Entity<Usuario> xml = Entity.xml(usuario);
 
-		usuario = target.request(MediaType.APPLICATION_XML_TYPE).post(xml, Usuario.class);
+		usuario = target.request(MediaType.APPLICATION_XML_TYPE).post(xml,
+				Usuario.class);
 
 		client.close();
 
@@ -81,18 +88,14 @@ public class UsuarioFacadeRESTTest {
 	@Test
 	public void insert() {
 
-		Usuario userTest = findByEmail(EMAIL_TEST);
+		Usuario userTest = new Usuario();// findByEmail(EMAIL_TEST);
 
-		if (userTest == null) {
-			userTest = new Usuario();
-			userTest.setNome("teste");
-			userTest.setSenha("teste");
-			userTest.setEmail(EMAIL_TEST);
-			userTest.setPerfil(PerfilUsuario.USUARIO);
+		// userTest.setNome("teste");
+		userTest.setSenha("teste");
+		userTest.setEmail(EMAIL_TEST);
+		userTest.setPerfil(PerfilUsuario.USUARIO);
 
-			insert(userTest);
-
-		}
+		insert(userTest);
 
 		Assert.assertNotNull(userTest.getIdUsuario());
 
@@ -101,6 +104,7 @@ public class UsuarioFacadeRESTTest {
 	}
 
 	@Test
+	@Ignore
 	public void loginFail() {
 
 		Usuario userTest = new Usuario();
@@ -110,19 +114,23 @@ public class UsuarioFacadeRESTTest {
 
 		Client client = ClientBuilder.newClient();
 
-		WebTarget target = client.target(UriBuilder.fromPath(uriBase).path("users/login"));
+		WebTarget target = client.target(UriBuilder.fromPath(uriBase).path(
+				"usuarios/login"));
 
 		Entity<Usuario> xml = Entity.xml(userTest);
 
-		Response response = target.request(MediaType.APPLICATION_XML_TYPE).post(xml);
+		Response response = target.request(MediaType.APPLICATION_XML_TYPE)
+				.post(xml);
 
-		Assert.assertEquals(response.getStatus(), Status.UNAUTHORIZED.getStatusCode());
-		
+		Assert.assertEquals(response.getStatus(),
+				Status.UNAUTHORIZED.getStatusCode());
+
 		client.close();
 
 	}
-	
+
 	@Test
+	@Ignore
 	public void login() {
 
 		Usuario userTest = new Usuario();
@@ -132,19 +140,22 @@ public class UsuarioFacadeRESTTest {
 
 		Client client = ClientBuilder.newClient();
 
-		WebTarget target = client.target(UriBuilder.fromPath(uriBase).path("users/login"));
+		WebTarget target = client.target(UriBuilder.fromPath(uriBase).path(
+				"usuarios/login"));
 
 		Entity<Usuario> xml = Entity.xml(userTest);
 
-		SessaoUsuario sessaoUsuario = target.request(MediaType.APPLICATION_XML_TYPE).post(xml, SessaoUsuario.class);
+		SessaoUsuario sessaoUsuario = target.request(
+				MediaType.APPLICATION_XML_TYPE).post(xml, SessaoUsuario.class);
 
 		Assert.assertNotNull(sessaoUsuario);
-		
+
 		client.close();
 
 	}
 
 	@Test
+	@Ignore
 	public void logout() {
 
 		Usuario userTest = new Usuario();
@@ -154,18 +165,20 @@ public class UsuarioFacadeRESTTest {
 
 		Client client = ClientBuilder.newClient();
 
-		WebTarget target = client.target(UriBuilder.fromPath(uriBase).path("users/logout"));
+		WebTarget target = client.target(UriBuilder.fromPath(uriBase).path(
+				"usuarios/logout"));
 
 		Entity<Usuario> xml = Entity.xml(userTest);
 
-		SessaoUsuario sessaoUsuario = target.request(MediaType.APPLICATION_XML_TYPE).post(xml, SessaoUsuario.class);
+		SessaoUsuario sessaoUsuario = target.request(
+				MediaType.APPLICATION_XML_TYPE).post(xml, SessaoUsuario.class);
 
 		Assert.assertNotNull(sessaoUsuario);
-		
+
 		client.close();
 
 	}
-	
+
 	// @Test
 	public void listUsers() {
 
@@ -176,9 +189,11 @@ public class UsuarioFacadeRESTTest {
 		GenericType<List<Usuario>> responseType = new GenericType<List<Usuario>>() {
 		};
 
-		WebTarget target = client.target(UriBuilder.fromPath(uriBase).path("users"));
+		WebTarget target = client.target(UriBuilder.fromPath(uriBase).path(
+				"usuarios"));
 
-		List<Usuario> userList = target.request(MediaType.APPLICATION_XML_TYPE).get(responseType);
+		List<Usuario> userList = target.request(MediaType.APPLICATION_XML_TYPE)
+				.get(responseType);
 
 		for (Usuario user : userList) {
 

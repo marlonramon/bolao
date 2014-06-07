@@ -120,5 +120,7 @@ public class Partida extends AbstractEntity {
         return getIdPartida();
     }
 
-    
+    public String getDescricao() {
+    	return getClubeMandante().getNome() + " X "+getClubeVisitante().getNome();
+    }
 }

@@ -1,12 +1,11 @@
 package org.javaee.bolao.exception;
 
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response.Status;
 
-public class NaoAutorizadoException extends WebApplicationException {
+public class NaoAutorizadoException extends BolaoWebApplicationException {
 	private static final long serialVersionUID = 1L;
 
 	public NaoAutorizadoException(String messagem) {
-		super(messagem, Status.UNAUTHORIZED);
+		super(Status.UNAUTHORIZED, messagem);
 	}
 }

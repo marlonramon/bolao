@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
 import org.javaee.bolao.config.Config;
@@ -17,7 +16,7 @@ import org.javaee.bolao.entidades.Bolao;
 import org.javaee.bolao.entidades.SessaoUsuario;
 import org.javaee.bolao.entidades.Usuario;
 import org.javaee.bolao.entidades.UsuarioBolao;
-import org.javaee.bolao.exception.ErrorResponse;
+import org.javaee.bolao.exception.BolaoWebApplicationException;
 import org.javaee.bolao.exception.NaoAutorizadoException;
 import org.javaee.rest.common.Encryptor;
 
@@ -32,13 +31,13 @@ public class UsuarioFacade {
 
 	@Inject
 	private UsuarioBolaoEAO usuarioBolaoEAO;
-	
+
 	@Inject
 	private BolaoEAO bolaoEAO;
 
 	public Usuario insertOrUpdate(Usuario user) {
 		validarEmailDuplicado(user);
-
+		validarConfirmarSenha(user);
 		criptografarSenha(user);
 
 		if (!user.hasId())
@@ -57,22 +56,25 @@ public class UsuarioFacade {
 		} else
 			usuario.setSenha(Encryptor.encryptPassword(usuario.getSenha()));
 	}
-
+	
 	private boolean isSenhaAlterada(Usuario usuario) {
-		Usuario usuarioDB = (Usuario) this.usuarioEAO.find(usuario);
+		Usuario usuarioDB = usuarioEAO.find(usuario);
 		return !usuarioDB.getSenha().equals(usuario.getSenha());
 	}
 
 	public void validarEmailDuplicado(Usuario usuario) {
 		Usuario userDB = this.usuarioEAO.findByEmail(usuario.getEmail());
-		if ((userDB != null) && (!userDB.equals(usuario)))
-			throw new WebApplicationException(Response
-					.status(Response.Status.CONFLICT)
-					.entity(new ErrorResponse(
-							"Já existe um Usuário com o Email {0}",
-							new Object[] { usuario.getEmail() })).build());
+		if ((userDB != null) && (!userDB.equals(usuario))){
+			throw new BolaoWebApplicationException(Response.Status.CONFLICT, "Já existe um Usuário com o Email {0}", usuario.getEmail());
+		}
 	}
 
+	public void validarConfirmarSenha(Usuario usuario) {
+		if (!usuario.getSenha().equals(usuario.getConfirmarSenha())){
+			throw new BolaoWebApplicationException(Response.Status.CONFLICT, "A Senha não foi confirmada corretamente.");
+		}
+	}
+	
 	public void delete(Long id) {
 		this.usuarioEAO.delete(id);
 	}
@@ -86,6 +88,15 @@ public class UsuarioFacade {
 	}
 
 	public SessaoUsuario login(String email, String senha) {
+		
+		if(email == null){
+			throw new BolaoWebApplicationException("Email é de preenchimento Obrigatório");
+		}
+		
+		if(senha == null){
+			throw new BolaoWebApplicationException("Senha é de preenchimento Obrigatório");
+		}
+		
 		Usuario usuario = findByEmail(email);
 		if (usuario == null) {
 			throw new NaoAutorizadoException("Email e/ou senha inválido.");
@@ -99,12 +110,10 @@ public class UsuarioFacade {
 
 		removeInvalidSessions(usuario, actualDate);
 
-		SessaoUsuario validSession = this.sessaoUsuarioEAO.findSessaoValida(
-				email, actualDate);
+		SessaoUsuario validSession = this.sessaoUsuarioEAO.findSessaoValida(email, actualDate);
 
 		if (validSession == null) {
-			validSession = this.sessaoUsuarioEAO.create(usuario,
-					Config.getExpirationLoginTime());
+			validSession = this.sessaoUsuarioEAO.create(usuario, Config.getExpirationLoginTime());
 		}
 
 		return validSession;
@@ -122,8 +131,7 @@ public class UsuarioFacade {
 		Usuario usuario = findByEmail(email);
 
 		if (usuario != null) {
-			validSession = this.sessaoUsuarioEAO.findSessaoValida(
-					usuario.getEmail(), expirateDate);
+			validSession = this.sessaoUsuarioEAO.findSessaoValida(usuario.getEmail(), expirateDate);
 
 			if (validSession != null) {
 				validSession.setDataExpiracao(expirateDate);
@@ -143,21 +151,21 @@ public class UsuarioFacade {
 	}
 
 	public boolean vincularUsuarioBolao(Long idUsuario, Long idBolao) {
-		
+
 		Usuario usuario = usuarioEAO.find(idUsuario);
-		
+
 		Bolao bolao = bolaoEAO.find(idBolao);
-		
-		if(!isUsuarioVinculadoBolao(usuario, bolao)){
+
+		if (!isUsuarioVinculadoBolao(usuario, bolao)) {
 			UsuarioBolao usuarioBolao = new UsuarioBolao();
 			usuarioBolao.setUsuario(usuario);
 			usuarioBolao.setBolao(bolao);
-			
+
 			usuarioBolaoEAO.insert(usuarioBolao);
-			
+
 			return true;
 		}
-		
+
 		return false;
 	}
 

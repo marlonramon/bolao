@@ -29,16 +29,13 @@ public class Bolao extends AbstractEntity {
 	private BigDecimal contribuicaoPorRodada;
 
 	@NotNull
-	private Short pontosPlacarExato;
+	private Short pontosAcertoDoisPlacares;
 
 	@NotNull
-	private Short pontosResultadoEPlacar;
+	private Short pontosAcertoUmPlacar;
 
 	@NotNull
-	private Short pontosResultado;
-
-	@NotNull
-	private Short pontosPlacar;
+	private Short pontosAcertoResultado;
 
 	@NotNull
 	@JoinColumn(name = "idCampeonato")
@@ -69,36 +66,28 @@ public class Bolao extends AbstractEntity {
 		this.contribuicaoPorRodada = contribuicaoPorRodada;
 	}
 
-	public Short getPontosPlacarExato() {
-		return pontosPlacarExato;
+	public Short getPontosAcertoDoisPlacares() {
+		return pontosAcertoDoisPlacares;
 	}
 
-	public void setPontosPlacarExato(Short pontosPlacarExato) {
-		this.pontosPlacarExato = pontosPlacarExato;
+	public void setPontosAcertoDoisPlacares(Short pontosPlacarExato) {
+		this.pontosAcertoDoisPlacares = pontosPlacarExato;
 	}
 
-	public Short getPontosResultadoEPlacar() {
-		return pontosResultadoEPlacar;
+	public Short getPontosAcertoUmPlacar() {
+		return pontosAcertoUmPlacar;
 	}
 
-	public void setPontosResultadoEPlacar(Short pontosResultadoEPlacar) {
-		this.pontosResultadoEPlacar = pontosResultadoEPlacar;
+	public void setPontosAcertoUmPlacar(Short pontosResultadoEPlacar) {
+		this.pontosAcertoUmPlacar = pontosResultadoEPlacar;
 	}
 
-	public Short getPontosResultado() {
-		return pontosResultado;
+	public Short getPontosAcertoResultado() {
+		return pontosAcertoResultado;
 	}
 
-	public void setPontosResultado(Short pontosResultado) {
-		this.pontosResultado = pontosResultado;
-	}
-
-	public Short getPontosPlacar() {
-		return pontosPlacar;
-	}
-
-	public void setPontosPlacar(Short pontosPlacar) {
-		this.pontosPlacar = pontosPlacar;
+	public void setPontosAcertoResultado(Short pontosResultado) {
+		this.pontosAcertoResultado = pontosResultado;
 	}
 
 	public Campeonato getCampeonato() {

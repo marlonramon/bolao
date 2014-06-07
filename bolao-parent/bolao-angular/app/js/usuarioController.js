@@ -66,6 +66,9 @@ app.controller('LoginCtrl', ['$scope', '$cookieStore', 'Restangular', 'usuarioSe
                 Restangular.setDefaultHeaders({'Authorization': $cookieStore.get('sessaoUsuario').token});
                 
                 $scope.atualizar();                
+                
+                $('#loginModal').modal('hide')
+                
             });
         };
 
