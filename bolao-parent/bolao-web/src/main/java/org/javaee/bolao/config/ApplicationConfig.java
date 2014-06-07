@@ -1,5 +1,6 @@
 package org.javaee.bolao.config;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -9,6 +10,8 @@ import org.javaee.bolao.aposta.ApostaFacadeREST;
 import org.javaee.bolao.bolao.BolaoFacadeREST;
 import org.javaee.bolao.campeonato.CampeonatoFacadeREST;
 import org.javaee.bolao.clube.ClubeFacadeREST;
+import org.javaee.bolao.exception.BolaoExceptionMapper;
+import org.javaee.bolao.exception.ConstraintViolationExceptionMapper;
 import org.javaee.bolao.partida.PartidaFacadeREST;
 import org.javaee.bolao.rodada.RodadaFacadeREST;
 import org.javaee.bolao.usuario.UsuarioFacadeREST;
@@ -34,6 +37,8 @@ public class ApplicationConfig extends Application {
     	
         resources.add(UsuarioFacadeREST.class);
         resources.add(CrossOriginResourceSharingFilter.class);
+        resources.add(ConstraintViolationExceptionMapper.class);
+        resources.add(BolaoExceptionMapper.class);
 //        resources.add(SecurityInterceptor.class);
         resources.add(CampeonatoFacadeREST.class);
         resources.add(BolaoFacadeREST.class);        
@@ -46,7 +51,12 @@ public class ApplicationConfig extends Application {
     
     @Override
     public Map<String, Object> getProperties() {
-    	return super.getProperties();
+    	Map<String, Object> properties = new HashMap<String, Object>();
+    	
+    	properties.put("jersey.config.beanValidation.enableOutputValidationErrorEntity.server", true);
+    	
+    	return properties;
+    	
     }
     
 }

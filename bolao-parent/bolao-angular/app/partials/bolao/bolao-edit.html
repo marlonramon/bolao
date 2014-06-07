@@ -5,7 +5,7 @@
         <p ng-repeat="errs in errors" class="alert alert-error"><strong>Erro</strong>: {{ errs}}</p>
 
         <div class="panel-body">
-            <form class="form-horizontal">
+            <form class="form-horizontal" name="form">
 
                 <fieldset> 
                     <legend ng-show="bolao.idBolao">Alterar Bolão</legend>
@@ -72,7 +72,7 @@
                     
                     <div class="form-group">
                         <div class="col-lg-8 col-lg-offset-3">
-                            <button ng-click="save()" class="btn btn-small btn-primary">Salvar</button>
+                            <button ng-disabled="!form.$valid" ng-click="save()" class="btn btn-small btn-primary">Salvar</button>
                             <button ng-show="bolao.idBolao" ng-click="delete(bolao.idBolao)" class="btn btn-small btn-danger">Excluir</button>
                             <a ng-click="cancel()" class="btn btn-small btn-default">Cancelar</a>
                             

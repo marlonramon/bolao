@@ -17,18 +17,18 @@ public class ConstraintViolationExceptionMapper implements ExceptionMapper<Const
 	
 	@Override
 	public Response toResponse(ConstraintViolationException exception) {
-		logger.log(Level.SEVERE, "ConstraintViolationException: "+exception.getMessage(), exception);
 		
 		Set<ConstraintViolation<?>> constraintViolations = exception.getConstraintViolations();
 		
-		ErrorResponse errorBean = new ErrorResponse(exception.getMessage());
+		ErroResposta errorBean = new ErroResposta(exception.getMessage());
 		
 		for (ConstraintViolation<?> constraintViolation : constraintViolations) {
-			errorBean.addChildMessage(constraintViolation.getMessage());
+			errorBean.addMensagem(constraintViolation.getPropertyPath()+ " "+ constraintViolation.getMessage());
 		}
 		
+		logger.log(Level.SEVERE, "ConstraintViolationException: "+errorBean);
 		
-		return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorBean).build();
+		return new BolaoWebApplicationException(errorBean).getResponse();
 	}
 
 }

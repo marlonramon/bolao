@@ -5,26 +5,26 @@ import java.text.MessageFormat;
 import javax.ejb.ApplicationException;
 
 @ApplicationException(rollback=true)
-public class BusinessException extends Exception{
+public class BolaoRuntimeException extends RuntimeException{
 	private static final long serialVersionUID = 1L;
 
-	public BusinessException(Throwable e, String message, Object... args) {
+	public BolaoRuntimeException(Throwable e, String message, Object... args) {
 		super(MessageFormat.format(message, args), e);
 	}
 	
-	public BusinessException(String message, Object... args) {
+	public BolaoRuntimeException(String message, Object... args) {
 		super(MessageFormat.format(message, args));
 	}
 	
-	public BusinessException(String message) {
+	public BolaoRuntimeException(String message) {
 		super(message);
 	}
 
-	public BusinessException(String message, Throwable cause) {
+	public BolaoRuntimeException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
-	public BusinessException(Throwable cause) {
+	public BolaoRuntimeException(Throwable cause) {
 		super(cause);
 	}
 	

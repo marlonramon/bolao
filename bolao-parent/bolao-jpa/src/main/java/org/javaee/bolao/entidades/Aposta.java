@@ -1,5 +1,7 @@
 package org.javaee.bolao.entidades;
 
+import java.util.Date;
+
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -38,6 +42,9 @@ public class Aposta extends AbstractEntity {
 	@JoinColumn(name="idUsuarioBolao")
 	private UsuarioBolao usuarioBolao;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dataAposta;
+	
 	public Long getIdAposta() {
 		return idAposta;
 	}
@@ -76,6 +83,14 @@ public class Aposta extends AbstractEntity {
 	
 	public void setPlacar(Placar placar) {
 		this.placar = placar;
+	}
+	
+	public Date getDataAposta() {
+		return dataAposta;
+	}
+	
+	public void setDataAposta(Date dataAposta) {
+		this.dataAposta = dataAposta;
 	}
 	
 	@Override

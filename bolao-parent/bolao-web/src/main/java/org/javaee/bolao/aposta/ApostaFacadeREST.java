@@ -3,7 +3,9 @@ package org.javaee.bolao.aposta;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -16,11 +18,11 @@ public class ApostaFacadeREST {
 	@Inject
 	private ApostaFacade apostaFacade;
 
-//	@POST
-//	@Consumes({ "application/xml", "application/json" })
-//	public Aposta insertOrUpdate(Aposta aposta) {
-//		return apostaFacade.insertOrUpdate(aposta);
-//	}
+	@POST
+	@Consumes({ "application/xml", "application/json" })
+	public void insertOrUpdate(List<Aposta> apostas) {
+		apostaFacade.gravar(apostas);
+	}
 
 //	@DELETE
 //	@Path("{id}")

@@ -109,16 +109,16 @@
 
                         <p ng-repeat="errs in errors" class="alert alert-error"><strong>Erro</strong>: {{ errs}}</p>
 
-                        <form class="form center-block">
+                        <form class="form center-block" name="formLogin">
                             <div class="form-group">
-                                <input focus-me ng-model="usuario.email" class="form-control input-lg" placeholder="Email" type="text" mandatory="true">
+                                <input focus-me ng-model="usuario.email" required="true" class="form-control input-lg" placeholder="Email" type="text">
                             </div>
                             <div class="form-group">
-                                <input ng-model="usuario.senha" class="form-control input-lg" placeholder="Senha" type="password" mandatory="true">
+                                <input ng-model="usuario.senha" required="true" class="form-control input-lg" placeholder="Senha" type="password">
                             </div>
 
                             <div class="modal-footer">
-                                <button ng-click="login()" class="btn btn-primary btn-lg btn-block" data-dismiss="modal">Entrar</button>                                
+                                <button ng-disabled="!formLogin.$valid" ng-click="login()" class="btn btn-primary btn-lg btn-block" >Entrar</button>                                
                             </div>
 
                         </form>

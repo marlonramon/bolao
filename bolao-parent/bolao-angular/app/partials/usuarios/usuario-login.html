@@ -1,22 +1,24 @@
-    <div class="modal-dialog" style="width: 300pt">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-                <h1 class="text-center">Entrar</h1>
-            </div>
-            <div class="modal-body">
-                <form class="form center-block">
-                    <div class="form-group">
-                        <input ng-model="usuario.email" class="form-control input-lg" placeholder="Email" type="email">
-                    </div>
-                    <div class="form-group">
-                        <input ng-model="usuario.senha" class="form-control input-lg" placeholder="Senha" type="password">
-                    </div>
-
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button ng-click="login()" class="btn btn-primary btn-lg btn-block">Entrar</button>                                
-            </div>
+<div class="modal-dialog" style="width: 300pt">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+            <h1 class="text-center">Entrar</h1>
         </div>
+        <div class="modal-body">
+            <form class="form center-block">
+                <div class="form-group">
+                    <input ng-model="usuario.email" required="true" class="form-control input-lg" placeholder="Email" type="email">
+                </div>
+                <div class="form-group">
+                    <input ng-model="usuario.senha" required="true" class="form-control input-lg" placeholder="Senha" type="password">
+                </div>
+
+                <div class="modal-footer">
+                    <button ng-click="login()" class="btn btn-primary btn-lg btn-block">Entrar</button>                                
+                </div>
+
+            </form>
+        </div>
+
     </div>
+</div>

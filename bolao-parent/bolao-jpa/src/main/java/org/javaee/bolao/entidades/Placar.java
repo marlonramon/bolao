@@ -76,5 +76,9 @@ public class Placar implements IResultado {
 		
 		return resultadoIgual;
 	}
-
+	
+	public boolean isAoMenosUmPlacarPreenchido(){
+		return getPlacarMandante() != null || getPlacarVisitante() != null;
+	}
+	
 }

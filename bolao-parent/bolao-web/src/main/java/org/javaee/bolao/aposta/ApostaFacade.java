@@ -1,6 +1,7 @@
 package org.javaee.bolao.aposta;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -15,6 +16,7 @@ import org.javaee.bolao.entidades.Partida;
 import org.javaee.bolao.entidades.Placar;
 import org.javaee.bolao.entidades.Rodada;
 import org.javaee.bolao.entidades.UsuarioBolao;
+import org.javaee.bolao.exception.BolaoWebApplicationException;
 import org.javaee.bolao.vo.ApostaVO;
 
 @Stateless
@@ -72,5 +74,66 @@ public class ApostaFacade {
 
 	public List<ApostaVO> persitApostas(List<ApostaVO> apostaList) {
 		return null;
+	}
+
+	public void gravar(List<Aposta> apostas) {
+		
+		for (Aposta aposta : apostas) {
+			
+			if(isApostaComAomEnosUmPlacarPreenchido(aposta)){
+				inserirOuAtualizar(aposta);
+			}else{
+				excluirSeExistir(aposta);
+			}
+		}
+		
+	}
+
+	private void excluirSeExistir(Aposta aposta) {
+		if(aposta.hasId()){
+			apostaEAO.delete(aposta);
+		}
+	}
+
+	private void inserirOuAtualizar(Aposta aposta) {
+		Partida partida = findPartida(aposta);
+		
+		validarPlacar(partida, aposta.getPlacar());
+		
+		if(!aposta.hasId()){
+			aposta.setDataAposta(new Date());
+			validarApostaNova(partida, aposta);
+			apostaEAO.insert(aposta);
+		}else{
+			apostaEAO.update(aposta);
+		}
+	}
+	
+	private boolean isApostaComAomEnosUmPlacarPreenchido(Aposta aposta){
+		Placar placar = aposta.getPlacar();
+		return placar != null && placar.isAoMenosUmPlacarPreenchido();
+	}
+	
+	private void validarPlacar(Partida partida, Placar placar){
+		if(placar.getPlacarMandante() == null){
+			throw new BolaoWebApplicationException("O Placar do Time mandante da Partida {0} não foi preenchido.", partida.getDescricao());
+		}
+		
+		if(placar.getPlacarVisitante() == null){
+			throw new BolaoWebApplicationException("O Placar do Time visitante da Partida {0} não foi preenchido.", partida.getDescricao());
+		}
+	}
+	
+	private Partida findPartida(Aposta aposta){
+		return partidaEAO.find(aposta.getPartida());
+	}
+	
+	private void validarApostaNova(Partida partida, Aposta aposta) {
+		Date dataPartida = partida.getDataPartida();
+		Date dataAposta = aposta.getDataAposta();
+		if(dataPartida.compareTo(dataAposta) < 0){
+			throw new BolaoWebApplicationException("Não foi possível cadastar a Aposta pois a data da Aposta {0,date} é supeior a data da Partida {1,date}", dataAposta, dataPartida);
+		}
+		
 	}
 }
