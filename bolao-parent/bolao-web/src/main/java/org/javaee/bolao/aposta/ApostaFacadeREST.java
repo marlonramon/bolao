@@ -24,11 +24,7 @@ public class ApostaFacadeREST {
 		apostaFacade.gravar(apostas);
 	}
 
-//	@DELETE
-//	@Path("{id}")
-//	public void delete(@PathParam("id") Long id) {
-//		apostaFacade.delete(id);
-//	}
+
 
 	@GET
 	@Path("usuariobolao/{idUsuarioBolao}/rodada/{idRodada}")
@@ -37,9 +33,4 @@ public class ApostaFacadeREST {
 		return apostaFacade.findApostas(idUsuarioBolao, idRodada);
 	}
 
-//	@GET
-//	@Produces({ "application/xml", "application/json" })
-//	public List<Aposta> findAll() {
-//		return apostaFacade.findAll();
-//	}
 }

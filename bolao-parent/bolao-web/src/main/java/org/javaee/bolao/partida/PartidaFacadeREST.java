@@ -16,35 +16,36 @@ import org.javaee.bolao.entidades.Partida;
 
 @Stateless
 @Path("partidas")
-public class PartidaFacadeREST
-{
+public class PartidaFacadeREST {
 
-  @Inject
-  private PartidaFacade partidaFacade;
+	@Inject
+	private PartidaFacade partidaFacade;
 
-  @POST
-  @Consumes({"application/xml", "application/json"})
-  public Partida insertOrUpdate(Partida partida)
-  {
-    return this.partidaFacade.insertOrUpdate(partida);
-  }
+	@POST
+	@Consumes({ "application/xml", "application/json" })
+	public Partida insertOrUpdate(Partida partida) {
+		return this.partidaFacade.insertOrUpdate(partida);
+	}
 
-  @DELETE
-  @Path("{id}")
-  public void delete(@PathParam("id") Long id) {
-    this.partidaFacade.delete(id);
-  }
+	@DELETE
+	@Path("{id}")
+	public void delete(@PathParam("id") Long id) {
+		this.partidaFacade.delete(id);
+	}
 
-  @GET
-  @Path("{id}")
-  @Produces({"application/xml", "application/json"})
-  public Partida find(@PathParam("id") Long id) {
-    return this.partidaFacade.find(id);
-  }
+	@GET
+	@Path("{id}")
+	@Produces({ "application/xml", "application/json" })
+	public Partida find(@PathParam("id") Long id) {
+		return this.partidaFacade.find(id);
+	}
 
-  @GET
-  @Produces({"application/xml", "application/json"})
-  public List<Partida> findAll() {
-    return this.partidaFacade.findAll();
-  }
+	@GET
+	@Produces({ "application/xml", "application/json" })
+	public List<Partida> findAll() {
+		return this.partidaFacade.findAll();
+	}
+
+	
+
 }

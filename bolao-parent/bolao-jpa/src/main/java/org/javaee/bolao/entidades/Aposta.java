@@ -30,12 +30,12 @@ public class Aposta extends AbstractEntity {
 	private Placar placar;
 	
 	@NotNull
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="idPartida")
 	private Partida partida;
 	
 	@NotNull
-	private Integer pontuacao;
+	private Integer pontuacao = 0;
 	
 	@NotNull
 	@ManyToOne(fetch=FetchType.LAZY)

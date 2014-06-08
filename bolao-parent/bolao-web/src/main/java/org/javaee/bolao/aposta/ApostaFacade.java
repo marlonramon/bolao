@@ -29,19 +29,19 @@ public class ApostaFacade {
 
 	@Inject
 	private UsuarioBolaoEAO usuarioBolaoEAO;
-	
+
 	@Inject
 	private RodadaEAO rodadaEAO;
-	
+
 	public List<Aposta> findApostas(Long idUsuarioBolao, Long idRodada) {
-		
+
 		Rodada rodada = rodadaEAO.find(idRodada);
-		
+
 		UsuarioBolao usuarioBolao = usuarioBolaoEAO.find(idUsuarioBolao);
-		
+
 		return findApostas(usuarioBolao, rodada);
 	}
-	
+
 	public List<Aposta> findApostas(UsuarioBolao usuarioBolao, Rodada rodada) {
 		List<Partida> partidas = partidaEAO.findByRodada(rodada);
 		return createApostaList(usuarioBolao, partidas);
@@ -52,11 +52,11 @@ public class ApostaFacade {
 
 		for (Partida partida : partidas) {
 			Aposta aposta = apostaEAO.findByPartida(usuarioBolao, partida);
-			
-			if(aposta == null){
+
+			if (aposta == null) {
 				aposta = createAposta(partida, usuarioBolao);
 			}
-			
+
 			apostas.add(aposta);
 		}
 
@@ -68,7 +68,7 @@ public class ApostaFacade {
 		aposta.setPartida(partida);
 		aposta.setPlacar(new Placar());
 		aposta.setUsuarioBolao(usuarioBolao);
-		
+
 		return aposta;
 	}
 
@@ -77,63 +77,66 @@ public class ApostaFacade {
 	}
 
 	public void gravar(List<Aposta> apostas) {
-		
+
 		for (Aposta aposta : apostas) {
-			
-			if(isApostaComAomEnosUmPlacarPreenchido(aposta)){
+
+			if (isApostaComAomEnosUmPlacarPreenchido(aposta)) {
 				inserirOuAtualizar(aposta);
-			}else{
+				System.out.println("inseri a aposta: " + aposta.getIdAposta());
+			} else {
+				System.out.println("excluindo a aposta: " + aposta.getIdAposta());
 				excluirSeExistir(aposta);
 			}
 		}
-		
+
 	}
 
 	private void excluirSeExistir(Aposta aposta) {
-		if(aposta.hasId()){
+		if (aposta.hasId()) {
 			apostaEAO.delete(aposta);
 		}
 	}
 
 	private void inserirOuAtualizar(Aposta aposta) {
 		Partida partida = findPartida(aposta);
-		
+
 		validarPlacar(partida, aposta.getPlacar());
-		
-		if(!aposta.hasId()){
+
+		if (!aposta.hasId()) {
 			aposta.setDataAposta(new Date());
 			validarApostaNova(partida, aposta);
 			apostaEAO.insert(aposta);
-		}else{
+		} else {
 			apostaEAO.update(aposta);
 		}
 	}
-	
-	private boolean isApostaComAomEnosUmPlacarPreenchido(Aposta aposta){
+
+	private boolean isApostaComAomEnosUmPlacarPreenchido(Aposta aposta) {
 		Placar placar = aposta.getPlacar();
 		return placar != null && placar.isAoMenosUmPlacarPreenchido();
 	}
-	
-	private void validarPlacar(Partida partida, Placar placar){
-		if(placar.getPlacarMandante() == null){
+
+	private void validarPlacar(Partida partida, Placar placar) {
+		if (placar.getPlacarMandante() == null) {
 			throw new BolaoWebApplicationException("O Placar do Time mandante da Partida {0} não foi preenchido.", partida.getDescricao());
 		}
-		
-		if(placar.getPlacarVisitante() == null){
+
+		if (placar.getPlacarVisitante() == null) {
 			throw new BolaoWebApplicationException("O Placar do Time visitante da Partida {0} não foi preenchido.", partida.getDescricao());
 		}
 	}
-	
-	private Partida findPartida(Aposta aposta){
+
+	private Partida findPartida(Aposta aposta) {
 		return partidaEAO.find(aposta.getPartida());
 	}
-	
+
 	private void validarApostaNova(Partida partida, Aposta aposta) {
 		Date dataPartida = partida.getDataPartida();
 		Date dataAposta = aposta.getDataAposta();
-		if(dataPartida.compareTo(dataAposta) < 0){
-			throw new BolaoWebApplicationException("Não foi possível cadastar a Aposta pois a data da Aposta {0,date} é supeior a data da Partida {1,date}", dataAposta, dataPartida);
+		if (dataPartida.compareTo(dataAposta) < 0) {
+			throw new BolaoWebApplicationException("Não foi possível cadastar a Aposta pois a data da Aposta {0,date} é supeior a data da Partida {1,date}",
+					dataAposta, dataPartida);
 		}
-		
+
 	}
 }

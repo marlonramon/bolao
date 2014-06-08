@@ -19,6 +19,7 @@ import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @XmlRootElement
@@ -45,7 +46,7 @@ public class Partida extends AbstractEntity {
     private Clube clubeVisitante;
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name = "idRodada")
     private Rodada rodada;
 
@@ -53,6 +54,7 @@ public class Partida extends AbstractEntity {
     private Placar placar;
 
     @OneToMany(mappedBy = "partida", fetch = FetchType.LAZY)
+    @XmlTransient
     private Set<Aposta> apostas = new HashSet<>();
 
     public Long getIdPartida() {

@@ -77,6 +77,17 @@ public class Placar implements IResultado {
 		return resultadoIgual;
 	}
 	
+	public boolean isUmPlacarIgual(Placar placar){
+		boolean resultadoIgual = false;
+		
+		if(isResultadoDefinido() && placar.isResultadoDefinido()){
+			resultadoIgual = getPlacarMandante().equals(placar.getPlacarMandante()) ||
+					getPlacarVisitante().equals(placar.getPlacarVisitante());
+		}
+		
+		return resultadoIgual;
+	}
+	
 	public boolean isAoMenosUmPlacarPreenchido(){
 		return getPlacarMandante() != null || getPlacarVisitante() != null;
 	}

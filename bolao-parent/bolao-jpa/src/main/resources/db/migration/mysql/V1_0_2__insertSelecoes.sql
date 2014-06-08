@@ -1,4 +1,4 @@
-INSERT INTO Clube (nome, bandeira) VALUES('Áfica do Sul','bandeiras/AficaDoSul.jpg');
+INSERT INTO Clube (nome, bandeira) VALUES('África do Sul','bandeiras/AficaDoSul.jpg');
 INSERT INTO Clube (nome, bandeira) VALUES('Alemanha','bandeiras/Alemanha.jpg');
 INSERT INTO Clube (nome, bandeira) VALUES('Argélia','bandeiras/Argelia.jpg');
 INSERT INTO Clube (nome, bandeira) VALUES('Argentina','bandeiras/Argentina.jpg');
@@ -16,7 +16,7 @@ INSERT INTO Clube (nome, bandeira) VALUES('Espanha','bandeiras/Espanha.jpg');
 INSERT INTO Clube (nome, bandeira) VALUES('Estados Unidos','bandeiras/EstadosUnidos.jpg');
 INSERT INTO Clube (nome, bandeira) VALUES('Françaa','bandeiras/Franca.jpg');
 INSERT INTO Clube (nome, bandeira) VALUES('Gana','bandeiras/Gana.jpg');
-INSERT INTO Clube (nome, bandeira) VALUES('Grácia','bandeiras/Grecia.jpg');
+INSERT INTO Clube (nome, bandeira) VALUES('Grecia','bandeiras/Grecia.jpg');
 INSERT INTO Clube (nome, bandeira) VALUES('Holanda','bandeiras/Holanda.jpg');
 INSERT INTO Clube (nome, bandeira) VALUES('Honduras','bandeiras/Honduras.jpg');
 INSERT INTO Clube (nome, bandeira) VALUES('Inglaterra','bandeiras/Inglaterra.jpg');

@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.annotation.ManagedBean;
 import javax.inject.Inject;
 
+import org.javaee.bolao.eao.ApostaEAO;
 import org.javaee.bolao.eao.PartidaEAO;
 import org.javaee.bolao.entidades.Aposta;
 import org.javaee.bolao.entidades.Bolao;
@@ -14,73 +15,93 @@ import org.javaee.bolao.entidades.Partida;
 @ManagedBean
 public class PartidaFacade {
 
-    @Inject
-    private PartidaEAO partidaEAO;
+	@Inject
+	private PartidaEAO partidaEAO;
+	
+	@Inject
+	private ApostaEAO apostaEAO;
+	
 
-    public Partida insertOrUpdate(Partida partida) {
+	public Partida insertOrUpdate(Partida partida) {
 
-        if (!partida.hasId()) {
-            this.partidaEAO.insert(partida);
-        } else {
-            this.partidaEAO.update(partida);
-        }
-        
-        encerrarPartida(partida);
+		if (!partida.hasId()) {
+			this.partidaEAO.insert(partida);
+		} else {
+			this.partidaEAO.update(partida);
+		}
 
-        return partida;
-    }
+		encerrarPartida(partida);
 
-    public void delete(Long id) {
-        this.partidaEAO.delete(id);
-    }
+		return partida;
+	}
 
-    public Partida find(Long id) {
-        return this.partidaEAO.find(id);
-    }
+	public void delete(Long id) {
+		this.partidaEAO.delete(id);
+	}
 
-    public List<Partida> findAll() {
-        return this.partidaEAO.findAll();
-    }
+	public Partida find(Long id) {
+		return this.partidaEAO.find(id);
+	}
 
-    public void encerrarPartida(Partida partida) {
+	public List<Partida> findAll() {
+		return this.partidaEAO.findAll();
+	}
 
-    	if(partida.hasId()){
-	    	partida = partidaEAO.find(partida.getIdPartida());
-	    	
-	    	if(partida.isEncerrada()){
-		
-		        Set<Aposta> listApostas = partida.getApostas();
-		
-		        for (Aposta aposta : listApostas) {
-		
-		            Bolao bolao = aposta.getUsuarioBolao().getBolao();
-		
-		            // if(aposta.getPlacarMandante().equals(partida.getPlacarMandante()))
-		        }
-	    	}
-    	}
+	public void encerrarPartida(Partida partida) {
 
-    }
+		if (partida.hasId()) {
+			partida = partidaEAO.find(partida.getIdPartida());
+			System.out.println( partida.isEncerrada());
 
-    private Integer getPontuacaoAposta(Aposta aposta, Partida partida, Bolao bolao) {
-        Integer totalAposta = 0;
-        
-        if (isPlacarCerteiro(partida, aposta)) {
-            totalAposta += bolao.getPontosAcertoDoisPlacares();
-        } else if(isResultadoCerteiro(partida, aposta)) {
-            totalAposta += bolao.getPontosAcertoResultado();
-        }
+			if (partida.isEncerrada()) {
 
-        return 0;
-    }
+				List<Aposta> listApostas = apostaEAO.findByPartida(partida);
 
-    private boolean isPlacarCerteiro(Partida partida, Aposta aposta) {
-        return partida.getPlacar().isIgual(aposta.getPlacar());
-    }
-    
-    private boolean isResultadoCerteiro(Partida partida, Aposta aposta) {
-        return partida.getPlacar().getResultado().equals(aposta.getPlacar().getResultado());
-    }
-    
+				for (Aposta aposta : listApostas) {
+					
+					System.out.println("entrei");
+
+					Bolao bolao = aposta.getUsuarioBolao().getBolao();
+
+					aposta.setPontuacao(getPontuacaoAposta(aposta, partida, bolao));
+					
+					System.out.println("entrei: " + aposta.getPontuacao());
+					apostaEAO.update(aposta);
+					
+				}
+			}
+		}
+
+	}
+
+	private Integer getPontuacaoAposta(Aposta aposta, Partida partida, Bolao bolao) {
+		Integer totalAposta = 0;
+
+		if (isPlacarCerteiro(partida, aposta)) {
+			totalAposta += bolao.getPontosAcertoDoisPlacares();
+		} else {
+			if (isResultadoCerteiro(partida, aposta)) {
+				totalAposta += bolao.getPontosAcertoResultado();
+			}
+
+			if (isUmPlacarCerteiro(partida, aposta)) {
+				totalAposta += bolao.getPontosAcertoUmPlacar();
+			}
+		}
+
+		return totalAposta;
+	}
+
+	private boolean isUmPlacarCerteiro(Partida partida, Aposta aposta) {
+		return partida.getPlacar().isUmPlacarIgual(aposta.getPlacar());
+	}
+
+	private boolean isPlacarCerteiro(Partida partida, Aposta aposta) {
+		return partida.getPlacar().isIgual(aposta.getPlacar());
+	}
+
+	private boolean isResultadoCerteiro(Partida partida, Aposta aposta) {
+		return partida.getPlacar().getResultado().equals(aposta.getPlacar().getResultado());
+	}
 
 }

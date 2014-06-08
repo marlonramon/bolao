@@ -1,5 +1,7 @@
 package org.javaee.bolao.eao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaQuery;
@@ -33,8 +35,9 @@ public class ApostaEAO extends AbstractEAO<Aposta>
 		
 		Root<Aposta> from = cq.from(Aposta.class);
 		
-		Join<Aposta, Partida> joinPartida = from.join(Aposta_.partida);
+		from.fetch(Aposta_.usuarioBolao);
 		
+		Join<Aposta, Partida> joinPartida = from.join(Aposta_.partida);
 		Join<Aposta, UsuarioBolao> joinUsuarioBolao = from.join(Aposta_.usuarioBolao);
 		
 		Predicate equalsPartida = getCriteriaBuilder().equal(joinPartida, partida);
@@ -43,6 +46,24 @@ public class ApostaEAO extends AbstractEAO<Aposta>
 		cq.where(equalsPartida, equalsUsuarioBolao);
 		
 		return super.getSingleResult(cq);
+	}
+	
+    public List<Aposta> findByPartida(Partida partida){
+		
+		
+		CriteriaQuery<Aposta> cq = super.createCriteriaQuery();
+		
+		Root<Aposta> from = cq.from(Aposta.class);
+		
+		from.fetch(Aposta_.usuarioBolao);
+		
+		Join<Aposta, Partida> joinPartida = from.join(Aposta_.partida);
+		
+		Predicate equalsPartida = getCriteriaBuilder().equal(joinPartida, partida);
+		
+		cq.where(equalsPartida);
+		
+		return getEntityManager().createQuery(cq).getResultList();
 	}
 	
 }

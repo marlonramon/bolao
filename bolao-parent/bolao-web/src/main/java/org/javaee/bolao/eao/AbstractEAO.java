@@ -22,6 +22,8 @@ import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.SingularAttribute;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 
 import org.javaee.bolao.entidades.IEntity;
 import org.javaee.bolao.entidades.SessaoUsuario;
@@ -45,7 +47,17 @@ public abstract class AbstractEAO<E extends IEntity>
 		logger.log(Level.INFO, "Insert {0}: {1}", new Object[]{entityClass.getSimpleName(), XmlUtil.toString(entity, true)});
 		try{
 			getEntityManager().persist(entity);
+		}catch(ConstraintViolationException e){
+			for (ConstraintViolation constraintViolation : e.getConstraintViolations()) {
+				StringBuilder sb = new StringBuilder();
+				sb.append("ConstraintViolationException");
+				sb.append("\nInvalidValue: "+constraintViolation.getInvalidValue());
+				sb.append("\nProperty: "+constraintViolation.getPropertyPath());
+				sb.append("\nMessage: "+constraintViolation.getMessage());
+				logger.severe(sb.toString());
+			}
 		}catch(Exception e){
+			e.printStackTrace();
 			throw new BolaoRuntimeException(e);
 		}
 	}
@@ -86,8 +98,28 @@ public abstract class AbstractEAO<E extends IEntity>
 	public E update(E entity) {
 		logger.log(Level.INFO, "Update {0}: {1}", new Object[]{entityClass.getSimpleName(), XmlUtil.toString(entity, true)});
 		try{
-			return getEntityManager().merge(entity);
+			System.out.println("akiiiiiiiiiiiiiiiiiiiiiiiii");
+			
+			E merge = getEntityManager().merge(entity);
+			getEntityManager().flush();
+			return merge;
+		}catch(ConstraintViolationException e){
+			e.printStackTrace();
+			System.out.println(" CONTRANINSFASFASDFA  " + e.getConstraintViolations().size());
+			for (ConstraintViolation constraintViolation : e.getConstraintViolations()) {
+				StringBuilder sb = new StringBuilder();
+				sb.append("ConstraintViolationException");
+				sb.append("\nInvalidValue: "+constraintViolation.getInvalidValue());
+				sb.append("\nProperty: "+constraintViolation.getPropertyPath());
+				sb.append("\nMessage: "+constraintViolation.getMessage());
+				logger.severe(sb.toString());
+			}
+			//throw new BolaoRuntimeException(e);
+			
+			return null;
 		}catch(Exception e){
+			System.out.println("tretaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+			e.printStackTrace();
 			throw new BolaoRuntimeException(e);
 		}
 	}

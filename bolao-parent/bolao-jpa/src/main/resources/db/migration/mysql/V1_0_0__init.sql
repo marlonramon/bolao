@@ -141,7 +141,7 @@ CREATE  TABLE IF NOT EXISTS `Aposta` (
   `idPartida` INT NOT NULL ,
   `pontuacao` SMALLINT NULL ,
   `idUsuarioBolao` INT NOT NULL ,
-  `dataAposta` DATETIME default now(),
+  `dataAposta` DATETIME NOT NULL ,
   PRIMARY KEY (`idAposta`) ,
   INDEX `fk_Aposta_Partida1_idx` (`idPartida` ASC) ,
   INDEX `fk_Aposta_UsuarioBolao1_idx` (`idUsuarioBolao` ASC) ,
