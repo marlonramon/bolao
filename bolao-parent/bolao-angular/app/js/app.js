@@ -1,6 +1,6 @@
 'use strict';
 
-var url = 'http://localhost:8081/bolao-web';
+var url = 'http://localhost:8080/bolao-web';
 
 var baseUrl = url + '/app';
 
@@ -11,6 +11,7 @@ var app = angular.module('bolao', [
     'ngRoute',
     'ngCookies',
     'restangular',
+    'ngQuickDate',
     'bolao.services',
     'bolao.usuarioController',
     'bolao.campeonatoController',
@@ -21,6 +22,7 @@ var app = angular.module('bolao', [
     'bolao.rankingController',
     'bolao.apostaController',
     'bolao.usuarioBolaoController'
+
 ]);
 
 
@@ -73,34 +75,41 @@ app.run(function($rootScope) {
     $rootScope.baseUrlImages = baseUrlImages;
 });
 
+
+
 app.config(function(RestangularProvider) {
     RestangularProvider.setBaseUrl(baseUrl);
     //RestangularProvider.setDefaultHttpFields({withCredentials: true});
-    
+
     RestangularProvider.setErrorInterceptor(function(response) {
-        
+
         //alert(response.status+' '+ response.data.mensagem);
-        
-        alert(response.data.mensagem);
-        
-        return false; // error not handled
+
+
     });
-    
+
+ 
+
 });
 
-app.directive('match', function () {
-        return {
-            require: 'ngModel',
-            restrict: 'A',
-            scope: {
-                match: '='
-            },
-            link: function(scope, elem, attrs, ctrl) {
-                scope.$watch(function() {
-                    return (ctrl.$pristine && angular.isUndefined(ctrl.$modelValue)) || scope.match === ctrl.$modelValue;
-                }, function(currentValue) {
-                    ctrl.$setValidity('match', currentValue);
-                });
-            }
-        };
+app.config(function(ngQuickDateDefaultsProvider) {
+    return ngQuickDateDefaultsProvider.set({
     });
+});
+
+app.directive('match', function() {
+    return {
+        require: 'ngModel',
+        restrict: 'A',
+        scope: {
+            match: '='
+        },
+        link: function(scope, elem, attrs, ctrl) {
+            scope.$watch(function() {
+                return (ctrl.$pristine && angular.isUndefined(ctrl.$modelValue)) || scope.match === ctrl.$modelValue;
+            }, function(currentValue) {
+                ctrl.$setValidity('match', currentValue);
+            });
+        }
+    };
+});

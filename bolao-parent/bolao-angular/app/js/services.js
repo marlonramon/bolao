@@ -7,6 +7,7 @@ app.service('usuarioService', function() {
   var sessaoUsuario = {};
 
   this.setBolaoSelecionado = function(usuarioBolao) {
+      console.log('akiii: ' + usuarioBolao);
       this.usuarioBolao = usuarioBolao;
   };
   
