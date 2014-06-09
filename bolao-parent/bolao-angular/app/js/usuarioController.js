@@ -41,7 +41,7 @@ app.controller('UserEditCtrl', ['$scope', '$routeParams', '$location', 'Restangu
         };
 
         $scope.cancel = function() {
-            $location.path('/usuario-list');
+            $location.path('index');
         };
 
         $scope.delete = function(id) {
@@ -54,12 +54,12 @@ app.controller('UserEditCtrl', ['$scope', '$routeParams', '$location', 'Restangu
         };
     }]);
 
-app.controller('LoginCtrl', ['$scope', '$cookieStore', 'Restangular', 'usuarioService','$route',
-    function($scope, $cookieStore, Restangular, usuarioService, $route) {
+app.controller('LoginCtrl', ['$scope', '$cookieStore', 'Restangular', 'usuarioService','$route', '$location',
+    function($scope, $cookieStore, Restangular, usuarioService, $route, $location) {
 
         $scope.boloesUsuario = {};
         $scope.sessaoUsuario = $cookieStore.get('sessaoUsuario');
-
+        
         $scope.login = function() {
             Restangular.all('usuarios/login').post($scope.usuario).then(function(sessaoUsuario) {
                 $scope.sessaoUsuario = sessaoUsuario;
@@ -109,8 +109,7 @@ app.controller('LoginCtrl', ['$scope', '$cookieStore', 'Restangular', 'usuarioSe
         $scope.logout = function() {
             Restangular.all('usuarios/logout').post($scope.sessaoUsuario.usuario).then(function(data) {
                 $scope.sessaoUsuario = null;
-                $cookieStore.remove('sessaoUsuario');
-                console.log(data.status);
+                $cookieStore.remove('sessaoUsuario');                
             }, function(error) {
                 $scope.sessaoUsuario = null;
                 $cookieStore.remove('sessaoUsuario');
@@ -124,6 +123,10 @@ app.controller('LoginCtrl', ['$scope', '$cookieStore', 'Restangular', 'usuarioSe
         
         $scope.getBolaoSelecionado = function (){
             return usuarioService.getBolaoSelecionado();
+        };
+        
+        $scope.toViewScore = function() {
+            $location.path('/ranking-bolao/'+ $scope.getBolaoSelecionado().bolao.idBolao);
         };
         
     }]);
