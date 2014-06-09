@@ -27,27 +27,6 @@ public class ApplicationConfig extends Application {
         return resources;
     }
 
-    /**
-     * Do not modify addRestResourceClasses() method.
-     * It is automatically populated with
-     * all resources defined in the project.
-     * If required, comment out calling this method in getClasses().
-     */
-    private void addRestResourceClasses(Set<Class<?>> resources) {
-    	
-        resources.add(UsuarioFacadeREST.class);
-        resources.add(CrossOriginResourceSharingFilter.class);
-        resources.add(ConstraintViolationExceptionMapper.class);
-        resources.add(BolaoExceptionMapper.class);
-//        resources.add(SecurityInterceptor.class);
-        resources.add(CampeonatoFacadeREST.class);
-        resources.add(BolaoFacadeREST.class);        
-        resources.add(PartidaFacadeREST.class);
-        resources.add(RodadaFacadeREST.class);
-        resources.add(ClubeFacadeREST.class);
-        resources.add(UsuarioBolaoFacadeREST.class);
-        resources.add(ApostaFacadeREST.class);
-    }
     
     @Override
     public Map<String, Object> getProperties() {
@@ -57,6 +36,21 @@ public class ApplicationConfig extends Application {
     	
     	return properties;
     	
+    }
+
+    private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(org.javaee.bolao.aposta.ApostaFacadeREST.class);
+        resources.add(org.javaee.bolao.bolao.BolaoFacadeREST.class);
+        resources.add(org.javaee.bolao.campeonato.CampeonatoFacadeREST.class);
+        resources.add(org.javaee.bolao.clube.ClubeFacadeREST.class);
+        resources.add(org.javaee.bolao.config.CrossOriginResourceSharingFilter.class);
+        resources.add(org.javaee.bolao.exception.BolaoExceptionMapper.class);
+        resources.add(org.javaee.bolao.exception.ConstraintViolationExceptionMapper.class);
+        resources.add(org.javaee.bolao.partida.PartidaFacadeREST.class);
+        resources.add(org.javaee.bolao.rodada.RodadaFacadeREST.class);
+        resources.add(org.javaee.bolao.security.SecurityInterceptor.class);
+        resources.add(org.javaee.bolao.usuario.UsuarioFacadeREST.class);
+        resources.add(org.javaee.bolao.usuariobolao.UsuarioBolaoFacadeREST.class);
     }
     
 }

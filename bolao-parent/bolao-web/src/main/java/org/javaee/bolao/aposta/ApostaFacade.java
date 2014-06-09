@@ -82,9 +82,7 @@ public class ApostaFacade {
 
 			if (isApostaComAomEnosUmPlacarPreenchido(aposta)) {
 				inserirOuAtualizar(aposta);
-				System.out.println("inseri a aposta: " + aposta.getIdAposta());
 			} else {
-				System.out.println("excluindo a aposta: " + aposta.getIdAposta());
 				excluirSeExistir(aposta);
 			}
 		}
@@ -101,14 +99,19 @@ public class ApostaFacade {
 		Partida partida = findPartida(aposta);
 
 		validarPlacar(partida, aposta.getPlacar());
-
-		if (!aposta.hasId()) {
+		
+		Aposta apostaBanco = apostaEAO.findByPartida(aposta.getUsuarioBolao(), partida);
+		
+		if (apostaBanco != null) {
+			apostaBanco.setPlacar(aposta.getPlacar());
+			apostaEAO.update(apostaBanco);
+		} else {
 			aposta.setDataAposta(new Date());
 			validarApostaNova(partida, aposta);
 			apostaEAO.insert(aposta);
-		} else {
-			apostaEAO.update(aposta);
 		}
+
+		
 	}
 
 	private boolean isApostaComAomEnosUmPlacarPreenchido(Aposta aposta) {
