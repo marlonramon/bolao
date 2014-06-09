@@ -34,7 +34,9 @@ app.controller('UserEditCtrl', ['$scope', '$routeParams', '$location', 'Restangu
 
         $scope.save = function() {
             Restangular.all('usuarios').post($scope.usuario).then(function() {
-                $scope.cancel();
+                $location.path('index');
+            },function(response) {
+                $scope.errors = response.data;
             });
         };
 

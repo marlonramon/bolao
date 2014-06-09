@@ -51,7 +51,7 @@
 
                     <ul class="nav navbar-nav">
                         <li ng-show="isUsuarioLogado()"><a href="#/aposta-list">Palpites</a></li>
-                        <li ng-show="isUsuarioLogado()"><a href="#/ranking-list">Pontuação</a></li>
+                        <li ng-show="isUsuarioLogado()"><a ng-click="toViewScore()">Pontuação</a></li>
                         <li class="dropdown" ng-show="isAdm()">
                             <a id="menuAdm" href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 Administrador
@@ -69,17 +69,7 @@
                             </ul>
 
                         </li> 
-                        <li class="dropdown" ng-show="isUsuarioLogado()">                            
-                            <a id="menuBoloes" href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                {{ getBolaoSelecionado().bolao.descricao}}
-                                <span class="caret"></span>
-                            </a>
-
-                            <ul id="bolao" class="dropdown-menu" aria-labelledby="menuBoloes">
-                                <li ng-repeat="usuarioBolao in boloesUsuario"><a ng-click="setBolaoSelecionado(usuarioBolao)" >{{usuarioBolao.bolao.descricao}}</a></li>                                
-                            </ul>                           
-
-                        </li>
+                       
 
                     </ul>
 
