@@ -30,7 +30,7 @@
                 <tr ng-repeat="aposta in apostas">
                     <td style="vertical-align: inherit">{{aposta.partida.dataPartida| date:'dd/MM/yyyy HH:mm'}}</td>
                     <td style="vertical-align: inherit"><label for="inputPlacarMandante">  {{aposta.partida.clubeMandante.nome}} </label> </td>
-                    <td style="vertical-align: inherit"><img ng-src="{{baseUrlImages + '/' + aposta.partida.clubeMandante.bandeira}}" style="height: 30px; width: 40px;"/> </td>
+                    <td style="vertical-align: inherit"><img ng-src="{{baseUrlImages + '/' + aposta.partida.clubeMandante.bandeira}}"/> </td>
                     <td class="text-right" style="vertical-align: inherit">
                         <input class="form-control text-right" type="text"  
                                id="inputPlacarMandante" 
@@ -48,7 +48,7 @@
                                style="width: 40px"/>
 
                     </td>
-                    <td style="vertical-align: inherit"><img ng-src="{{baseUrlImages + '/' + aposta.partida.clubeVisitante.bandeira}}" style="height: 30px; width: 40px;"/> </td>
+                    <td style="vertical-align: inherit"><img ng-src="{{baseUrlImages + '/' + aposta.partida.clubeVisitante.bandeira}}" /> </td>
                     <td style="vertical-align: inherit">{{aposta.partida.clubeVisitante.nome}}</td>
                 </tr>
             </table>

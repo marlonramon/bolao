@@ -27,9 +27,11 @@ app.controller('ApostaListCtrl', ['$scope', 'Restangular', 'usuarioService',
 
 
         $scope.salvar = function() {
+            $scope.errors = {};            
+            $scope.messages = {};
             if ($scope.apostas) {
                 Restangular.all("apostas").post($scope.apostas).then(function() {
-                    $scope.messages = {"message":"Palpites salvos com sucesso."}
+                    $scope.messages = {"message":"Palpites salvos com sucesso."};
                 }, function(response){
                     $scope.errors = response.data;
                 });

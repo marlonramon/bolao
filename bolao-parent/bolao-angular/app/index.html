@@ -50,6 +50,8 @@
                 <div class="navbar-collapse collapse" id="navbar-main">
 
                     <ul class="nav navbar-nav">
+                        <li ng-show="isUsuarioLogado()"><a href="#/aposta-list">Palpites</a></li>
+                        <li ng-show="isUsuarioLogado()"><a href="#/ranking-list">Pontuação</a></li>
                         <li class="dropdown" ng-show="isAdm()">
                             <a id="menuAdm" href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 Administrador
