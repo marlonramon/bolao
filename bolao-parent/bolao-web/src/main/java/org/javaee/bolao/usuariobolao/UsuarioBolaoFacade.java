@@ -43,7 +43,11 @@ public class UsuarioBolaoFacade {
 		
 		Bolao bolao = bolaoEAO.find(idBolao);
 		
-		if(!isUsuarioBolaoVinculadoBolao(usuario, bolao)){
+		return vincularUsuarioBolao(usuario, bolao);
+	}
+
+	public boolean vincularUsuarioBolao(Usuario usuario, Bolao bolao) {
+		if(!isUsuarioVinculadoBolao(usuario, bolao)){
 			UsuarioBolao usuarioBolao = new UsuarioBolao();
 			usuarioBolao.setUsuario(usuario);
 			usuarioBolao.setBolao(bolao);
@@ -56,7 +60,7 @@ public class UsuarioBolaoFacade {
 		return false;
 	}
 
-	private boolean isUsuarioBolaoVinculadoBolao(Usuario usuario, Bolao bolao) {
+	private boolean isUsuarioVinculadoBolao(Usuario usuario, Bolao bolao) {
 		return usuarioBolaoEAO.findByUsuarioAndBolao(usuario, bolao) != null;
 	}
 
@@ -82,5 +86,9 @@ public class UsuarioBolaoFacade {
 		
 		
 		return usuarioBoloes;
+	}
+
+	public List<UsuarioBolao> findBoloesByUsuario(Usuario usuario) {
+		return usuarioBolaoEAO.findBoloesByUsuario(usuario);
 	}
 }

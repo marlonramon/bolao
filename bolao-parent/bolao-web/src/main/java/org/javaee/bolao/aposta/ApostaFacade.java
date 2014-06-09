@@ -17,7 +17,6 @@ import org.javaee.bolao.entidades.Placar;
 import org.javaee.bolao.entidades.Rodada;
 import org.javaee.bolao.entidades.UsuarioBolao;
 import org.javaee.bolao.exception.BolaoWebApplicationException;
-import org.javaee.bolao.vo.ApostaVO;
 
 @Stateless
 public class ApostaFacade {
@@ -70,10 +69,6 @@ public class ApostaFacade {
 		aposta.setUsuarioBolao(usuarioBolao);
 
 		return aposta;
-	}
-
-	public List<ApostaVO> persitApostas(List<ApostaVO> apostaList) {
-		return null;
 	}
 
 	public void gravar(List<Aposta> apostas) {

@@ -10,8 +10,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.javaee.bolao.vo.ClubeVO;
-
 @Entity
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -60,14 +58,8 @@ public class Clube extends AbstractEntity
 		return getIdClube();
 	}
 	
-	public ClubeVO getClubeVO()
-	{
-		ClubeVO clubeVO = new ClubeVO();
-		
-		clubeVO.setIdClube(getId());
-		clubeVO.setNome(getNome());
-		clubeVO.setBandeira(getBandeira());
-		
-		return clubeVO;
+	@Override
+	public String toString() {
+		return getNome();
 	}
 }

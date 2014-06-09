@@ -14,10 +14,10 @@ import org.javaee.bolao.enuns.EnumResultado;
 public class Placar implements IResultado {
 
 	@NotNull
-	private Short placarMandante;
+	private Short placarMandante = null;
 
 	@NotNull
-	private Short placarVisitante;
+	private Short placarVisitante = null;
 
 	public EnumResultado getResultado() {
 
@@ -90,6 +90,11 @@ public class Placar implements IResultado {
 	
 	public boolean isAoMenosUmPlacarPreenchido(){
 		return getPlacarMandante() != null || getPlacarVisitante() != null;
+	}
+	
+	@Override
+	public String toString() {
+		return getPlacarMandante() + " X "+getPlacarVisitante();
 	}
 	
 }

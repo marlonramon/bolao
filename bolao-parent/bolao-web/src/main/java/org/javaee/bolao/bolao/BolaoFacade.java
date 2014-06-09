@@ -2,49 +2,63 @@ package org.javaee.bolao.bolao;
 
 import java.util.List;
 
-import javax.annotation.ManagedBean;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import org.javaee.bolao.eao.BolaoEAO;
+import org.javaee.bolao.eao.UsuarioEAO;
 import org.javaee.bolao.entidades.Bolao;
+import org.javaee.bolao.entidades.Usuario;
+import org.javaee.bolao.usuariobolao.UsuarioBolaoFacade;
 import org.javaee.bolao.vo.RankingBolaoVO;
 
-@ManagedBean
-public class BolaoFacade
-{
+@Stateless
+public class BolaoFacade {
 
-  @Inject
-  private BolaoEAO bolaoEAO;
+	@Inject
+	private BolaoEAO bolaoEAO;
 
-  public Bolao insertOrUpdate(Bolao bolao)
-  {
+	@Inject
+	private UsuarioEAO usuarioEAO;
+	
+	@Inject
+	private UsuarioBolaoFacade usuarioBolaoFacade;
 
-    if (!bolao.hasId())
-      bolaoEAO.insert(bolao);
-    else {
-      bolaoEAO.update(bolao);
-    }
+	public Bolao insertOrUpdate(Bolao bolao) {
 
-    return bolao;
-  }
+		if (!bolao.hasId()) {
+			bolaoEAO.insert(bolao);
+			vincularBolaoUsuarios(bolao);
+		} else {
+			bolaoEAO.update(bolao);
+		}
 
-  
-  public void delete(Long id)
-  {
-    bolaoEAO.delete(id);
-  }
+		return bolao;
+	}
 
-  public Bolao find(Long id) {
-    return bolaoEAO.find(id);
-  }
+	private void vincularBolaoUsuarios(Bolao bolao) {
+		List<Usuario> usuarios = usuarioEAO.findAll();
+		
+		for (Usuario usuario : usuarios) {
+			usuarioBolaoFacade.vincularUsuarioBolao(usuario, bolao);
+		}
+		
+	}
 
-  public List<Bolao> findAll() {
-    return bolaoEAO.findAll();
-  }
+	public void delete(Long id) {
+		bolaoEAO.delete(id);
+	}
 
+	public Bolao find(Long id) {
+		return bolaoEAO.find(id);
+	}
 
-public RankingBolaoVO ranking(Long id, Integer limite) {
-	Bolao bolao = bolaoEAO.find(id);
-	return bolaoEAO.ranking(bolao, limite);
-}  
+	public List<Bolao> findAll() {
+		return bolaoEAO.findAll();
+	}
+
+	public RankingBolaoVO ranking(Long id, Integer limite) {
+		Bolao bolao = bolaoEAO.find(id);
+		return bolaoEAO.ranking(bolao, limite);
+	}
 }

@@ -27,9 +27,9 @@ public class UsuarioFacadeREST
 
   @POST
   @Consumes({"application/xml", "application/json"})
-  public Usuario insertOrUpdate(Usuario usuario)
+  public void insertOrUpdate(Usuario usuario)
   {	
-    return this.usuarioFacade.insertOrUpdate(usuario);
+    usuarioFacade.insertOrUpdate(usuario);
   }
 
   @DELETE
