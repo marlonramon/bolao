@@ -12,6 +12,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -61,11 +62,11 @@ public class RodadaEAO extends AbstractEAO<Rodada> {
 		
 		Join<Partida, Placar> joinPlacarPartida = joinPartidas.join(Partida_.placar);
 		
-		SetJoin<Partida, Aposta> joinApostas = joinPartidas.join(Partida_.apostas);
+		SetJoin<Partida, Aposta> joinApostas = joinPartidas.join(Partida_.apostas, JoinType.LEFT);
 		
-		Join<Aposta, UsuarioBolao> joinUsuarioBolao = joinApostas.join(Aposta_.usuarioBolao);
+		Join<Aposta, UsuarioBolao> joinUsuarioBolao = joinApostas.join(Aposta_.usuarioBolao, JoinType.LEFT);
 		
-		Join<UsuarioBolao, Usuario> joinUsuario = joinUsuarioBolao.join(UsuarioBolao_.usuario);
+		Join<UsuarioBolao, Usuario> joinUsuario = joinUsuarioBolao.join(UsuarioBolao_.usuario, JoinType.LEFT);
 		
 		Expression<Integer> sumPontuacao = cb.sum(joinApostas.get(Aposta_.pontuacao));
 		

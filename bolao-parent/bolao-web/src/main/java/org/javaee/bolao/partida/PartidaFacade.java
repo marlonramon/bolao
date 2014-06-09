@@ -50,7 +50,6 @@ public class PartidaFacade {
 
 		if (partida.hasId()) {
 			partida = partidaEAO.find(partida.getIdPartida());
-			System.out.println( partida.isEncerrada());
 
 			if (partida.isEncerrada()) {
 
@@ -58,13 +57,10 @@ public class PartidaFacade {
 
 				for (Aposta aposta : listApostas) {
 					
-					System.out.println("entrei");
-
 					Bolao bolao = aposta.getUsuarioBolao().getBolao();
 
 					aposta.setPontuacao(getPontuacaoAposta(aposta, partida, bolao));
 					
-					System.out.println("entrei: " + aposta.getPontuacao());
 					apostaEAO.update(aposta);
 					
 				}
@@ -73,7 +69,7 @@ public class PartidaFacade {
 
 	}
 
-	private Integer getPontuacaoAposta(Aposta aposta, Partida partida, Bolao bolao) {
+	public Integer getPontuacaoAposta(Aposta aposta, Partida partida, Bolao bolao) {
 		Integer totalAposta = 0;
 
 		if (isPlacarCerteiro(partida, aposta)) {

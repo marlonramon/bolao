@@ -15,6 +15,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
@@ -28,7 +29,7 @@ public class Aposta extends AbstractEntity {
 	private Long idAposta;
 	
 	@Embedded
-	@NotNull
+	@XmlElement(nillable=true)
 	private Placar placar;
 	
 	@NotNull

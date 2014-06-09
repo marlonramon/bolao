@@ -17,6 +17,7 @@ import org.javaee.bolao.entidades.Placar;
 import org.javaee.bolao.entidades.Rodada;
 import org.javaee.bolao.entidades.UsuarioBolao;
 import org.javaee.bolao.exception.BolaoWebApplicationException;
+import org.javaee.bolao.partida.PartidaFacade;
 
 @Stateless
 public class ApostaFacade {
@@ -32,6 +33,9 @@ public class ApostaFacade {
 	@Inject
 	private RodadaEAO rodadaEAO;
 
+	@Inject
+	private PartidaFacade partidaFacade;
+	
 	public List<Aposta> findApostas(Long idUsuarioBolao, Long idRodada) {
 
 		Rodada rodada = rodadaEAO.find(idRodada);
@@ -104,8 +108,14 @@ public class ApostaFacade {
 			aposta.setDataAposta(new Date());
 			validarApostaNova(partida, aposta);
 			apostaEAO.insert(aposta);
+			apostaBanco = aposta;
 		}
 
+		
+		if(partida.isEncerrada()){
+			Integer pontuacaoAposta = partidaFacade.getPontuacaoAposta(apostaBanco, partida, apostaBanco.getUsuarioBolao().getBolao());
+			apostaBanco.setPontuacao(pontuacaoAposta);
+		}
 		
 	}
 
