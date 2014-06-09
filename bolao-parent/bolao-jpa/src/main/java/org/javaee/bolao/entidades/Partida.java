@@ -13,8 +13,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PostLoad;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -56,7 +58,10 @@ public class Partida extends AbstractEntity {
     @OneToMany(mappedBy = "partida", fetch = FetchType.LAZY)
     @XmlTransient
     private Set<Aposta> apostas = new HashSet<>();
-
+    
+    @Transient    
+    private boolean partidaFinalizada; 
+    
     public Long getIdPartida() {
         return idPartida;
     }
@@ -125,4 +130,11 @@ public class Partida extends AbstractEntity {
     public String getDescricao() {
     	return getClubeMandante().getNome() + " X "+getClubeVisitante().getNome();
     }
+        
+    @PostLoad
+	public void setPartidaFinalizada() {
+		partidaFinalizada =  dataPartida != null ? dataPartida.compareTo(new Date()) < 0 : false;
+	}
+
+	
 }

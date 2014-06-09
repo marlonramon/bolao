@@ -51,7 +51,7 @@
 
                     <ul class="nav navbar-nav">
                         <li class="dropdown" ng-show="isAdm()">
-                            <a id="menuAdm" class="dropdown-toggle" data-toggle="dropdown">
+                            <a id="menuAdm" href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 Administrador
                                 <span class="caret"></span>
                             </a>
@@ -68,13 +68,13 @@
 
                         </li> 
                         <li class="dropdown" ng-show="isUsuarioLogado()">                            
-                            <a id="menuBoloes" class="dropdown-toggle" data-toggle="dropdown">
+                            <a id="menuBoloes" href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 {{ getBolaoSelecionado().bolao.descricao}}
                                 <span class="caret"></span>
                             </a>
 
                             <ul id="bolao" class="dropdown-menu" aria-labelledby="menuBoloes">
-                                <li ng-repeat="usuarioBolao in boloesUsuario"><a ng-click="" >{{usuarioBolao.bolao.descricao}}</a></li>                                
+                                <li ng-repeat="usuarioBolao in boloesUsuario"><a ng-click="setBolaoSelecionado(usuarioBolao)" >{{usuarioBolao.bolao.descricao}}</a></li>                                
                             </ul>                           
 
                         </li>
@@ -86,7 +86,7 @@
 
                         <li ng-show="!isUsuarioLogado()" ><a href="#/usuario-edit">Participar!</a></li>
                         <li ng-show="isUsuarioLogado()" class="navbar-text">Bem vindo {{sessaoUsuario.usuario.nome}}</li>
-                        <li ng-show="!isUsuarioLogado()"><a data-toggle="modal" data-target="#loginModal">Entrar</a></li>
+                        <li ng-show="!isUsuarioLogado()"><a href="#" data-toggle="modal" data-target="#loginModal">Entrar</a></li>
                         <li ng-show="isUsuarioLogado()"><a href="#" ng-click="logout()">Sair</a></li>
 
                     </ul>
@@ -121,7 +121,7 @@
                             </div>
 
                             <div class="modal-footer">
-                                <button ng-disabled="!formLogin.$valid" ng-click="login()" class="btn btn-primary btn-lg btn-block" >Entrar</button>                                
+                                <button ng-disabled="!formLogin.$valid" ng-click="login()" data-dismiss="modal" class="btn btn-primary btn-lg btn-block" >Entrar</button>                                
                             </div>
 
                         </form>
