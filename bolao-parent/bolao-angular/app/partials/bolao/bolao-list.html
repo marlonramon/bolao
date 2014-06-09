@@ -13,10 +13,9 @@
                         <th>Descrição</th>
                         <th>Campeonato</th>
                         <th>Contrinuição rodada</th>
-                        <th>Pontos (placar exato)</th>
-                        <th>Pontos (resultado e placar)</th>
-                        <th>Pontos (resultado)</th>
-                        <th>Pontos (placar)</th>
+                        <th>Pontos (Placar exato)</th>
+                        <th>Pontos (Um Placar)</th>
+                        <th>Pontos (Resultado)</th>                        
                     </tr>
                 </thead>
 
@@ -25,10 +24,9 @@
                     <td>{{bolao.descricao}}</td>
                     <td>{{bolao.campeonato.descricao}}</td>
                     <td>{{bolao.contribuicaoPorRodada | currency}}</td>
-                    <td>{{bolao.pontosPlacarExato}}</td>
-                    <td>{{bolao.pontosResultadoEPlacar}}</td>
-                    <td>{{bolao.pontosResultado}}</td>
-                    <td>{{bolao.pontosPlacar}}</td>
+                    <td>{{bolao.pontosAcertoDoisPlacares}}</td>
+                    <td>{{bolao.pontosAcertoUmPlacar}}</td>
+                    <td>{{bolao.pontosAcertoResultado}}</td>
                     <td>
                         <a ng-click="edit(bolao.idBolao)" class="btn btn-primary">Editar</a>
                     </td>

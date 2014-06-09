@@ -16,6 +16,11 @@ app.controller('RodadaListCtrl', ['$scope', '$location', 'Restangular',
         $scope.new = function() {
             $location.path('/rodada-edit');
         };
+        
+        $scope.ranking = function(id) {
+            $location.path('/ranking-rodada/' + id);
+        };
+        
     }]);
 
 app.controller('RodadaEditCtrl', ['$scope', '$routeParams', '$location', 'Restangular',

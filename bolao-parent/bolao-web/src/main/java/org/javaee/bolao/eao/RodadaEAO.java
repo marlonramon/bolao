@@ -74,7 +74,7 @@ public class RodadaEAO extends AbstractEAO<Rodada> {
 		Path<Long> idUsuarioPath = joinUsuario.get(Usuario_.idUsuario);
 		Path<String> nomeUsuarioPath = joinUsuario.get(Usuario_.nome);
 		
-		criteriaQuery.select(cb.tuple(idRodadaPath, numeroRodadaPath, idRodadaPath, nomeUsuarioPath));
+		criteriaQuery.select(cb.tuple(idRodadaPath, numeroRodadaPath, idUsuarioPath, nomeUsuarioPath, sumPontuacao));
 		
 		Predicate equalRodada = cb.equal(from, rodada);
 		
