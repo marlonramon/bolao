@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.ws.rs.core.Response;
 
 import org.javaee.bolao.config.Config;
 import org.javaee.bolao.eao.BolaoEAO;
@@ -65,13 +64,13 @@ public class UsuarioFacade {
 	public void validarEmailDuplicado(Usuario usuario) {
 		Usuario userDB = this.usuarioEAO.findByEmail(usuario.getEmail());
 		if ((userDB != null) && (!userDB.equals(usuario))){
-			throw new BolaoWebApplicationException(Response.Status.CONFLICT, "Já existe um Usuário com o Email {0}", usuario.getEmail());
+			throw new BolaoWebApplicationException("Já existe um Usuário com o Email {0}", userDB.getEmail());
 		}
 	}
 
 	public void validarConfirmarSenha(Usuario usuario) {
 		if (!usuario.getSenha().equals(usuario.getConfirmarSenha())){
-			throw new BolaoWebApplicationException(Response.Status.CONFLICT, "A Senha não foi confirmada corretamente.");
+			throw new BolaoWebApplicationException("A Senha não foi confirmada corretamente.");
 		}
 	}
 	
