@@ -11,6 +11,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import org.javaee.bolao.entidades.Aposta;
+import org.javaee.bolao.entidades.Placar;
+import org.javaee.rest.common.XmlUtil;
 
 @Path("apostas")
 public class ApostaFacadeREST {
@@ -31,6 +33,17 @@ public class ApostaFacadeREST {
 	@Produces({ "application/xml", "application/json" })
 	public List<Aposta> findByUsuarioAndRodada(@PathParam("idUsuarioBolao") Long idUsuarioBolao, @PathParam("idRodada") Long idRodada) {
 		return apostaFacade.findApostas(idUsuarioBolao, idRodada);
+	}
+	
+	
+	public static void main(String[] args) {
+		
+		Aposta aposta = new Aposta();
+		aposta.setIdAposta(10L);
+		aposta.setPlacar(new Placar());
+		
+		System.out.println(XmlUtil.toString(aposta, false));
+		
 	}
 
 }

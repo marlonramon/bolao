@@ -2,7 +2,6 @@ package org.javaee.bolao.clube;
 
 import java.util.List;
 
-import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -14,7 +13,6 @@ import javax.ws.rs.Produces;
 
 import org.javaee.bolao.entidades.Clube;
 
-@Stateless
 @Path("clubes")
 public class ClubeFacadeREST
 {

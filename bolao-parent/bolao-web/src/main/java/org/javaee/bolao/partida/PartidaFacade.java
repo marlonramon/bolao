@@ -1,9 +1,8 @@
 package org.javaee.bolao.partida;
 
 import java.util.List;
-import java.util.Set;
 
-import javax.annotation.ManagedBean;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import org.javaee.bolao.eao.ApostaEAO;
@@ -12,7 +11,7 @@ import org.javaee.bolao.entidades.Aposta;
 import org.javaee.bolao.entidades.Bolao;
 import org.javaee.bolao.entidades.Partida;
 
-@ManagedBean
+@Stateless
 public class PartidaFacade {
 
 	@Inject

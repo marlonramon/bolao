@@ -15,8 +15,10 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
+@XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Aposta extends AbstractEntity {
 	private static final long serialVersionUID = 1L;
@@ -96,6 +98,11 @@ public class Aposta extends AbstractEntity {
 	@Override
 	public Long getId() {
 		return getIdAposta();
+	}
+	
+	@Override
+	public String toString() {
+		return getPartida().getClubeMandante() + " X " +getPartida().getClubeVisitante();
 	}
         
 }

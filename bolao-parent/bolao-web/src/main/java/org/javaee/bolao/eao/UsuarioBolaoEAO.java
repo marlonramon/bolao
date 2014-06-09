@@ -30,7 +30,7 @@ public class UsuarioBolaoEAO extends AbstractEAO<UsuarioBolao> {
 		return entityManager;
 	}
 
-	public List<UsuarioBolao> finBoloes(Usuario usuario){
+	public List<UsuarioBolao> findBoloesByUsuario(Usuario usuario){
 		
 		CriteriaQuery<UsuarioBolao> cq = super.createCriteriaQuery();
 		
@@ -38,7 +38,7 @@ public class UsuarioBolaoEAO extends AbstractEAO<UsuarioBolao> {
 		
 		Join<UsuarioBolao, Usuario> joinUsuario = from.join(UsuarioBolao_.usuario);
 		
-		Join<UsuarioBolao, Bolao> joinBolao = from.join(UsuarioBolao_.bolao);
+		from.join(UsuarioBolao_.bolao);
 		
 		//Join<Bolao, Campeonato> joinCampeonato = joinBolao.join(Bolao_.campeonato);
 		

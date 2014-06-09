@@ -2,7 +2,6 @@ package org.javaee.bolao.bolao;
 
 import java.util.List;
 
-import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -15,7 +14,6 @@ import javax.ws.rs.Produces;
 import org.javaee.bolao.entidades.Bolao;
 import org.javaee.bolao.vo.RankingBolaoVO;
 
-@Stateless
 @Path("boloes")
 public class BolaoFacadeREST {
 

@@ -2,13 +2,13 @@ package org.javaee.bolao.clube;
 
 import java.util.List;
 
-import javax.annotation.ManagedBean;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import org.javaee.bolao.eao.ClubeEAO;
 import org.javaee.bolao.entidades.Clube;
 
-@ManagedBean
+@Stateless
 public class ClubeFacade
 {
 
