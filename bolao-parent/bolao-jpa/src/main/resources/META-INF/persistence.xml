@@ -20,8 +20,8 @@
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     
     <properties>
-    	<property name="eclipselink.logging.level.sql" value="FINE"/>
-		<property name="eclipselink.logging.parameters" value="true"/>
+<!--     	<property name="eclipselink.logging.level.sql" value="FINE"/> -->
+<!-- 		<property name="eclipselink.logging.parameters" value="true"/> -->
     </properties>
     
   </persistence-unit>

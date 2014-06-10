@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="bolao">
+    <head>
+        <title>Bolão</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+        <link rel="stylesheet" href="css/bootstrap.min.css" />
+        <link rel="stylesheet" href="css/bootstrap.css" />
+        <link rel="stylesheet" type="text/css" href="css/ng-quick-date-plus-default-theme.css" media="all" />
+
+        <!-- include javascript, jQuery FIRST -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>  
+        <script src="lib/angular/angular.js"></script>
+        <script src="lib/angular/angular-route.js"></script>
+        <script src="lib/angular/angular-resource.js"></script>
+        <script src="lib/angular/angular-cookies.js"></script>
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/restangular/1.4.0/restangular.min.js"></script>
+        <script type="text/javascript" src="js/ng-quick-date.js"></script>
+    
+
+        <script src="js/app.js"></script>
+        <script src="js/services.js"></script>
+
+        <script src="js/campeonatoController.js"></script>
+        <script src="js/apostaController.js"></script>
+        <script src="js/usuarioController.js"></script>
+        <script src="js/bolaoController.js"></script>
+        <script src="js/clubeController.js"></script>
+        <script src="js/rodadaController.js"></script>
+        <script src="js/partidaController.js"></script>
+        <script src="js/rankingController.js"></script>
+        <script src="js/usuarioBolaoController.js"></script>
+    </head>
+    <body ng-controller="LoginCtrl">
+
+        <div class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <a href="#" class="navbar-brand">Bolão</a>
+                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="navbar-collapse collapse" id="navbar-main">
+
+                    <ul class="nav navbar-nav">
+                        <li ng-show="isUsuarioLogado()"><a href="#/aposta-list">Palpites</a></li>
+                        <li ng-show="isUsuarioLogado()"><a ng-click="toViewScore()">Pontuação</a></li>
+                        <li class="dropdown" ng-show="isAdm()">
+                            <a id="menuAdm" href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                Administrador
+                                <span class="caret"></span>
+                            </a>
+                            <ul id="menu" class="dropdown-menu" aria-labelledby="menuAdm">
+                                <li><a href="#/bolao-list" >Bolões</a></li>
+                                <li><a href="#/usuariobolao-list">Usuário/Bolão</a></li>
+                                <li><a href="#/campeonato-list">Campeonatos</a></li>
+                                <li><a href="#/rodada-list">Rodadas</a></li>
+                                <li><a href="#/clube-list">Clubes</a></li>
+                                <li><a href="#/partida-list">Partidas</a></li>
+                                <li><a href="#/usuario-list">Usuários</a></li>
+                                <li><a href="#/aposta-list">Apostas</a></li>
+                            </ul>
+
+                        </li> 
+                       
+
+                    </ul>
+
+
+                    <ul class="nav navbar-nav navbar-right">
+
+                        <li ng-show="!isUsuarioLogado()" ><a href="#/usuario-edit">Participar!</a></li>
+                        <li ng-show="isUsuarioLogado()" class="navbar-text">Bem vindo {{sessaoUsuario.usuario.nome}}</li>
+                        <li ng-show="!isUsuarioLogado()"><a href="#" ng-click="entrar()" data-toggle="modal" data-target="#loginModal">Entrar</a></li>
+                        <li ng-show="isUsuarioLogado()"><a href="#" ng-click="logout()">Sair</a></li>
+
+                    </ul>
+
+                </div>
+            </div>            
+        </div>
+
+        <div id="content" ng-view class="container-fluid" style="padding: 60px" >
+
+
+        </div>
+
+        <!--login modal-->
+        <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" style="width: 330pt">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                        <h1 class="text-center">Entrar</h1>
+                    </div>
+                    
+                    <p ng-repeat="errs in errorsLogin" class="alert alert-danger"><strong>Erro</strong>: {{ errs}}</p>
+                    
+                    <div class="modal-body">
+
+                        <form class="form center-block" name="formLogin">
+                            <div class="form-group">
+                                <input focus-me ng-model="usuario.email" required="true" class="form-control input-lg" placeholder="Email" type="text">
+                            </div>
+                            <div class="form-group">
+                                <input ng-model="usuario.senha" required="true" class="form-control input-lg" placeholder="Senha" type="password">
+                            </div>
+
+                            <div class="modal-footer">
+                                <button ng-disabled="!formLogin.$valid" ng-click="login()" class="btn btn-primary btn-lg btn-block" >Entrar</button>                                
+                            </div>
+
+                        </form>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -6,17 +6,6 @@ import java.util.Set;
 
 import javax.ws.rs.core.Application;
 
-import org.javaee.bolao.aposta.ApostaFacadeREST;
-import org.javaee.bolao.bolao.BolaoFacadeREST;
-import org.javaee.bolao.campeonato.CampeonatoFacadeREST;
-import org.javaee.bolao.clube.ClubeFacadeREST;
-import org.javaee.bolao.exception.BolaoExceptionMapper;
-import org.javaee.bolao.exception.ConstraintViolationExceptionMapper;
-import org.javaee.bolao.partida.PartidaFacadeREST;
-import org.javaee.bolao.rodada.RodadaFacadeREST;
-import org.javaee.bolao.usuario.UsuarioFacadeREST;
-import org.javaee.bolao.usuariobolao.UsuarioBolaoFacadeREST;
-
 @javax.ws.rs.ApplicationPath("/app")
 public class ApplicationConfig extends Application {
 
@@ -32,7 +21,7 @@ public class ApplicationConfig extends Application {
     public Map<String, Object> getProperties() {
     	Map<String, Object> properties = new HashMap<String, Object>();
     	
-    	properties.put("jersey.config.beanValidation.enableOutputValidationErrorEntity.server", true);
+//    	properties.put("jersey.config.beanValidation.enableOutputValidationErrorEntity.server", true);
     	
     	return properties;
     	

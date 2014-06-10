@@ -32,20 +32,22 @@
                     <td style="vertical-align: inherit"><label for="inputPlacarMandante">  {{aposta.partida.clubeMandante.nome}} </label> </td>
                     <td style="vertical-align: inherit"><img ng-src="{{baseUrlImages + '/' + aposta.partida.clubeMandante.bandeira}}"/> </td>
                     <td class="text-right" style="vertical-align: inherit">
-                        <input class="form-control text-right" type="text"  
+                        <input class="form-control text-right" type="number"  
                                id="inputPlacarMandante" 
+							   min="0" max="99"
                                ng-model="aposta.placar.placarMandante" 
-                               style="width: 40px"
+                               style="width: 70px"
                                ng-disabled="aposta.partida.partidaFinalizada"/>
 
                     </td>
                     <td style="text-align: center;font-size: 30px;width: 30px">X</td>
                     <td align="left" class="text-left" style="vertical-align: inherit">
-                        <input class="form-control" type="text" 
+                        <input class="form-control" type="number" 
                                id="inputPlacarVisitante" 
+							   min="0" max="99"
                                ng-model="aposta.placar.placarVisitante" 
                                ng-disabled="aposta.partida.partidaFinalizada"
-                               style="width: 40px"/>
+                               style="width: 70px"/>
 
                     </td>
                     <td style="vertical-align: inherit"><img ng-src="{{baseUrlImages + '/' + aposta.partida.clubeVisitante.bandeira}}" /> </td>

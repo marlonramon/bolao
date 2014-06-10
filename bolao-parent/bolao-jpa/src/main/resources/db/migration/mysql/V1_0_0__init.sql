@@ -5,7 +5,7 @@ CREATE  TABLE IF NOT EXISTS `Usuario` (
   `idUsuario` INT NOT NULL AUTO_INCREMENT ,
   `email` VARCHAR(120) NOT NULL ,
   `senha` VARCHAR(80) NOT NULL ,
-  `perfil` VARCHAR(80) NOT NULL ,
+  `admin` TINYINT NOT NULL default 0,
   `nome` VARCHAR(80) NOT NULL ,
   `dataCadastro` DATETIME NOT NULL ,
   `dataUltimoAcesso` DATETIME NOT NULL ,

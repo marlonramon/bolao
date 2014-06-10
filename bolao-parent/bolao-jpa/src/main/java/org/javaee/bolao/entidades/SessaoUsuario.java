@@ -86,7 +86,7 @@ public class SessaoUsuario extends AbstractEntity {
 	}
 
 	public boolean isExpirado(Date dataAtual) {
-		return getDataExpiracao().after(dataAtual);
+		return getDataExpiracao().before(dataAtual);
 	}
 
 }

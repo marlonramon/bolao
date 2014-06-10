@@ -12,6 +12,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import org.javaee.bolao.entidades.Bolao;
+import org.javaee.bolao.security.Acesso;
+import org.javaee.bolao.security.RestricaoAcesso;
 import org.javaee.bolao.vo.RankingBolaoVO;
 
 @Path("boloes")
@@ -48,6 +50,7 @@ public class BolaoFacadeREST {
 	@GET
 	@Path("{id}/ranking/{limite}")
 	@Produces({ "application/xml", "application/json" })
+	@RestricaoAcesso(acesso = Acesso.USUARIO)
 	public RankingBolaoVO ranking(@PathParam("id") Long id, @PathParam("limite") Integer limite) {
 		return bolaoFacade.ranking(id, limite);
 	}
