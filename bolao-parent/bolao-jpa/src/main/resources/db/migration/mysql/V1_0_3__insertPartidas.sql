@@ -14,13 +14,13 @@ INSERT INTO partida (idPartida,dataPartida,idClubeMandante,idClubeVisitante,idRo
 INSERT INTO partida (idPartida,dataPartida,idClubeMandante,idClubeVisitante,idRodada,placarVisitante,placarMandante) VALUES (7, STR_TO_DATE('2014-06-14 16:00:00','%Y-%m-%d %H:%i:%s'),32,13,1,null,null);
 INSERT INTO partida (idPartida,dataPartida,idClubeMandante,idClubeVisitante,idRodada,placarVisitante,placarMandante) VALUES (8, STR_TO_DATE('2014-06-14 19:00:00','%Y-%m-%d %H:%i:%s'),23,25,1,null,null);
 INSERT INTO partida (idPartida,dataPartida,idClubeMandante,idClubeVisitante,idRodada,placarVisitante,placarMandante) VALUES (9, STR_TO_DATE('2014-06-15 13:00:00','%Y-%m-%d %H:%i:%s'),31,15,1,null,null);
-INSERT INTO partida (idPartida,dataPartida,idClubeMandante,idClubeVisitante,idRodada,placarVisitante,placarMandante) VALUES (10, STR_TO_DATE('2014-06-15 16:00:00','%Y-%m-%d %H:%i:%s'),18,21,1,null,null);
+INSERT INTO partida (idPartida,dataPartida,idClubeMandante,idClubeVisitante,idRodada,placarVisitante,placarMandante) VALUES (10, STR_TO_DATE('2014-06-15 16:00:00','%Y-%m-%d %H:%i:%s'),18,22,1,null,null);
 INSERT INTO partida (idPartida,dataPartida,idClubeMandante,idClubeVisitante,idRodada,placarVisitante,placarMandante) VALUES (11, STR_TO_DATE('2014-06-15 19:00:00','%Y-%m-%d %H:%i:%s'),3,7,1,null,null);
 INSERT INTO partida (idPartida,dataPartida,idClubeMandante,idClubeVisitante,idRodada,placarVisitante,placarMandante) VALUES (12, STR_TO_DATE('2014-06-16 16:00:00','%Y-%m-%d %H:%i:%s'),24,28,1,null,null);
 INSERT INTO partida (idPartida,dataPartida,idClubeMandante,idClubeVisitante,idRodada,placarVisitante,placarMandante) VALUES (13, STR_TO_DATE('2014-06-16 13:00:00','%Y-%m-%d %H:%i:%s'),1,29,1,null,null);
 INSERT INTO partida (idPartida,dataPartida,idClubeMandante,idClubeVisitante,idRodada,placarVisitante,placarMandante) VALUES (14, STR_TO_DATE('2014-06-16 19:00:00','%Y-%m-%d %H:%i:%s'),19,17,1,null,null);
 INSERT INTO partida (idPartida,dataPartida,idClubeMandante,idClubeVisitante,idRodada,placarVisitante,placarMandante) VALUES (15, STR_TO_DATE('2014-06-17 13:00:00','%Y-%m-%d %H:%i:%s'),6,2,1,null,null);
-INSERT INTO partida (idPartida,dataPartida,idClubeMandante,idClubeVisitante,idRodada,placarVisitante,placarMandante) VALUES (16, STR_TO_DATE('2014-06-17 19:00:00','%Y-%m-%d %H:%i:%s'),30,1,1,null,null);
+INSERT INTO partida (idPartida,dataPartida,idClubeMandante,idClubeVisitante,idRodada,placarVisitante,placarMandante) VALUES (16, STR_TO_DATE('2014-06-17 19:00:00','%Y-%m-%d %H:%i:%s'),30,11,1,null,null);
 
 
 
