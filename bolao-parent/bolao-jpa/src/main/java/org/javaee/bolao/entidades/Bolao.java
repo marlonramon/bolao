@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -42,6 +43,7 @@ public class Bolao extends AbstractEntity {
 	private Short pontosAcertoResultado;
 
 	@NotNull
+	@ManyToOne
 	@JoinColumn(name = "idCampeonato")
 	private Campeonato campeonato;
 

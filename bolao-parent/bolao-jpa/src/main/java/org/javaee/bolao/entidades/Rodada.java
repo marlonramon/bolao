@@ -38,7 +38,10 @@ public class Rodada extends AbstractEntity {
 	@OneToMany(mappedBy = "rodada")
 	@XmlTransient
 	private Set<Partida> partidas = new HashSet<>();
-
+	
+	@NotNull
+	private Boolean rodadaAtual = Boolean.FALSE;
+	
 	public Long getIdRodada() {
 		return idRodada;
 	}
@@ -70,7 +73,15 @@ public class Rodada extends AbstractEntity {
 	public void setPartidas(Set<Partida> partidas) {
 		this.partidas = partidas;
 	}
-
+	
+	public Boolean getRodadaAtual() {
+		return rodadaAtual;
+	}
+	
+	public void setRodadaAtual(Boolean rodadaAtual) {
+		this.rodadaAtual = rodadaAtual;
+	}
+	
 	@Override
 	public Long getId() {
 		return getIdRodada();

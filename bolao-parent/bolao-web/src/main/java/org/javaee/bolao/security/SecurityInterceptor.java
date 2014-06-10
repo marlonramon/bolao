@@ -4,16 +4,14 @@ import java.io.IOException;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
-import javax.ws.rs.container.ResourceInfo;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.ext.Provider;
 
 @Provider
 public class SecurityInterceptor implements ContainerRequestFilter {
 	public static final String AUTHORIZATION_PROPERTY = "Authorization";
 
-	@Context
-	private ResourceInfo resourceInfo;
+//	@Context
+//	private ResourceInfo resourceInfo;
 
 //	@Inject
 //	private SessaoUsuarioEAO sessaoUsuarioEAO;

@@ -9,7 +9,7 @@
         <div class="panel-body">
             <ul class="list-inline" >
                 <li ng-repeat="rodada in rodadas">
-                    <a ng-click="getApostas(rodada)" class="btn btn-primary">{{rodada.numero}}</a>
+                    <a ng-click="getApostas(rodada)" ng-class="isRodadaAtual(rodada.numero) ? 'btn-primary' : 'btn-block'" class="btn">{{rodada.numero}}</a>
                 </li>
             </ul>
         </div>

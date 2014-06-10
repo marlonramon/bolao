@@ -64,6 +64,7 @@ CREATE  TABLE IF NOT EXISTS `Rodada` (
   `idRodada` INT NOT NULL AUTO_INCREMENT ,
   `numero` SMALLINT NOT NULL ,
   `idCampeonato` INT NOT NULL ,
+  `rodadaAtual` TINYINT NOT NULL default 0,
   PRIMARY KEY (`idRodada`) ,
   INDEX `fk_Rodada_Campeonato1_idx` (`idCampeonato` ASC) ,
   UNIQUE INDEX `numero_UNIQUE` (`numero` ASC, `idCampeonato` ASC) ,

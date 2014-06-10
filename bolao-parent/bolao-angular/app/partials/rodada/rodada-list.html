@@ -12,6 +12,7 @@
                         <th>Código</th>
                         <th>Campeonato</th>
                         <th>Número</th>                                                
+                        <th class="text-center">Rodada Atual</th>
                     </tr>
                 </thead>
 
@@ -19,6 +20,8 @@
                     <td>{{rodada.idRodada}}</td>
                     <td>{{rodada.campeonato.descricao}}</td>
                     <td>{{rodada.numero}}</td>
+                    <td class="text-center"><input disabled="true" type="checkbox" ng-model="rodada.rodadaAtual"/></td>
+                    
                     <td>
                         <a ng-click="edit(rodada.idRodada)" class="btn btn-primary">Editar</a>
                     </td>

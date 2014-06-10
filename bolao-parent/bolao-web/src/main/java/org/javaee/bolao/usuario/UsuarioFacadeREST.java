@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -48,7 +47,7 @@ public class UsuarioFacadeREST
   @GET
   @Path("email/{email}")
   @Produces({"application/xml", "application/json"})
-  public Usuario findByEmail(@Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "E-mail inválido") @PathParam("email") String login) {
+  public Usuario findByEmail(@PathParam("email") String login) {
     return this.usuarioFacade.findByEmail(login);
   }
 
@@ -76,7 +75,7 @@ public class UsuarioFacadeREST
   @Path("login")
   @Consumes({"application/xml", "application/json"})
   @Produces({"application/xml", "application/json"})
-  public SessaoUsuario login(@NotNull Usuario user) {
+  public SessaoUsuario login(Usuario user) {
     return this.usuarioFacade.login(user.getEmail(), user.getSenha());
   }
 
