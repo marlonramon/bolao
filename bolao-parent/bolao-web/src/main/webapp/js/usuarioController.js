@@ -66,6 +66,7 @@ app.controller('LoginCtrl', ['$scope', '$cookieStore', 'Restangular', 'usuarioSe
         	Restangular.all('usuarios/login').post($scope.usuario).then(function(sessaoUsuario) {
                 $scope.sessaoUsuario = sessaoUsuario;
                 $cookieStore.put('sessaoUsuario', $scope.sessaoUsuario);
+                usuarioService.setSessaoUsuario(sessaoUsuario);
 
                 Restangular.setDefaultHeaders({'Authorization': $cookieStore.get('sessaoUsuario').token});
                 
@@ -86,7 +87,7 @@ app.controller('LoginCtrl', ['$scope', '$cookieStore', 'Restangular', 'usuarioSe
 
         $scope.atualizar = function() {
 
-            if (eval($scope.sessaoUsuario)) {
+            if ($scope.sessaoUsuario) {
                 
                 var idUsuario = $scope.sessaoUsuario.usuario.idUsuario;
                 if (idUsuario) {
@@ -94,7 +95,7 @@ app.controller('LoginCtrl', ['$scope', '$cookieStore', 'Restangular', 'usuarioSe
                         $scope.boloesUsuario = boloesUsuario;
                         
                         usuarioService.setBolaoSelecionado(boloesUsuario[0]);
-                        $route.reload();
+                        //$route.reload();
                         
                     });
                 }

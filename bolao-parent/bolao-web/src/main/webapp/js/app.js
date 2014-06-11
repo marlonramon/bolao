@@ -11,6 +11,7 @@ var app = angular.module('bolao', [
     'ngRoute',
     'ngCookies',
     'restangular',
+    'angular-underscore',
     'ngQuickDate',
     'bolao.services',
     'bolao.usuarioController',
@@ -75,7 +76,36 @@ app.run(function($rootScope) {
     $rootScope.baseUrlImages = baseUrlImages;
 });
 
+app.run(function(Restangular,$cookieStore) {
+	if($cookieStore.get('sessaoUsuario')) {
+		Restangular.setDefaultHeaders({'Authorization': $cookieStore.get('sessaoUsuario').token});
+	}
+});
 
+app.run(function($rootScope, $location, usuarioService, $cookieStore) {
+	
+    // enumerate routes that don't need authentication
+    var routesThatDontRequireAuth = ['/index'];
+
+    // check if current location matches route  
+    var routeClean = function(route) {
+
+        return _.find(routesThatDontRequireAuth,
+                function(noAuthRoute) {
+                    return _.str.startsWith(route, noAuthRoute);
+                });
+    };
+
+    $rootScope.$on('$routeChangeStart', function(event, next, current) {
+        // if route requires auth and user is not logged in
+        if (!routeClean($location.url()) && !usuarioService.isUsuarioLogado()) {
+            // redirect back to login
+        	console.log('redirecionando');
+        	$location.path('/index');
+            
+        }
+    });
+});
 
 app.config(function(RestangularProvider) {
     RestangularProvider.setBaseUrl(baseUrl);

@@ -1,8 +1,8 @@
 'use strict';
 
-var app = angular.module('bolao.services', ['ngResource']);
+var app = angular.module('bolao.services', ['ngResource','ngCookies']);
 
-app.service('usuarioService', function() {
+app.service('usuarioService',['$cookieStore', function($cookieStore) {
   var usuarioBolao= {};
   var sessaoUsuario = {};
 
@@ -14,12 +14,16 @@ app.service('usuarioService', function() {
       return this.usuarioBolao;
   };
   
-  this.setUsuario = function (sessaoUsuario) {
+  this.setSessaoUsuario = function (sessaoUsuario) {
       this.sessaoUsuario = sessaoUsuario;
   };
   
-  this.isUsuarioLogado = function() {
+  this.getSessaoUsuario = function () {
       return this.sessaoUsuario;
   };
-});
+  
+  this.isUsuarioLogado = function() {
+      return $cookieStore.get('sessaoUsuario');
+  };
+}]);
 
