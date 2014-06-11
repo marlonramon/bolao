@@ -85,7 +85,7 @@ app.run(function(Restangular,$cookieStore) {
 app.run(function($rootScope, $location, usuarioService, $cookieStore) {
 	
     // enumerate routes that don't need authentication
-    var routesThatDontRequireAuth = ['/index'];
+    var routesThatDontRequireAuth = ['/index', '/usuario-edit'];
 
     // check if current location matches route  
     var routeClean = function(route) {

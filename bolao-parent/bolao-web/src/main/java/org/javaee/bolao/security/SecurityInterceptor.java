@@ -4,13 +4,14 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Date;
 
-import javax.inject.Inject;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
-import javax.ws.rs.container.ResourceInfo;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.ext.Provider;
 
+import org.glassfish.jersey.server.internal.routing.UriRoutingContext;
+import org.glassfish.jersey.server.model.ResourceMethodInvoker;
 import org.javaee.bolao.config.Config;
 import org.javaee.bolao.entidades.SessaoUsuario;
 import org.javaee.bolao.entidades.Usuario;
@@ -21,10 +22,10 @@ import org.javaee.bolao.usuario.UsuarioFacade;
 public class SecurityInterceptor implements ContainerRequestFilter {
 	public static final String AUTHORIZATION_PROPERTY = "Authorization";
 
-	@Context
-	private ResourceInfo resourceInfo;
+//	@Context
+//	private ResourceInfo resourceInfo;
 
-	@Inject
+//	@Inject
 	private UsuarioFacade usuarioFacade;
 
 	public void filter(ContainerRequestContext requestContext) throws IOException {
@@ -33,7 +34,10 @@ public class SecurityInterceptor implements ContainerRequestFilter {
 
 	private void doFilter(ContainerRequestContext requestContext) {
 		
-		Method method = resourceInfo.getResourceMethod();
+		UriRoutingContext routingContext = (UriRoutingContext) requestContext.getUriInfo();
+	    ResourceMethodInvoker invoker = (ResourceMethodInvoker) routingContext.getInflector();
+//	    Class<?> className = invoker.getResourceClass();
+	    Method method = invoker.getResourceMethod();
 		
 		String token = requestContext.getHeaderString("Authorization");
 
@@ -53,7 +57,7 @@ public class SecurityInterceptor implements ContainerRequestFilter {
 			throw new NaoAutorizadoException("Permissão negada para acessar o recurso.");
 		}
 
-		SessaoUsuario sessaoUsuario = usuarioFacade.findByToken(token);
+		SessaoUsuario sessaoUsuario = getUsuarioFacade().findByToken(token);
 		if (sessaoUsuario == null) {
 			throw new NaoAutorizadoException("Token de acesso inválido.");
 		}
@@ -72,9 +76,20 @@ public class SecurityInterceptor implements ContainerRequestFilter {
 		atualizarDataDeExpiracao(sessaoUsuario, dataAtual);
 	}
 
+	private UsuarioFacade getUsuarioFacade() {
+		if(usuarioFacade == null){
+			try {
+				usuarioFacade = InitialContext.doLookup("java:global/bolao-web/UsuarioFacade!org.javaee.bolao.usuario.UsuarioFacade");
+			} catch (NamingException e) {
+				throw new RuntimeException(e);
+			}
+		}
+		return usuarioFacade;
+	}
+
 	private void atualizarDataDeExpiracao(SessaoUsuario sessaoUsuario, Date dataAtual) {
 		long novaDataExpiracao = dataAtual.getTime() + Config.getExpirationLoginTime();
 		sessaoUsuario.setDataExpiracao(new Date(novaDataExpiracao));
-		usuarioFacade.update(sessaoUsuario);
+		getUsuarioFacade().update(sessaoUsuario);
 	}
 }
