@@ -3,23 +3,21 @@
 var app = angular.module('bolao.services', ['ngResource','ngCookies']);
 
 app.service('usuarioService',['$cookieStore', function($cookieStore) {
-  var usuarioBolao= {};
-  var sessaoUsuario = {};
-
+    
   this.setBolaoSelecionado = function(usuarioBolao) {
-      this.usuarioBolao = usuarioBolao;
+	  $cookieStore.put('usuarioBolao', usuarioBolao);
   };
   
   this.getBolaoSelecionado = function(){
-      return this.usuarioBolao;
+      return $cookieStore.get('usuarioBolao');
   };
   
   this.setSessaoUsuario = function (sessaoUsuario) {
-      this.sessaoUsuario = sessaoUsuario;
+	  $cookieStore.put('sessaoUsuario', sessaoUsuario);
   };
   
   this.getSessaoUsuario = function () {
-      return this.sessaoUsuario;
+      return $cookieStore.get('sessaoUsuario');
   };
   
   this.isUsuarioLogado = function() {

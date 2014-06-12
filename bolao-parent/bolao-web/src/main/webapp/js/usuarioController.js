@@ -65,10 +65,10 @@ app.controller('LoginCtrl', ['$scope', '$cookieStore', 'Restangular', 'usuarioSe
         	
         	Restangular.all('usuarios/login').post($scope.usuario).then(function(sessaoUsuario) {
                 $scope.sessaoUsuario = sessaoUsuario;
-                $cookieStore.put('sessaoUsuario', $scope.sessaoUsuario);
+                
                 usuarioService.setSessaoUsuario(sessaoUsuario);
 
-                Restangular.setDefaultHeaders({'Authorization': $cookieStore.get('sessaoUsuario').token});
+                Restangular.setDefaultHeaders({'Authorization': sessaoUsuario.token});
                 
                 $scope.atualizar();                
                 
@@ -86,23 +86,20 @@ app.controller('LoginCtrl', ['$scope', '$cookieStore', 'Restangular', 'usuarioSe
         };
 
         $scope.atualizar = function() {
-
-            if ($scope.sessaoUsuario) {
-                
-                var idUsuario = $scope.sessaoUsuario.usuario.idUsuario;
+        	var sessaoUsuario = usuarioService.getSessaoUsuario();
+            if (sessaoUsuario) {
+                var idUsuario = sessaoUsuario.usuario.idUsuario;
                 if (idUsuario) {
                     Restangular.one('usuarios', idUsuario).one('boloes').get().then(function(boloesUsuario) {
                         $scope.boloesUsuario = boloesUsuario;
                         
                         usuarioService.setBolaoSelecionado(boloesUsuario[0]);
-                        //$route.reload();
+                        
                         
                     });
                 }
             }
         };
-
-        $scope.atualizar();
 
         $scope.isAdm = function() {
             var sessaoUsuario = $scope.sessaoUsuario;
@@ -115,7 +112,10 @@ app.controller('LoginCtrl', ['$scope', '$cookieStore', 'Restangular', 'usuarioSe
         };
 
         $scope.isUsuarioLogado = function() {
-            return $scope.sessaoUsuario;
+        	if($scope.sessaoUsuario) {
+        		return $scope.sessaoUsuario;
+        	} else {return usuarioService.isUsuarioLogado();}
+            
         };
 
         $scope.logout = function() {

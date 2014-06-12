@@ -29,14 +29,15 @@
 
                 <tr ng-repeat="aposta in apostas">
                     <td style="vertical-align: inherit">{{aposta.partida.dataPartida| date:'dd/MM/yyyy HH:mm'}}</td>
-                    <td style="vertical-align: inherit"><label for="inputPlacarMandante">  {{aposta.partida.clubeMandante.nome}} </label> </td>
-                    <td style="vertical-align: inherit"><img ng-src="{{baseUrlImages + '/' + aposta.partida.clubeMandante.bandeira}}"/> </td>
-                    <td class="text-right" style="vertical-align: inherit">
+                    <td style="vertical-align: inherit" align="right"><label for="inputPlacarMandante"  class="text-right">  {{aposta.partida.clubeMandante.nome}} </label> </td>
+                    <td style="vertical-align: inherit"><img ng-src="{{baseUrlImages + '/' + aposta.partida.clubeMandante.bandeira}}"/> {{aposta.partida.placar.placarMandante}} </td>
+                    <td align="right" style="vertical-align: inherit">
                         <input class="form-control text-right" type="number"
                                id="inputPlacarMandante" 
 							   min="0" max="99"
                                ng-model="aposta.placar.placarMandante" 
                                style="width: 70px"
+                               number-mask=""
                                ng-disabled="aposta.partida.partidaFinalizada"/>
 
                     </td>
@@ -47,11 +48,12 @@
 							   min="0" max="99"
                                ng-model="aposta.placar.placarVisitante" 
                                ng-disabled="aposta.partida.partidaFinalizada"
+                               number-mask=""
                                style="width: 70px"/>
 
                     </td>
-                    <td style="vertical-align: inherit"><img ng-src="{{baseUrlImages + '/' + aposta.partida.clubeVisitante.bandeira}}" /> </td>
-                    <td style="vertical-align: inherit">{{aposta.partida.clubeVisitante.nome}}</td>
+                    <td style="vertical-align: inherit"><img ng-src="{{baseUrlImages + '/' + aposta.partida.clubeVisitante.bandeira}}" /> {{aposta.partida.placar.placarVisitante}} </td>
+                    <td style="vertical-align: inherit"><label for="inputPlacarMandante">  {{aposta.partida.clubeVisitante.nome}} </label></td>
                 </tr>
             </table>
         </div>
