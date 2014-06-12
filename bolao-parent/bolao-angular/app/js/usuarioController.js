@@ -59,18 +59,29 @@ app.controller('LoginCtrl', ['$scope', '$cookieStore', 'Restangular', 'usuarioSe
 
         $scope.boloesUsuario = {};
         $scope.sessaoUsuario = $cookieStore.get('sessaoUsuario');
+        $scope.errorsLogin = {};
         
         $scope.login = function() {
-            Restangular.all('usuarios/login').post($scope.usuario).then(function(sessaoUsuario) {
+        	
+        	Restangular.all('usuarios/login').post($scope.usuario).then(function(sessaoUsuario) {
                 $scope.sessaoUsuario = sessaoUsuario;
                 $cookieStore.put('sessaoUsuario', $scope.sessaoUsuario);
 
                 Restangular.setDefaultHeaders({'Authorization': $cookieStore.get('sessaoUsuario').token});
                 
                 $scope.atualizar();                
-               
                 
+                $('#loginModal').modal('hide');
+                
+            }, function(response){            	
+            	
+            	$scope.errorsLogin = response.data;
             });
+        };
+        
+        $scope.entrar = function(){
+        	$scope.errorsLogin = {};
+        	$scope.usuario = {};
         };
 
         $scope.atualizar = function() {
@@ -94,9 +105,9 @@ app.controller('LoginCtrl', ['$scope', '$cookieStore', 'Restangular', 'usuarioSe
 
         $scope.isAdm = function() {
             var sessaoUsuario = $scope.sessaoUsuario;
-
+            
             if ($scope.isUsuarioLogado()) {
-                return  sessaoUsuario.usuario.perfil === "ADMINISTRADOR";
+                return sessaoUsuario.usuario.admin;
             } else {
                 return false;
             }

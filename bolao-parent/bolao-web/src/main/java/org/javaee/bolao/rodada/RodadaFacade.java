@@ -1,16 +1,14 @@
 package org.javaee.bolao.rodada;
 
-import java.text.MessageFormat;
 import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Response;
 
 import org.javaee.bolao.eao.RodadaEAO;
 import org.javaee.bolao.entidades.Campeonato;
 import org.javaee.bolao.entidades.Rodada;
+import org.javaee.bolao.exception.BolaoWebApplicationException;
 import org.javaee.bolao.vo.RankingRodadaVO;
 
 @Stateless
@@ -26,10 +24,24 @@ public class RodadaFacade {
 		if (!rodada.hasId())
 			rodadaEAO.insert(rodada);
 		else {
-			rodadaEAO.update(rodada);
+			rodada = rodadaEAO.update(rodada);
 		}
 
+		atualizarRodadaAtual(rodada);
+		
 		return rodada;
+	}
+
+	private void atualizarRodadaAtual(Rodada rodada) {
+		if(rodada.getRodadaAtual()){
+			List<Rodada> rodadasAtuais = rodadaEAO.findRodadaAtualByCampeoanto(rodada.getCampeonato());
+			
+			for (Rodada rodadaAtual : rodadasAtuais) {
+				if(!rodadaAtual.equals(rodada)){
+					rodadaAtual.setRodadaAtual(Boolean.FALSE);
+				}
+			}
+		}
 	}
 
 	private void validar(Rodada rodada) {
@@ -44,8 +56,8 @@ public class RodadaFacade {
 		
 		Rodada rodadaDB = rodadaEAO.findByCampeonatoAndNumero(campeonato, numero);
 		
-		if(rodadaDB != null){
-			throw new WebApplicationException(MessageFormat.format("Rodada número {0} já cadastrada para o campeonato {1}.", numero, campeonato.getDescricao()), Response.Status.CONFLICT);
+		if(rodadaDB != null && !rodadaDB.equals(rodada)){
+			throw new BolaoWebApplicationException("Rodada número {0} já cadastrada para o campeonato {1}.", numero, campeonato.getDescricao());
 		}
 	}
 

@@ -8,11 +8,11 @@ public class BolaoWebApplicationException extends WebApplicationException{
 	private static final long serialVersionUID = 1L;
 
 	public BolaoWebApplicationException(String mensagem, Object... argumentos) {
-		super(Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ErroResposta(mensagem, argumentos)).build());
+		super(Response.status(Response.Status.NOT_ACCEPTABLE).entity(new ErroResposta(mensagem, argumentos)).build());
 	}
 	
 	public BolaoWebApplicationException(ErroResposta erroResposta) {
-		super(Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erroResposta).build());
+		super(Response.status(Response.Status.NOT_ACCEPTABLE).entity(erroResposta).build());
 	}
 	
 	public BolaoWebApplicationException(Status status, String mensagem, Object... argumentos) {

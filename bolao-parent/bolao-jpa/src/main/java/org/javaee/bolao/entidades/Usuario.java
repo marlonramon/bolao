@@ -3,8 +3,6 @@ package org.javaee.bolao.entidades;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,11 +22,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Usuario extends AbstractEntity {
 	private static final long serialVersionUID = 1L;
-	
-	public enum PerfilUsuario {
-		ADMINISTRADOR,
-		USUARIO;
-	}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,9 +49,8 @@ public class Usuario extends AbstractEntity {
 	@Size(max = 120)
 	private String email;
 
-	@NotNull
-	@Enumerated(EnumType.STRING)
-	private PerfilUsuario perfil = PerfilUsuario.USUARIO;
+	@NotNull	
+	private Boolean admin = Boolean.FALSE;
 
 	public Usuario() {
 	}
@@ -123,12 +115,12 @@ public class Usuario extends AbstractEntity {
 		this.email = email;
 	}
 
-	public PerfilUsuario getPerfil() {
-		return perfil;
+	public Boolean getAdmin() {
+		return admin;
 	}
 	
-	public void setPerfil(PerfilUsuario perfil) {
-		this.perfil = perfil;
+	public void setAdmin(Boolean admin) {
+		this.admin = admin;
 	}
 	
 	public String getConfirmarSenha() {

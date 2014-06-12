@@ -1,6 +1,5 @@
 package org.javaee.bolao.usuario;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -16,7 +15,6 @@ import org.javaee.bolao.entidades.SessaoUsuario;
 import org.javaee.bolao.entidades.Usuario;
 import org.javaee.bolao.entidades.UsuarioBolao;
 import org.javaee.bolao.exception.BolaoWebApplicationException;
-import org.javaee.bolao.exception.NaoAutorizadoException;
 import org.javaee.bolao.usuariobolao.UsuarioBolaoFacade;
 import org.javaee.rest.common.Encryptor;
 
@@ -109,43 +107,31 @@ public class UsuarioFacade {
 		
 		Usuario usuario = findByEmail(email);
 		if (usuario == null) {
-			throw new NaoAutorizadoException("Email e/ou senha inválido.");
+			throw new BolaoWebApplicationException("Email e/ou senha inválido.");
 		}
 
 		if (!usuarioEAO.checkPassword(usuario, senha)) {
-			throw new NaoAutorizadoException("Email e/ou senha inválido.");
+			throw new BolaoWebApplicationException("Email e/ou senha inválido.");
 		}
 
-		Date actualDate = new Date();
+		apagarSessoesDoUsuario(usuario);
 
-		removeInvalidSessions(usuario, actualDate);
-
-		SessaoUsuario validSession = sessaoUsuarioEAO.findSessaoValida(email, actualDate);
-
-		if (validSession == null) {
-			validSession = sessaoUsuarioEAO.create(usuario, Config.getExpirationLoginTime());
-		}
+		SessaoUsuario validSession = sessaoUsuarioEAO.create(usuario, Config.getExpirationLoginTime());
 
 		return validSession;
 	}
 
-	private void removeInvalidSessions(Usuario user, Date actualDate) {
-		sessaoUsuarioEAO.deleteExpiratedSessions(user, actualDate);
+	private void apagarSessoesDoUsuario(Usuario user) {
+		sessaoUsuarioEAO.apagarSessoesDoUsuario(user);
 	}
 
 	public boolean logout(String email) {
 		SessaoUsuario validSession = null;
 
-		Date expirateDate = new Date();
-
 		Usuario usuario = findByEmail(email);
 
 		if (usuario != null) {
-			validSession = sessaoUsuarioEAO.findSessaoValida(usuario.getEmail(), expirateDate);
-
-			if (validSession != null) {
-				validSession.setDataExpiracao(expirateDate);
-			}
+			apagarSessoesDoUsuario(usuario);
 		}
 
 		return validSession != null;
@@ -158,6 +144,18 @@ public class UsuarioFacade {
 	public List<UsuarioBolao> findBoloes(Long idUsuario) {
 		Usuario usuario = find(idUsuario);
 		return usuarioBolaoFacade.findBoloesByUsuario(usuario);
+	}
+	
+	public void trocarSenha(){
+		
+	}
+
+	public SessaoUsuario findByToken(String token) {
+		return sessaoUsuarioEAO.findByToken(token);
+	}
+
+	public void update(SessaoUsuario sessaoUsuario) {
+		sessaoUsuarioEAO.update(sessaoUsuario);
 	}
 
 }

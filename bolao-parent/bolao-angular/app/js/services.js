@@ -2,6 +2,11 @@
 
 var app = angular.module('bolao.services', ['ngResource']);
 
+app.factory('_', function() {
+    return window._; // assumes underscore has already been loaded on the page
+});
+
+
 app.service('usuarioService', function() {
   var usuarioBolao= {};
   var sessaoUsuario = {};
@@ -22,4 +27,5 @@ app.service('usuarioService', function() {
       return this.sessaoUsuario;
   };
 });
+
 

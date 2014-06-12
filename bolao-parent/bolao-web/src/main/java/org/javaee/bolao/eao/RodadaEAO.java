@@ -148,4 +148,20 @@ public class RodadaEAO extends AbstractEAO<Rodada> {
 		return super.createQuery(criteriaQuery).getResultList();
 	}
 	
+	public List<Rodada> findRodadaAtualByCampeoanto(Campeonato campeonato){
+		
+		CriteriaQuery<Rodada> cq = createCriteriaQuery();
+		
+		Root<Rodada> from = cq.from(Rodada.class);
+		
+		CriteriaBuilder cb = getCriteriaBuilder();
+		
+		Predicate equalCampeonato = cb.equal(from.get(Rodada_.campeonato), campeonato);
+		
+		cq.where(equalCampeonato);
+		
+		return super.createQuery(cq).getResultList();
+		
+	}
+	
 }

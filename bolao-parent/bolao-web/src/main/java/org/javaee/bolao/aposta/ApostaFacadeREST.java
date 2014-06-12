@@ -12,6 +12,8 @@ import javax.ws.rs.Produces;
 
 import org.javaee.bolao.entidades.Aposta;
 import org.javaee.bolao.entidades.Placar;
+import org.javaee.bolao.security.Acesso;
+import org.javaee.bolao.security.RestricaoAcesso;
 import org.javaee.rest.common.XmlUtil;
 
 @Path("apostas")
@@ -22,6 +24,7 @@ public class ApostaFacadeREST {
 
 	@POST
 	@Consumes({ "application/xml", "application/json" })
+	@RestricaoAcesso(acesso = Acesso.USUARIO)
 	public void insertOrUpdate(List<Aposta> apostas) {
 		apostaFacade.gravar(apostas);
 	}
@@ -31,6 +34,7 @@ public class ApostaFacadeREST {
 	@GET
 	@Path("usuariobolao/{idUsuarioBolao}/rodada/{idRodada}")
 	@Produces({ "application/xml", "application/json" })
+	@RestricaoAcesso(acesso = Acesso.USUARIO)
 	public List<Aposta> findByUsuarioAndRodada(@PathParam("idUsuarioBolao") Long idUsuarioBolao, @PathParam("idRodada") Long idRodada) {
 		return apostaFacade.findApostas(idUsuarioBolao, idRodada);
 	}

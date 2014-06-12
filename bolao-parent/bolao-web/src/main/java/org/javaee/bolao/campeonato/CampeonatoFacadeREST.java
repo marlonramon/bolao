@@ -13,6 +13,8 @@ import javax.ws.rs.Produces;
 
 import org.javaee.bolao.entidades.Campeonato;
 import org.javaee.bolao.entidades.Rodada;
+import org.javaee.bolao.security.Acesso;
+import org.javaee.bolao.security.RestricaoAcesso;
 
 @Path("campeonatos")
 public class CampeonatoFacadeREST
@@ -44,6 +46,7 @@ public class CampeonatoFacadeREST
   @GET
   @Path("{idCampeonato}/rodadas")
   @Produces({"application/xml", "application/json"})
+  @RestricaoAcesso(acesso = Acesso.USUARIO)
   public List<Rodada> findRodadas(@PathParam("idCampeonato") Long idCampeonato) {
     return campeonatoFacade.findRodadas(idCampeonato);
   }

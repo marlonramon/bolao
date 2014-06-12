@@ -26,7 +26,6 @@ import org.javaee.bolao.entidades.Campeonato_;
 import org.javaee.bolao.entidades.Partida;
 import org.javaee.bolao.entidades.Partida_;
 import org.javaee.bolao.entidades.Placar;
-import org.javaee.bolao.entidades.Placar_;
 import org.javaee.bolao.entidades.Rodada;
 import org.javaee.bolao.entidades.Rodada_;
 import org.javaee.bolao.entidades.Usuario;
@@ -83,10 +82,7 @@ public class BolaoEAO extends AbstractEAO<Bolao> {
 
 		Predicate equalBolao = cb.equal(from, bolao);
 
-		Predicate placarMandanteNotNull = cb.isNotNull(joinPlacarPartida.get(Placar_.placarMandante));
-		Predicate placarVisitanteNotNull = cb.isNotNull(joinPlacarPartida.get(Placar_.placarVisitante));
-
-		criteriaQuery.where(equalBolao, placarMandanteNotNull, placarVisitanteNotNull);
+		criteriaQuery.where(equalBolao);
 
 		criteriaQuery.groupBy(idUsuarioPath);
 

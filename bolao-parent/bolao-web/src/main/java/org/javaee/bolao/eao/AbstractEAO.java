@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -47,8 +48,19 @@ public abstract class AbstractEAO<E extends IEntity>
 		logger.log(Level.INFO, "Insert {0}: {1}", new Object[]{entityClass.getSimpleName(), XmlUtil.toString(entity, true)});
 		try{
 			getEntityManager().persist(entity);
-		}catch(ConstraintViolationException e){
-			for (ConstraintViolation constraintViolation : e.getConstraintViolations()) {
+		}catch(Exception e){
+			throw convertException(e);
+		}
+	}
+
+	private RuntimeException convertException(Exception e) {
+		
+		RuntimeException re = new RuntimeException(e);
+		
+		if(e instanceof ConstraintViolationException){
+			ConstraintViolationException  cve = (ConstraintViolationException) e;
+			Set<ConstraintViolation<?>> constraintViolations = cve.getConstraintViolations();
+			for (ConstraintViolation<?> constraintViolation : constraintViolations) {
 				StringBuilder sb = new StringBuilder();
 				sb.append("ConstraintViolationException");
 				sb.append("\nInvalidValue: "+constraintViolation.getInvalidValue());
@@ -56,32 +68,11 @@ public abstract class AbstractEAO<E extends IEntity>
 				sb.append("\nMessage: "+constraintViolation.getMessage());
 				logger.severe(sb.toString());
 			}
-		}catch(Exception e){
-			e.printStackTrace();
-			throw new BolaoRuntimeException(e);
 		}
+		
+		
+		return re;
 	}
-
-//	private RuntimeException convertException(Exception e) {
-//		
-//		RuntimeException re = new RuntimeException(e);
-//		
-//		if(e instanceof ConstraintViolationException){
-//			ConstraintViolationException  cve = (ConstraintViolationException) e;
-//			Set<ConstraintViolation<?>> constraintViolations = cve.getConstraintViolations();
-//			for (ConstraintViolation<?> constraintViolation : constraintViolations) {
-//				StringBuilder sb = new StringBuilder();
-//				sb.append("ConstraintViolationException");
-//				sb.append("\nInvalidValue: "+constraintViolation.getInvalidValue());
-//				sb.append("\nProperty: "+constraintViolation.getPropertyPath());
-//				sb.append("\nMessage: "+constraintViolation.getMessage());
-//				logger.severe(sb.toString());
-//			}
-//		}
-//		
-//		
-//		return re;
-//	}
 
 	public void delete(Long id) {
 		logger.log(Level.INFO, "Delete {0} Id: {1}", new Object[]{entityClass.getSimpleName(), id});
@@ -98,29 +89,11 @@ public abstract class AbstractEAO<E extends IEntity>
 	public E update(E entity) {
 		logger.log(Level.INFO, "Update {0}: {1}", new Object[]{entityClass.getSimpleName(), XmlUtil.toString(entity, true)});
 		try{
-			System.out.println("akiiiiiiiiiiiiiiiiiiiiiiiii");
-			
 			E merge = getEntityManager().merge(entity);
 			getEntityManager().flush();
 			return merge;
-		}catch(ConstraintViolationException e){
-			e.printStackTrace();
-			System.out.println(" CONTRANINSFASFASDFA  " + e.getConstraintViolations().size());
-			for (ConstraintViolation constraintViolation : e.getConstraintViolations()) {
-				StringBuilder sb = new StringBuilder();
-				sb.append("ConstraintViolationException");
-				sb.append("\nInvalidValue: "+constraintViolation.getInvalidValue());
-				sb.append("\nProperty: "+constraintViolation.getPropertyPath());
-				sb.append("\nMessage: "+constraintViolation.getMessage());
-				logger.severe(sb.toString());
-			}
-			//throw new BolaoRuntimeException(e);
-			
-			return null;
 		}catch(Exception e){
-			System.out.println("tretaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-			e.printStackTrace();
-			throw new BolaoRuntimeException(e);
+			throw convertException(e);
 		}
 	}
 

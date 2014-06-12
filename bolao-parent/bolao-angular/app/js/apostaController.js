@@ -5,14 +5,31 @@ var app = angular.module('bolao.apostaController', []);
 app.controller('ApostaListCtrl', ['$scope', 'Restangular', 'usuarioService',
     function($scope, Restangular, usuarioService) {
 
-        var sessaoUsuario = $scope.sessaoUsuario;
         var usuarioBolao = usuarioService.getBolaoSelecionado();
-        
-        if (usuarioBolao) {
-            var rodadas = Restangular.one("campeonatos", usuarioBolao.bolao.campeonato.idCampeonato).all("rodadas").getList().$object;
-            $scope.rodadas = rodadas;
-        } 
 
+        if (usuarioBolao) {
+            Restangular.one("campeonatos", usuarioBolao.bolao.campeonato.idCampeonato).all("rodadas").getList().then(function(rodadas) {
+                $scope.rodadas = rodadas;
+
+                for (var i = 0; i < $scope.rodadas.length; i++) { 
+
+                    var r = $scope.rodadas[i];
+
+                    if (r.rodadaAtual) {
+                        $scope.getApostas(r);
+                        break;
+                    }
+                }
+
+            });
+
+
+
+        }
+
+        $scope.isRodadaAtual = function(numero) {
+            return $scope.rodada && numero === $scope.rodada.numero;
+        };
 
         $scope.getApostas = function(rodada) {
             $scope.rodada = rodada;
@@ -22,22 +39,19 @@ app.controller('ApostaListCtrl', ['$scope', 'Restangular', 'usuarioService',
                 $scope.apostas = {};
             }
         };
-        
-        
-
 
         $scope.salvar = function() {
-            $scope.errors = {};            
+            $scope.errors = {};
             $scope.messages = {};
             if ($scope.apostas) {
                 Restangular.all("apostas").post($scope.apostas).then(function() {
-                    $scope.messages = {"message":"Palpites salvos com sucesso."};
-                }, function(response){
+                    $scope.messages = {"message": "Palpites salvos com sucesso."};
+                }, function(response) {
                     $scope.errors = response.data;
                 });
             }
         };
-        
-        
+
+
 
     }]);

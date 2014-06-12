@@ -11,6 +11,7 @@ var app = angular.module('bolao', [
     'ngRoute',
     'ngCookies',
     'restangular',
+    'angular-underscore',
     'ngQuickDate',
     'bolao.services',
     'bolao.usuarioController',
@@ -22,9 +23,32 @@ var app = angular.module('bolao', [
     'bolao.rankingController',
     'bolao.apostaController',
     'bolao.usuarioBolaoController'
+    
 
 ]);
 
+app.run(function($rootScope, $location, usuarioService) {
+
+    // enumerate routes that don't need authentication
+    var routesThatDontRequireAuth = ['/index'];
+
+    // check if current location matches route  
+    var routeClean = function(route) {
+
+        return _.find(routesThatDontRequireAuth,
+                function(noAuthRoute) {
+                    return _.str.startsWith(route, noAuthRoute);
+                });
+    };
+
+    $rootScope.$on('$routeChangeStart', function(event, next, current) {
+        // if route requires auth and user is not logged in
+        if (!routeClean($location.url()) && !usuarioService.isUsuarioLogado()) {
+            // redirect back to login
+            $location.path('/index');
+        }
+    });
+});
 
 app.config(['$routeProvider', function($routeProvider) {
         //usuarios
@@ -79,7 +103,7 @@ app.run(function($rootScope) {
 
 app.config(function(RestangularProvider) {
     RestangularProvider.setBaseUrl(baseUrl);
-    //RestangularProvider.setDefaultHttpFields({withCredentials: true});
+//    RestangularProvider.setDefaultHttpFields({withCredentials: true});
 
     RestangularProvider.setErrorInterceptor(function(response) {
 
@@ -88,7 +112,7 @@ app.config(function(RestangularProvider) {
 
     });
 
- 
+
 
 });
 
@@ -97,20 +121,5 @@ app.config(function(ngQuickDateDefaultsProvider) {
     });
 });
 
-app.directive('match', function() {
-    return {
-        require: 'ngModel',
-        restrict: 'A',
-        scope: {
-            match: '='
-        },
-        link: function(scope, elem, attrs, ctrl) {
-            scope.$watch(function() {
-                return (ctrl.$pristine && angular.isUndefined(ctrl.$modelValue)) || scope.match === ctrl.$modelValue;
-            }, function(currentValue) {
-                ctrl.$setValidity('match', currentValue);
-            });
-        }
-    };
-});
+
 
