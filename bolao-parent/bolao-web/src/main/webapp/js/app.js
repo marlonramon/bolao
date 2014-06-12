@@ -100,12 +100,12 @@ app.run(function($rootScope, $location, usuarioService, $cookieStore) {
 
     $rootScope.$on('$routeChangeStart', function(event, next, current) {
         // if route requires auth and user is not logged in
-//        if (!routeClean($location.url()) && !usuarioService.isUsuarioLogado()) {
-//            // redirect back to login
-//        	console.log('redirecionando');
-//        	$location.path('/index');
-//            
-//        }
+        if (!routeClean($location.url()) && !usuarioService.isUsuarioLogado()) {
+            // redirect back to login
+        	console.log('redirecionando');
+        	$location.path('/index');
+            
+        }
     });
 });
 
