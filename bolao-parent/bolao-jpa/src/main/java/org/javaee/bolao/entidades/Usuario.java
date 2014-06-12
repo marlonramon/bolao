@@ -130,4 +130,8 @@ public class Usuario extends AbstractEntity {
 	public void setConfirmarSenha(String confirmarSenha) {
 		this.confirmarSenha = confirmarSenha;
 	}
+	
+	public boolean isAdmin(){
+		return getAdmin() != null && getAdmin();
+	}
 }

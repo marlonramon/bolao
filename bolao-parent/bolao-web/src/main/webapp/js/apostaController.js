@@ -2,8 +2,8 @@
 
 var app = angular.module('bolao.apostaController', []);
 
-app.controller('ApostaListCtrl', ['$scope', 'Restangular', 'usuarioService', '$route',
-    function($scope, Restangular, usuarioService, $route) {
+app.controller('ApostaListCtrl', ['$scope', 'Restangular', 'usuarioService', '$route', 'flash',
+    function($scope, Restangular, usuarioService, $route, flash) {
 
         var usuarioBolao = usuarioService.getBolaoSelecionado();
 
@@ -42,11 +42,11 @@ app.controller('ApostaListCtrl', ['$scope', 'Restangular', 'usuarioService', '$r
             $scope.errors = {};
             $scope.messages = {};
             if ($scope.apostas) {
-                Restangular.all("apostas").post($scope.apostas).then(function() {
-                    $scope.messages = {"message": "Palpites salvos com sucesso."};
-                    $route.reload();
+                Restangular.all("apostas").post($scope.apostas).then(function() {                    
+                	flash.success = 'Salvo com sucesso';                	
+                	$route.reload();                	                	
                 }, function(response) {
-                    $scope.errors = response.data;
+                	flash.error = response.data.mensagem;
                 });
             }
         };

@@ -11,18 +11,19 @@
         <link rel="stylesheet" type="text/css" href="css/ng-quick-date-plus-default-theme.css" media="all" />
 
         <!-- include javascript, jQuery FIRST -->
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>  
+        <script src="lib/jquery.min.js"></script>
+        <script src="lib/bootstrap.min.js"></script>  
         <script src="lib/angular/angular.js"></script>
         <script src="lib/angular/angular-route.js"></script>
         <script src="lib/angular/angular-resource.js"></script>
         <script src="lib/angular/angular-cookies.js"></script>
-        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
-        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.string/2.3.3/underscore.string.min.js"></script>
-        <script type="text/javascript" src="js/angular-underscore.min.js"></script>
-        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/restangular/1.4.0/restangular.min.js"></script>
-        <script type="text/javascript" src="js/ng-quick-date.js"></script>
-    	<script src="https://raw.github.com/SamWM/jQuery-Plugins/master/numeric/jquery.numeric.js"></script>
+        <script type="text/javascript" src="lib/underscore-min.js"></script>
+        <script type="text/javascript" src="lib/underscore.string.min.js"></script>
+        <script type="text/javascript" src="lib/angular-underscore.min.js"></script>
+        <script type="text/javascript" src="lib/restangular.min.js"></script>
+        <script type="text/javascript" src="lib/ng-quick-date.js"></script>
+    	<script src="lib/jquery.numeric.js"></script>    	
+    	<script src="lib/angular-flash.min.js"></script>
 
         <script src="js/app.js"></script>
         <script src="js/services.js"></script>
@@ -88,10 +89,19 @@
                 </div>
             </div>            
         </div>
+		
+		
+		
+		<!-- Set the display duration in milli-secs.  Default is 5000, 0 disables the fade-away. -->
+		<div flash-alert active-class="in" class="alert fade" duration="0" style="margin-top:60px;margin-botton:0px">
+		    <!-- Manually hide the alert with `hide()` -->
+		    <button type="button" class="close" ng-click="hide()">&times;</button>		    
+		    <span class="alert-message">{{flash.message}}</span>
+		</div>
+	
 
-        <div id="content" ng-view class="container-fluid" style="padding: 60px" >
-
-
+		<div id="content" ng-view class="container-fluid"  >    
+        
         </div>
 
         <!--login modal-->

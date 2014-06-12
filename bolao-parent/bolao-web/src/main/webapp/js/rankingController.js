@@ -8,7 +8,7 @@ app.controller('RankingBolaoCtrl', ['$scope', '$routeParams', '$location', 'Rest
         $scope.rankingBolao = {};
 
         if ($routeParams.id) {
-            $scope.rankingBolao = Restangular.one('boloes', $routeParams.id).one('ranking/10').get().$object;
+            $scope.rankingBolao = Restangular.one('boloes', $routeParams.id).one('ranking/100').get().$object;
         }
 
     }]);
@@ -19,7 +19,7 @@ app.controller('RankingRodadaCtrl', ['$scope', '$routeParams', '$location', 'Res
         $scope.rankingRodada = {};
 
         if ($routeParams.id) {
-            $scope.rankingRodada = Restangular.one('rodadas', $routeParams.id).one('ranking/10').get().$object;
+            $scope.rankingRodada = Restangular.one('rodadas', $routeParams.id).one('ranking/100').get().$object;
         }
 
     }]);

@@ -3,7 +3,6 @@
 <div class="container" style="width: 800px" >
     <div class="panel panel-default">
 
-
         <div class="panel-heading text-center">Rodadas</div>
 
         <div class="panel-body">
@@ -19,11 +18,12 @@
 
     <div class="panel  panel-default">
 
-
-        <div class="panel-heading">Rodada: {{rodada.numero}} </div>
+		
+		
+        <div class="panel-heading">Rodada: {{rodada.numero}}</div>
+        <div class="panel-heading"><a ng-click="salvar()" class="btn btn-primary center-block ">Salvar Palpites</a></div>        
+        
         <div class="panel-body">
-            <p ng-repeat="message in messages" class="alert alert-success">{{message}}</p>
-            <p ng-repeat="errs in errors" class="alert alert-danger"><strong>Erro</strong>: {{ errs}}</p>
             <table class="table table-striped table-hover">
 
 
