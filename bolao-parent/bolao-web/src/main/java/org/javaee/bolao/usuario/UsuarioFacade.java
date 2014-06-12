@@ -15,6 +15,7 @@ import org.javaee.bolao.entidades.SessaoUsuario;
 import org.javaee.bolao.entidades.Usuario;
 import org.javaee.bolao.entidades.UsuarioBolao;
 import org.javaee.bolao.exception.BolaoWebApplicationException;
+import org.javaee.bolao.exception.TokenInvalidoException;
 import org.javaee.bolao.usuariobolao.UsuarioBolaoFacade;
 import org.javaee.rest.common.Encryptor;
 
@@ -33,7 +34,7 @@ public class UsuarioFacade {
 	@Inject
 	private BolaoEAO bolaoEAO;
 
-	public Response insertOrUpdate(Usuario usuario) {
+	public Response insertOrUpdate(Usuario usuario, String token) {
 		validarEmailDuplicado(usuario);
 		validarConfirmarSenha(usuario);
 		criptografarSenha(usuario);
@@ -42,10 +43,28 @@ public class UsuarioFacade {
 			usuarioEAO.insert(usuario);
 			vincularUsuarioBoloes(usuario);		
 		}else {
+			validarAlteracao(usuario, token);
 			usuarioEAO.update(usuario);
 		}
 
 		return Response.ok(usuario).build();
+	}
+
+	private void validarAlteracao(Usuario usuario, String token) {
+		SessaoUsuario sessaoUsuario = findSessaoUsuarioByToken(token);
+		
+		if(sessaoUsuario == null){
+			throw new TokenInvalidoException();
+		}
+		
+		Usuario usuarioLogado = sessaoUsuario.getUsuario();
+		
+		if(!usuario.equals(usuarioLogado)){
+			if(!usuarioLogado.isAdmin()){
+				throw new BolaoWebApplicationException("O Usuário Logado {0} não tem permissão para alterar dados de outro Usuário.", usuarioLogado.getNome());
+			}
+		}
+				
 	}
 
 	private void vincularUsuarioBoloes(Usuario usuario) {
@@ -150,12 +169,11 @@ public class UsuarioFacade {
 		
 	}
 
-	public SessaoUsuario findByToken(String token) {
+	public SessaoUsuario findSessaoUsuarioByToken(String token) {
 		return sessaoUsuarioEAO.findByToken(token);
 	}
 
 	public void update(SessaoUsuario sessaoUsuario) {
 		sessaoUsuarioEAO.update(sessaoUsuario);
 	}
-
 }

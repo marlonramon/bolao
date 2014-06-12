@@ -11,6 +11,8 @@ var app = angular.module('bolao', [
     'ngRoute',
     'ngCookies',
     'restangular',
+    'angular-flash.service', 
+    'angular-flash.flash-alert-directive',
     'angular-underscore',
     'ngQuickDate',
     'bolao.services',
@@ -127,6 +129,21 @@ app.config(function(RestangularProvider) {
 app.config(function(ngQuickDateDefaultsProvider) {
     return ngQuickDateDefaultsProvider.set({
     });
+});
+
+app.config(function (flashProvider) {
+
+    // Support bootstrap 3.0 "alert-danger" class with error flash types
+    flashProvider.errorClassnames.push('alert-danger');
+
+    /**
+     * Also have...
+     *
+     * flashProvider.warnClassnames
+     * flashProvider.infoClassnames
+     * flashProvider.successClassnames
+     */
+
 });
 
 app.directive('numberMask', function() {

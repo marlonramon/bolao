@@ -16,6 +16,8 @@ import org.javaee.bolao.config.Config;
 import org.javaee.bolao.entidades.SessaoUsuario;
 import org.javaee.bolao.entidades.Usuario;
 import org.javaee.bolao.exception.NaoAutorizadoException;
+import org.javaee.bolao.exception.SessaoExpiradaException;
+import org.javaee.bolao.exception.TokenInvalidoException;
 import org.javaee.bolao.usuario.UsuarioFacade;
 
 @Provider
@@ -54,17 +56,17 @@ public class SecurityInterceptor implements ContainerRequestFilter {
 		}
 		
 		if ((token == null) || (token.isEmpty())) {
-			throw new NaoAutorizadoException("Permissão negada para acessar o recurso.");
+			throw new TokenInvalidoException("Permissão negada para acessar o recurso. Usuário não identificado.");
 		}
 
-		SessaoUsuario sessaoUsuario = getUsuarioFacade().findByToken(token);
+		SessaoUsuario sessaoUsuario = getUsuarioFacade().findSessaoUsuarioByToken(token);
 		if (sessaoUsuario == null) {
-			throw new NaoAutorizadoException("Token de acesso inválido.");
+			throw new TokenInvalidoException();
 		}
 
 		Date dataAtual = new Date();
 		if (sessaoUsuario.isExpirado(dataAtual)) {
-			throw new NaoAutorizadoException("Sessão Expirada. Faça login novamente.");
+			throw new SessaoExpiradaException();
 		}
 
 		Usuario usuario = sessaoUsuario.getUsuario();
