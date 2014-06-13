@@ -1,11 +1,14 @@
 package org.javaee.bolao.entidades;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -16,6 +19,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @XmlRootElement
@@ -51,7 +55,11 @@ public class Usuario extends AbstractEntity {
 
 	@NotNull	
 	private Boolean admin = Boolean.FALSE;
-
+	
+	@OneToMany(mappedBy="usuario")
+	@XmlTransient
+	private Set<UsuarioBolao> usuarioBoloes = new HashSet<>();
+	
 	public Usuario() {
 	}
 
@@ -129,6 +137,14 @@ public class Usuario extends AbstractEntity {
 	
 	public void setConfirmarSenha(String confirmarSenha) {
 		this.confirmarSenha = confirmarSenha;
+	}
+
+	public Set<UsuarioBolao> getUsuarioBoloes() {
+		return usuarioBoloes;
+	}
+	
+	public void setUsuarioBoloes(Set<UsuarioBolao> usuarioBoloes) {
+		this.usuarioBoloes = usuarioBoloes;
 	}
 	
 	public boolean isAdmin(){

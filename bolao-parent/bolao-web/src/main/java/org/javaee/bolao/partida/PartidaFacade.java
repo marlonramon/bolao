@@ -20,6 +20,8 @@ public class PartidaFacade {
 	@Inject
 	private ApostaEAO apostaEAO;
 	
+	@Inject
+	private PartidaTimer partidaTimer;
 
 	public Partida insertOrUpdate(Partida partida) {
 
@@ -31,7 +33,13 @@ public class PartidaFacade {
 
 		encerrarPartida(partida);
 
+		agendar(partida);
+		
 		return partida;
+	}
+
+	private void agendar(Partida partida) {
+		partidaTimer.agendar(partida);
 	}
 
 	public void delete(Long id) {

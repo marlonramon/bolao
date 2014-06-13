@@ -106,6 +106,7 @@ public class ApostaFacade {
 		if(isApostaNova){
 			aposta.setDataAposta(new Date());
 			apostaEAO.insert(aposta);			
+			apostaBanco = aposta;
 		}else{
 			if(isPlacarAlterado(aposta, apostaBanco)){
 				apostaBanco.setDataAposta(new Date());
