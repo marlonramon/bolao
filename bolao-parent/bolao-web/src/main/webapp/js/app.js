@@ -114,10 +114,14 @@ app.config(function(RestangularProvider) {
 
     RestangularProvider.setErrorInterceptor(function(response) {
 
-        if(response.status === 401){
+        if(response.status === 403){
         	alert(response.status+' '+ response.data.mensagem);
         }
 
+        if(response.status === 401){
+        	alert(response.status+' '+ response.data.mensagem);
+        }
+        
         if(response.status === 500){
         	alert('Erro interno no Servidor. Contate o dministrador.');
         }

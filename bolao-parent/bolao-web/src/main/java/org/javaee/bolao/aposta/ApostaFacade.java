@@ -101,22 +101,29 @@ public class ApostaFacade {
 		
 		Aposta apostaBanco = apostaEAO.findByPartida(aposta.getUsuarioBolao(), partida);
 		
-		if (apostaBanco != null) {
-			apostaBanco.setPlacar(aposta.getPlacar());
-			apostaEAO.update(apostaBanco);
-		} else {
+		boolean isApostaNova = apostaBanco == null;
+		
+		if(isApostaNova){
 			aposta.setDataAposta(new Date());
-			validarApostaNova(partida, aposta);
-			apostaEAO.insert(aposta);
-			apostaBanco = aposta;
+			apostaEAO.insert(aposta);			
+		}else{
+			if(isPlacarAlterado(aposta, apostaBanco)){
+				apostaBanco.setDataAposta(new Date());
+				apostaBanco.setPlacar(aposta.getPlacar());
+				apostaEAO.update(apostaBanco);	
+			}
 		}
-
+		
+		validarDataAposta(partida, aposta);
 		
 		if(partida.isEncerrada()){
 			Integer pontuacaoAposta = partidaFacade.getPontuacaoAposta(apostaBanco, partida, apostaBanco.getUsuarioBolao().getBolao());
 			apostaBanco.setPontuacao(pontuacaoAposta);
 		}
-		
+	}
+	
+	private boolean isPlacarAlterado(Aposta aposta, Aposta apostaBanco) {
+		return !aposta.getPlacar().isIgual(apostaBanco.getPlacar());
 	}
 
 	private boolean isApostaComAomEnosUmPlacarPreenchido(Aposta aposta) {
@@ -138,12 +145,12 @@ public class ApostaFacade {
 		return partidaEAO.find(aposta.getPartida());
 	}
 
-	private void validarApostaNova(Partida partida, Aposta aposta) {
+	private void validarDataAposta(Partida partida, Aposta aposta) {
 		Date dataPartida = partida.getDataPartida();
 		Date dataAposta = aposta.getDataAposta();
 		if (dataPartida.compareTo(dataAposta) < 0) {
-			throw new BolaoWebApplicationException("Não foi possível cadastar a Aposta pois a data da Aposta {0,date} é supeior a data da Partida {1,date}",
-					dataAposta, dataPartida);
+			throw new BolaoWebApplicationException("Não foi possível cadastar a Aposta {0} pois a data da Aposta {1,date,dd/MM/yyyy HH:mm} é supeior a data da Partida {2,date, dd/MM/yyyy HH:mm}",
+					partida.getDescricao(), dataAposta, dataPartida);
 		}
 
 	}
