@@ -29,7 +29,7 @@ import javax.validation.ConstraintViolationException;
 import org.javaee.bolao.entidades.IEntity;
 import org.javaee.bolao.entidades.SessaoUsuario;
 import org.javaee.bolao.exception.BolaoRuntimeException;
-import org.javaee.rest.common.XmlUtil;
+import org.javaee.bolao.util.XmlUtil;
 
 public abstract class AbstractEAO<E extends IEntity>
 {

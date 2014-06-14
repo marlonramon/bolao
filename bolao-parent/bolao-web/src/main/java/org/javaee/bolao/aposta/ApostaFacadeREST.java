@@ -14,7 +14,7 @@ import org.javaee.bolao.entidades.Aposta;
 import org.javaee.bolao.entidades.Placar;
 import org.javaee.bolao.security.Acesso;
 import org.javaee.bolao.security.RestricaoAcesso;
-import org.javaee.rest.common.XmlUtil;
+import org.javaee.bolao.util.XmlUtil;
 
 @Path("apostas")
 public class ApostaFacadeREST {

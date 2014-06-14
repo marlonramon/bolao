@@ -1,4 +1,4 @@
-package org.javaee.rest.common;
+package org.javaee.bolao.util;
 
 import org.jasypt.util.password.BasicPasswordEncryptor;
 import org.jasypt.util.text.BasicTextEncryptor;

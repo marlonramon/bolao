@@ -13,6 +13,7 @@
 	</jdbc-connection-pool>
 	<jdbc-resource pool-name="BolaoPool"
 		jndi-name="jdbc/Bolao"></jdbc-resource>
+	<mail-resource host="mail.bolao.com.br" jndi-name="mail/Bolao" from="admin@bolao.com.br" user="bolao"></mail-resource>
 </resources>
 
 <!-- asadmin add-resources C:/java/workspace/bolao.git/bolao-parent/bolao-web/src/main/webapp/WEB-INF/glassfish-resources.xml -->

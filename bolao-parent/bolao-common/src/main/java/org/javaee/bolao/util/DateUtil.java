@@ -1,4 +1,4 @@
-package org.javaee.rest.common;
+package org.javaee.bolao.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -8,6 +8,9 @@ import java.util.Locale;
 
 public class DateUtil {
 
+	public static final SimpleDateFormat dd_MM_YYYY = new SimpleDateFormat("dd/MM/yyyy");
+	public static final SimpleDateFormat dd_MM_YYYY_HH_mm_ss = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+	
 	private static Calendar calendar = new GregorianCalendar();
 
 	private DateUtil() {

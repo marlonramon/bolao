@@ -29,7 +29,7 @@ public class RelatorioApostas {
 		
 		parametros.put("IDPARTIDA", partida.getIdPartida());
 		
-		JasperPrint jasperPrint = JasperFillManager.fillReport(getClass().getResourceAsStream("relatorios/RelatorioApostas.jasper"),parametros, dataSource.getConnection());
+		JasperPrint jasperPrint = JasperFillManager.fillReport(getClass().getClassLoader().getResourceAsStream("relatorios/RelatorioApostas.jasper"),parametros, dataSource.getConnection());
 		
 		return JasperExportManager.exportReportToPdf(jasperPrint);
 		

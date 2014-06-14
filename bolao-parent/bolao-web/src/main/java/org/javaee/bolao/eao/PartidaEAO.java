@@ -1,5 +1,6 @@
 package org.javaee.bolao.eao;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.ManagedBean;
@@ -39,6 +40,18 @@ public class PartidaEAO extends AbstractEAO<Partida> {
 		cq.where(getCriteriaBuilder().equal(joinRodada, rodada));
 		
 		return createQuery(cq).getResultList();
+	}
+	
+	public List<Partida> findPartidasPosteriores(Date data){
+		
+		CriteriaQuery<Partida> cq = super.createCriteriaQuery();
+		
+		Root<Partida> from = cq.from(Partida.class);
+		
+		cq.where(getCriteriaBuilder().greaterThanOrEqualTo(from.get(Partida_.dataPartida), data));
+		
+		return createQuery(cq).getResultList();
+		
 	}
 
 }

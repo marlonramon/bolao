@@ -1,4 +1,4 @@
-package org.javaee.rest.common;
+package org.javaee.bolao.util;
 
 import java.io.StringWriter;
 import java.util.HashMap;

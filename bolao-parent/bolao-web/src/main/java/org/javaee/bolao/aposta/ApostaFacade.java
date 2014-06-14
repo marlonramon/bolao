@@ -115,12 +115,16 @@ public class ApostaFacade {
 			}
 		}
 		
-		validarDataAposta(partida, aposta);
+		validarDataAposta(partida, apostaBanco);
 		
 		if(partida.isEncerrada()){
-			Integer pontuacaoAposta = partidaFacade.getPontuacaoAposta(apostaBanco, partida, apostaBanco.getUsuarioBolao().getBolao());
+			Integer pontuacaoAposta = getPontuacaoAposta(partida, apostaBanco);
 			apostaBanco.setPontuacao(pontuacaoAposta);
 		}
+	}
+
+	private Integer getPontuacaoAposta(Partida partida, Aposta apostaBanco) {
+		return partidaFacade.getPontuacaoAposta(apostaBanco, partida, apostaBanco.getUsuarioBolao().getBolao());
 	}
 	
 	private boolean isPlacarAlterado(Aposta aposta, Aposta apostaBanco) {

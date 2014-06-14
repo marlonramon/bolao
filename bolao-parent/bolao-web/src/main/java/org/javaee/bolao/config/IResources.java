@@ -4,5 +4,6 @@ public interface IResources {
 
 	public static final String DATASOURCE = "jdbc/Bolao";	
 	public static final String PERSISTENUNIT = "BolaoPU";
+	public static final String MAIL = "mail/Bolao";
 	
 }

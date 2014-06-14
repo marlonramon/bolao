@@ -6,7 +6,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
-import org.javaee.bolao.config.Config;
+import org.javaee.bolao.config.BolaoConfig;
 import org.javaee.bolao.eao.BolaoEAO;
 import org.javaee.bolao.eao.SessaoUsuarioEAO;
 import org.javaee.bolao.eao.UsuarioEAO;
@@ -17,7 +17,7 @@ import org.javaee.bolao.entidades.UsuarioBolao;
 import org.javaee.bolao.exception.BolaoWebApplicationException;
 import org.javaee.bolao.exception.TokenInvalidoException;
 import org.javaee.bolao.usuariobolao.UsuarioBolaoFacade;
-import org.javaee.rest.common.Encryptor;
+import org.javaee.bolao.util.Encryptor;
 
 @Stateless
 public class UsuarioFacade {
@@ -135,7 +135,7 @@ public class UsuarioFacade {
 
 		apagarSessoesDoUsuario(usuario);
 
-		SessaoUsuario validSession = sessaoUsuarioEAO.create(usuario, Config.getExpirationLoginTime());
+		SessaoUsuario validSession = sessaoUsuarioEAO.create(usuario, BolaoConfig.getExpirationLoginTime());
 
 		return validSession;
 	}
