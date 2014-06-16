@@ -103,7 +103,7 @@ public class RodadaEAO extends AbstractEAO<Rodada> {
 		
 		for (Tuple tuple : resultList) {
 			RankingUsuarioVO rankingUsuarioVO = new RankingUsuarioVO();
-			rankingUsuarioVO.setIdUsuario(tuple.get(idUsuarioPath));
+			rankingUsuarioVO.setIdUsuarioBolao(tuple.get(idUsuarioPath));
 			rankingUsuarioVO.setNome(tuple.get(nomeUsuarioPath));
 			rankingUsuarioVO.setPontuacao(tuple.get(sumPontuacao));
 			

@@ -1,5 +1,5 @@
 
-package org.javaee.rest.common;
+package org.javaee.bolao.util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;

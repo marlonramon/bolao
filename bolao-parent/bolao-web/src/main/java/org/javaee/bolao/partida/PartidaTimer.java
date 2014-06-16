@@ -1,6 +1,11 @@
 package org.javaee.bolao.partida;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
@@ -9,6 +14,7 @@ import javax.ejb.Timer;
 import javax.ejb.TimerService;
 import javax.inject.Inject;
 
+import org.javaee.bolao.eao.PartidaEAO;
 import org.javaee.bolao.entidades.Partida;
 
 @Stateless
@@ -20,9 +26,20 @@ public class PartidaTimer {
 	@Inject
 	private NotificadorPartida notificadorPartida;
 	
+	@Inject
+	private PartidaEAO partidaEAO;
+	
 	@Timeout
 	public void comunicarInicioPartida(Timer timer){
-		notificadorPartida.notificar(timer);
+		notificadorPartida.notificar(timer.getNextTimeout(), (Partida)timer.getInfo());
+	}
+	
+	public void restaurarTimers(){
+		List<Partida> partidasPosteriores = partidaEAO.findPartidasPosteriores(new Date());
+		
+		for (Partida partida : partidasPosteriores) {
+			agendar(partida);
+		}
 	}
 	
 	private Timer findTimerByPartida(Partida partida){
@@ -38,8 +55,17 @@ public class PartidaTimer {
 		return null;
 	}
 	
-	public Collection<Timer> findAllTimers(Partida partida){
-		return timerService.getAllTimers();
+	public List<Timer> findAllTimers(){
+		List<Timer> allTimers = new ArrayList<>(timerService.getAllTimers());
+		
+		Collections.sort(allTimers, new Comparator<Timer>() {
+			@Override
+			public int compare(Timer t1, Timer t2) {
+				return t1.getNextTimeout().compareTo(t2.getNextTimeout());
+			}
+		});
+		
+		return allTimers;
 	}
 	
 	public void agendar(Partida partida){

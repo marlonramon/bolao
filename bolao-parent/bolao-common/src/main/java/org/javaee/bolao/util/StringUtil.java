@@ -1,4 +1,4 @@
-package org.javaee.rest.common;
+package org.javaee.bolao.util;
 
 
 public final class StringUtil {

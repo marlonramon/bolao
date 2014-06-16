@@ -73,7 +73,7 @@ public class BolaoEAO extends AbstractEAO<Bolao> {
 
 		Expression<Integer> sumPontuacao = cb.sum(joinApostas.get(Aposta_.pontuacao));
 
-		Path<Long> idUsuarioPath = joinUsuario.get(Usuario_.idUsuario);
+		Path<Long> idUsuarioPath = joinUsuarioBolao.get(UsuarioBolao_.idUsuarioBolao);
 		Path<String> nomeUsuarioPath = joinUsuario.get(Usuario_.nome);
 		
 		CompoundSelection<Tuple> tupleSelection = cb.tuple(idUsuarioPath, nomeUsuarioPath, sumPontuacao);
@@ -103,7 +103,7 @@ public class BolaoEAO extends AbstractEAO<Bolao> {
 		
 		for (Tuple tuple : resultList) {
 			RankingUsuarioVO rankingUsuarioVO = new RankingUsuarioVO();
-			rankingUsuarioVO.setIdUsuario(tuple.get(idUsuarioPath));
+			rankingUsuarioVO.setIdUsuarioBolao(tuple.get(idUsuarioPath));
 			rankingUsuarioVO.setNome(tuple.get(nomeUsuarioPath));
 			rankingUsuarioVO.setPontuacao(tuple.get(sumPontuacao));
 			

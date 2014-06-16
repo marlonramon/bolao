@@ -1,9 +1,11 @@
 package org.javaee.bolao.eao;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
@@ -65,5 +67,27 @@ public class ApostaEAO extends AbstractEAO<Aposta>
 		
 		return getEntityManager().createQuery(cq).getResultList();
 	}
+    
+    public List<Aposta> findApostaFinalizada(UsuarioBolao usuarioBolao){
+		
+    	StringBuilder sb = new StringBuilder();
+    	
+    	sb.append("select aposta from Aposta aposta ");
+    	sb.append(" join fetch aposta.usuarioBolao usuarioBolao ");
+    	sb.append(" join fetch aposta.partida partida ");
+    	sb.append(" join fetch partida.clubeMandante ");
+    	sb.append(" join fetch partida.clubeVisitante ");
+    	sb.append(" where usuarioBolao = :usuarioBolao ");
+    	sb.append(" and partida.dataPartida < :dataAtual ");
+    	
+    	TypedQuery<Aposta> tQuery = getEntityManager().createQuery(sb.toString(),Aposta.class);
+    	
+    	tQuery.setParameter("usuarioBolao", usuarioBolao);
+    	tQuery.setParameter("dataAtual", new Date());
+    	
+		return tQuery.getResultList();
+	}
+    
+    
 	
 }

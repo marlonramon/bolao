@@ -1,5 +1,7 @@
 package org.javaee.bolao.entidades;
 
+import java.io.Serializable;
+
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -12,7 +14,8 @@ import org.javaee.bolao.enuns.EnumResultado;
 @Embeddable
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Placar implements IResultado {
+public class Placar implements IResultado, Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@NotNull
 	@XmlElement(nillable=true)

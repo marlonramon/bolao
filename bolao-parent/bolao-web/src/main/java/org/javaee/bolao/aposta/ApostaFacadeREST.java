@@ -14,7 +14,7 @@ import org.javaee.bolao.entidades.Aposta;
 import org.javaee.bolao.entidades.Placar;
 import org.javaee.bolao.security.Acesso;
 import org.javaee.bolao.security.RestricaoAcesso;
-import org.javaee.rest.common.XmlUtil;
+import org.javaee.bolao.util.XmlUtil;
 
 @Path("apostas")
 public class ApostaFacadeREST {
@@ -37,6 +37,14 @@ public class ApostaFacadeREST {
 	@RestricaoAcesso(acesso = Acesso.USUARIO)
 	public List<Aposta> findByUsuarioAndRodada(@PathParam("idUsuarioBolao") Long idUsuarioBolao, @PathParam("idRodada") Long idRodada) {
 		return apostaFacade.findApostas(idUsuarioBolao, idRodada);
+	}
+	
+	@GET
+	@Path("usuariobolao/{idUsuarioBolao}")
+	@Produces({ "application/xml", "application/json" })
+	@RestricaoAcesso(acesso = Acesso.USUARIO)
+	public List<Aposta> findByUsuario(@PathParam("idUsuarioBolao") Long idUsuarioBolao) {
+		return apostaFacade.findApostasFinalizadas(idUsuarioBolao);
 	}
 	
 	

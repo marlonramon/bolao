@@ -11,7 +11,7 @@ app.controller('ApostaListCtrl', ['$scope', 'Restangular', 'usuarioService', '$r
             Restangular.one("campeonatos", usuarioBolao.bolao.campeonato.idCampeonato).all("rodadas").getList().then(function(rodadas) {
                 $scope.rodadas = rodadas;
 
-                for (var i = 0; i < $scope.rodadas.length; i++) { 
+                for (var i = 0; i < $scope.rodadas.length; i++) {
 
                     var r = $scope.rodadas[i];
 
@@ -42,15 +42,21 @@ app.controller('ApostaListCtrl', ['$scope', 'Restangular', 'usuarioService', '$r
             $scope.errors = {};
             $scope.messages = {};
             if ($scope.apostas) {
-                Restangular.all("apostas").post($scope.apostas).then(function() {                    
-                	flash.success = 'Salvo com sucesso';                	
-                	$route.reload();                	                	
+                Restangular.all("apostas").post($scope.apostas).then(function() {
+                    flash.success = 'Salvo com sucesso';
+                    $route.reload();
                 }, function(response) {
-                	flash.error = response.data.mensagem;
+                    flash.error = response.data.mensagem;
                 });
             }
         };
+    }]);
 
+app.controller('ApostaFinalizadaListCtrl', ['$scope', 'Restangular', '$routeParams',
+    function($scope, Restangular, $routeParams) {
 
+        if ($routeParams.id) {
+            $scope.apostas = Restangular.one("apostas").one("usuariobolao", $routeParams.id).getList().$object;
+        } 
 
     }]);

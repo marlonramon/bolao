@@ -15,7 +15,7 @@
                 </thead>
 
                 <tr ng-repeat="usuario in rankingBolao.usuarios">
-                    <td>{{usuario.nome}}</td>
+                    <td><a href="#/aposta-finalizada/{{usuario.idUsuarioBolao}}"> {{usuario.nome}}</a></td>
                     <td>{{usuario.pontuacao}}</td>
                 </tr>
             </table>

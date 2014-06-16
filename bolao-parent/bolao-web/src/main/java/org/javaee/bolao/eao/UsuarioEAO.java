@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.SetJoin;
 
@@ -19,7 +20,7 @@ import org.javaee.bolao.entidades.Rodada_;
 import org.javaee.bolao.entidades.Usuario;
 import org.javaee.bolao.entidades.UsuarioBolao_;
 import org.javaee.bolao.entidades.Usuario_;
-import org.javaee.rest.common.Encryptor;
+import org.javaee.bolao.util.Encryptor;
 
 @ManagedBean
 public class UsuarioEAO extends AbstractEAO<Usuario> {
@@ -76,10 +77,7 @@ public class UsuarioEAO extends AbstractEAO<Usuario> {
 
 		Root<Usuario> root = query.from(Usuario.class);
 
-		SetJoin<Rodada, Partida> joinPartida = root.join(Usuario_.usuarioBoloes)
-				.join(UsuarioBolao_.bolao)
-				.join(Bolao_.campeonato)
-				.join(Campeonato_.rodadas)
+		SetJoin<Rodada, Partida> joinPartida = root.join(Usuario_.usuarioBoloes).join(UsuarioBolao_.bolao).join(Bolao_.campeonato).join(Campeonato_.rodadas)
 				.join(Rodada_.partidas);
 
 		query = query.where(criteriaBuilder.equal(joinPartida, partida));
@@ -89,22 +87,19 @@ public class UsuarioEAO extends AbstractEAO<Usuario> {
 		return q.getResultList();
 	}
 
-	// public List<User> findAdminActive(User notIn) {
-	// CriteriaBuilder criteriaBuilder =
-	// getEntityManager().getCriteriaBuilder();
-	//
-	// CriteriaQuery<User> query = criteriaBuilder.createQuery(User.class);
-	//
-	// Root<User> root = query.from(User.class);
-	//
-	// Predicate different = criteriaBuilder.notEqual(root, notIn);
-	// Predicate adminProfile =
-	// criteriaBuilder.equal(root.get(Usuario_.profile), Profile.ADMIN);
-	//
-	// query = query.where(active, different, adminProfile);
-	//
-	// TypedQuery<User> q = getEntityManager().createQuery(query);
-	//
-	// return q.getResultList();
-	// }
+	public List<Usuario> findAdmins() {
+		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+
+		CriteriaQuery<Usuario> query = criteriaBuilder.createQuery(Usuario.class);
+
+		Root<Usuario> root = query.from(Usuario.class);
+
+		Predicate adminPredicate = criteriaBuilder.equal(root.get(Usuario_.admin), Boolean.TRUE);
+
+		query = query.where(adminPredicate);
+
+		TypedQuery<Usuario> q = getEntityManager().createQuery(query);
+
+		return q.getResultList();
+	}
 }

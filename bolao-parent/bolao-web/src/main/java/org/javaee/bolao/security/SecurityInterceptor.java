@@ -12,7 +12,7 @@ import javax.ws.rs.ext.Provider;
 
 import org.glassfish.jersey.server.internal.routing.UriRoutingContext;
 import org.glassfish.jersey.server.model.ResourceMethodInvoker;
-import org.javaee.bolao.config.Config;
+import org.javaee.bolao.config.BolaoConfig;
 import org.javaee.bolao.entidades.SessaoUsuario;
 import org.javaee.bolao.entidades.Usuario;
 import org.javaee.bolao.exception.NaoAutorizadoException;
@@ -90,7 +90,7 @@ public class SecurityInterceptor implements ContainerRequestFilter {
 	}
 
 	private void atualizarDataDeExpiracao(SessaoUsuario sessaoUsuario, Date dataAtual) {
-		long novaDataExpiracao = dataAtual.getTime() + Config.getExpirationLoginTime();
+		long novaDataExpiracao = dataAtual.getTime() + BolaoConfig.getExpirationLoginTime();
 		sessaoUsuario.setDataExpiracao(new Date(novaDataExpiracao));
 		getUsuarioFacade().update(sessaoUsuario);
 	}
