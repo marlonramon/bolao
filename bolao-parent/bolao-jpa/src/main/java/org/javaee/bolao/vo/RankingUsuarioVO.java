@@ -2,18 +2,18 @@ package org.javaee.bolao.vo;
 
 public class RankingUsuarioVO {
 
-	private Long idUsuario;
+	private Long idUsuarioBolao;
 
 	private String nome;
 
 	private Integer pontuacao;
 
-	public Long getIdUsuario() {
-		return idUsuario;
+	public Long getIdUsuarioBolao() {
+		return idUsuarioBolao;
 	}
 
-	public void setIdUsuario(Long idUsuario) {
-		this.idUsuario = idUsuario;
+	public void setIdUsuarioBolao(Long idUsuario) {
+		this.idUsuarioBolao = idUsuario;
 	}
 
 	public String getNome() {

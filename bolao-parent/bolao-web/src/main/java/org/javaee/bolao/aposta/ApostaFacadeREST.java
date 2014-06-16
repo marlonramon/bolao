@@ -39,6 +39,14 @@ public class ApostaFacadeREST {
 		return apostaFacade.findApostas(idUsuarioBolao, idRodada);
 	}
 	
+	@GET
+	@Path("usuariobolao/{idUsuarioBolao}")
+	@Produces({ "application/xml", "application/json" })
+	@RestricaoAcesso(acesso = Acesso.USUARIO)
+	public List<Aposta> findByUsuario(@PathParam("idUsuarioBolao") Long idUsuarioBolao) {
+		return apostaFacade.findApostasFinalizadas(idUsuarioBolao);
+	}
+	
 	
 	public static void main(String[] args) {
 		

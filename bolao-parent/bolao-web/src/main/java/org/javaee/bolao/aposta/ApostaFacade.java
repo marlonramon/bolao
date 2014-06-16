@@ -159,4 +159,13 @@ public class ApostaFacade {
 		}
 
 	}
+	
+	public List<Aposta> findApostasFinalizadas(Long idUsuarioBolao) {
+		UsuarioBolao usuarioBolao = usuarioBolaoEAO.find(idUsuarioBolao);
+		
+		return apostaEAO.findApostaFinalizada(usuarioBolao);
+				
+		
+	}
+	
 }
