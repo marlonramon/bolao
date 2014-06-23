@@ -79,6 +79,7 @@ public class ApostaEAO extends AbstractEAO<Aposta>
     	sb.append(" join fetch partida.clubeVisitante ");
     	sb.append(" where usuarioBolao = :usuarioBolao ");
     	sb.append(" and partida.dataPartida < :dataAtual ");
+    	sb.append(" order by partida.dataPartida ");
     	
     	TypedQuery<Aposta> tQuery = getEntityManager().createQuery(sb.toString(),Aposta.class);
     	

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.ManagedBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Root;
@@ -29,15 +30,17 @@ public class PartidaEAO extends AbstractEAO<Partida> {
 		return entityManager;
 	}
 
-	public List<Partida> findByRodada(Rodada rodada)
-	{
+	public List<Partida> findByRodada(Rodada rodada) {
+		
 		CriteriaQuery<Partida> cq = super.createCriteriaQuery();
+		CriteriaBuilder criteriaBuilder = getCriteriaBuilder();
 		
 		Root<Partida> from = cq.from(Partida.class);
 		
 		Join<Partida, Rodada> joinRodada = from.join(Partida_.rodada);
 		
-		cq.where(getCriteriaBuilder().equal(joinRodada, rodada));
+		cq.where(criteriaBuilder.equal(joinRodada, rodada));
+		cq.orderBy(criteriaBuilder.asc(from.get(Partida_.dataPartida)));
 		
 		return createQuery(cq).getResultList();
 	}
