@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioApostas" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1394b487-b412-436c-ba18-86b2d2612a92">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="IDPARTIDA" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[1L]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT DISTINCT
+BOLAO.DESCRICAO AS DESCRICAO_BOLAO,
+CAMPEONATO.DESCRICAO AS DESCRICAO_CAMPEONATO,
+RODADA.NUMERO AS NUMERO_RODADA,
+PARTIDA.DATAPARTIDA AS DATA_PARTIDA,
+CLUBEMANDANTE.NOME AS NOME_CLUBE_MANDANTE,
+CLUBEVISITANTE.NOME AS NOME_CLUBE_VISITANTE,
+APOSTA.PLACARMANDANTE AS PLACAR_MANDANTE,
+APOSTA.PLACARVISITANTE AS PLACAR_VISITANTE,
+USUARIO.NOME AS NOME_USUARIO
+FROM APOSTA
+INNER JOIN USUARIOBOLAO ON USUARIOBOLAO.IDUSUARIOBOLAO = APOSTA.IDUSUARIOBOLAO
+INNER JOIN USUARIO ON USUARIO.IDUSUARIO = USUARIOBOLAO.IDUSUARIO
+INNER JOIN PARTIDA ON PARTIDA.IDPARTIDA = APOSTA.IDPARTIDA
+INNER JOIN RODADA ON RODADA.IDRODADA = PARTIDA.IDRODADA
+INNER JOIN CAMPEONATO ON CAMPEONATO.IDCAMPEONATO = RODADA.IDCAMPEONATO
+INNER JOIN BOLAO ON BOLAO.IDCAMPEONATO = CAMPEONATO.IDCAMPEONATO
+INNER JOIN CLUBE CLUBEMANDANTE ON CLUBEMANDANTE.IDCLUBE = PARTIDA.IDCLUBEMANDANTE
+INNER JOIN CLUBE CLUBEVISITANTE ON CLUBEVISITANTE.IDCLUBE = PARTIDA.IDCLUBEVISITANTE
+WHERE APOSTA.IDPARTIDA = $P{IDPARTIDA}
+ORDER BY USUARIO.NOME]]>
+	</queryString>
+	<field name="DESCRICAO_BOLAO" class="java.lang.String"/>
+	<field name="DESCRICAO_CAMPEONATO" class="java.lang.String"/>
+	<field name="NUMERO_RODADA" class="java.lang.Integer"/>
+	<field name="DATA_PARTIDA" class="java.sql.Timestamp"/>
+	<field name="NOME_CLUBE_MANDANTE" class="java.lang.String"/>
+	<field name="NOME_CLUBE_VISITANTE" class="java.lang.String"/>
+	<field name="PLACAR_MANDANTE" class="java.lang.Integer"/>
+	<field name="PLACAR_VISITANTE" class="java.lang.Integer"/>
+	<field name="NOME_USUARIO" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="106" splitType="Stretch">
+			<textField>
+				<reportElement uuid="52ec39b0-8ce1-4b29-b37c-89e5e28146f7" style="Title" x="1" y="0" width="554" height="62"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="20" pdfFontName="Times-Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOME_CLUBE_MANDANTE} +" X "+$F{NOME_CLUBE_VISITANTE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="eb7d7a0e-e647-497c-86c2-885e4a08013e" style="SubTitle" x="1" y="62" width="554" height="22"/>
+				<textElement textAlignment="Center" markup="none">
+					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESCRICAO_BOLAO} + " - "+$F{DESCRICAO_CAMPEONATO} + " Rodada: "+$F{NUMERO_RODADA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="37" splitType="Stretch">
+			<frame>
+				<reportElement uuid="804c0e54-d28e-43ce-9974-f4dc6e45c328" mode="Opaque" x="1" y="0" width="555" height="27" forecolor="#B89F7D" backcolor="#F2EBDF"/>
+				<staticText>
+					<reportElement uuid="e49cd6bb-a5aa-4323-8a97-a73b0b316bfb" style="SubTitle" x="0" y="0" width="218" height="24" forecolor="#736343"/>
+					<textElement markup="none">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Usuário]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="92089507-6b62-42e1-8543-24fd64b3fce1" style="SubTitle" x="294" y="3" width="107" height="24" forecolor="#736343"/>
+					<textElement textAlignment="Center" markup="none">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Palpite]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<frame>
+				<reportElement uuid="c571d052-ad05-42f2-ab86-d17506f1b455" style="Row" mode="Opaque" x="0" y="0" width="555" height="15"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="cad672d1-847c-497c-8480-89eae4dfa61b" style="Detail" x="1" y="0" width="271" height="15"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{NOME_USUARIO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="66a46d98-3c2e-4080-8aab-e94cfaf8f9c0" style="Detail" x="295" y="0" width="107" height="15"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{PLACAR_MANDANTE} + " X "+$F{PLACAR_VISITANTE}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="4" splitType="Stretch">
+			<line>
+				<reportElement uuid="c45c8e86-464d-4ce1-bd2c-bae17b13f4cf" positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement uuid="9b6c9e4d-267b-44c1-b52a-c618da374687" mode="Opaque" x="1" y="1" width="554" height="24" forecolor="#D0B48E" backcolor="#F2EBDF"/>
+				<textField evaluationTime="Report">
+					<reportElement uuid="e2135eed-b70c-4443-98d0-8e501a2143bf" style="Column header" x="508" y="1" width="40" height="20" forecolor="#736343"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="747bff7d-8587-4895-9085-81037201d6cf" style="Column header" x="428" y="1" width="80" height="20" forecolor="#736343"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement uuid="1c329852-65af-49b4-a168-eb37b8522410" style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

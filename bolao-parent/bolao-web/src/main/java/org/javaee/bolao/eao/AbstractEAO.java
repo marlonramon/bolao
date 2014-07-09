@@ -33,7 +33,7 @@ import org.javaee.bolao.util.XmlUtil;
 
 public abstract class AbstractEAO<E extends IEntity>
 {
-	protected Logger logger = Logger.getLogger(getClass().getName());
+//	protected Logger logger = Logger.getLogger(getClass().getName());
 
 	protected Class<E> entityClass;
 
@@ -45,7 +45,7 @@ public abstract class AbstractEAO<E extends IEntity>
 
 	public void insert(E entity) {
 
-		logger.log(Level.INFO, "Insert {0}: {1}", new Object[]{entityClass.getSimpleName(), XmlUtil.toString(entity, true)});
+//		logger.log(Level.INFO, "Insert {0}: {1}", new Object[]{entityClass.getSimpleName(), XmlUtil.toString(entity, true)});
 		try{
 			getEntityManager().persist(entity);
 		}catch(Exception e){
@@ -66,7 +66,7 @@ public abstract class AbstractEAO<E extends IEntity>
 				sb.append("\nInvalidValue: "+constraintViolation.getInvalidValue());
 				sb.append("\nProperty: "+constraintViolation.getPropertyPath());
 				sb.append("\nMessage: "+constraintViolation.getMessage());
-				logger.severe(sb.toString());
+//				logger.severe(sb.toString());
 			}
 		}
 		
@@ -75,7 +75,7 @@ public abstract class AbstractEAO<E extends IEntity>
 	}
 
 	public void delete(Long id) {
-		logger.log(Level.INFO, "Delete {0} Id: {1}", new Object[]{entityClass.getSimpleName(), id});
+//		logger.log(Level.INFO, "Delete {0} Id: {1}", new Object[]{entityClass.getSimpleName(), id});
 		if (id != null) {
 			E entity = getEntityManager().getReference(entityClass, id);
 			getEntityManager().remove(entity);
@@ -87,7 +87,7 @@ public abstract class AbstractEAO<E extends IEntity>
 	}
 
 	public E update(E entity) {
-		logger.log(Level.INFO, "Update {0}: {1}", new Object[]{entityClass.getSimpleName(), XmlUtil.toString(entity, true)});
+//		logger.log(Level.INFO, "Update {0}: {1}", new Object[]{entityClass.getSimpleName(), XmlUtil.toString(entity, true)});
 		try{
 			E merge = getEntityManager().merge(entity);
 			getEntityManager().flush();
@@ -98,7 +98,7 @@ public abstract class AbstractEAO<E extends IEntity>
 	}
 
 	public E find(Long id) {
-		logger.log(Level.INFO, "Find {0} Id: {1}", new Object[]{entityClass.getSimpleName(), id});
+//		logger.log(Level.INFO, "Find {0} Id: {1}", new Object[]{entityClass.getSimpleName(), id});
 		if (id == null) {
 			throw new BolaoRuntimeException("ID não pode ser NULL");
 		}
@@ -154,7 +154,7 @@ public abstract class AbstractEAO<E extends IEntity>
 
 		List<E> resultList = query.getResultList();
 
-		logger.log(Level.INFO, "FindAll {0} Total: {1}", new Object[]{entityClass.getSimpleName(), resultList.size()});
+//		logger.log(Level.INFO, "FindAll {0} Total: {1}", new Object[]{entityClass.getSimpleName(), resultList.size()});
 
 		return resultList;
 	}
@@ -206,7 +206,7 @@ public abstract class AbstractEAO<E extends IEntity>
 
 		int count = getEntityManager().createQuery(cq).getSingleResult().intValue();
 
-		logger.log(Level.INFO, "Count: {0}", count);
+//		logger.log(Level.INFO, "Count: {0}", count);
 
 		return count;
 	}

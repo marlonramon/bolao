@@ -75,6 +75,6 @@ public class SessaoUsuarioEAO extends AbstractEAO<SessaoUsuario>
 
     int deleted = deleteQuery.executeUpdate();
 
-    this.logger.info(deleted + " sessões do usuário: " + user.getEmail() +" removidas");
+//    this.logger.info(deleted + " sessões do usuário: " + user.getEmail() +" removidas");
   }
 }
