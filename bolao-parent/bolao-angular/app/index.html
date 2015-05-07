@@ -11,23 +11,19 @@
         <link rel="stylesheet" type="text/css" href="css/ng-quick-date-plus-default-theme.css" media="all" />
 
         <!-- include javascript, jQuery FIRST -->
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        
-        <script src="js/bootstrap.min.js"></script>  
-        
+        <script src="lib/jquery.min.js"></script>
+        <script src="lib/bootstrap.min.js"></script>  
         <script src="lib/angular/angular.js"></script>
-
         <script src="lib/angular/angular-route.js"></script>
         <script src="lib/angular/angular-resource.js"></script>
         <script src="lib/angular/angular-cookies.js"></script>
-        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
-        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.string/2.3.3/underscore.string.min.js"></script>
-        <script type="text/javascript" src="js/angular-underscore.min.js"></script>        
-        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/restangular/1.4.0/restangular.min.js"></script>
-        <script type="text/javascript" src="js/ng-quick-date.js"></script>
-        
-        
-    
+        <script type="text/javascript" src="lib/underscore-min.js"></script>
+        <script type="text/javascript" src="lib/underscore.string.min.js"></script>
+        <script type="text/javascript" src="lib/angular-underscore.min.js"></script>
+        <script type="text/javascript" src="lib/restangular.min.js"></script>
+        <script type="text/javascript" src="lib/ng-quick-date.js"></script>
+    	<script src="lib/jquery.numeric.js"></script>    	
+    	<script src="lib/angular-flash.min.js"></script>
 
         <script src="js/app.js"></script>
         <script src="js/services.js"></script>
@@ -83,9 +79,8 @@
 
                     <ul class="nav navbar-nav navbar-right">
 
-                        <li ng-show="!isUsuarioLogado()" ><a href="#/usuario-edit">Participar!</a></li>
                         <li ng-show="isUsuarioLogado()" class="navbar-text">Bem vindo {{sessaoUsuario.usuario.nome}}</li>
-                        <li ng-show="!isUsuarioLogado()"><a href="#" data-toggle="modal" data-target="#loginModal">Entrar</a></li>
+                        <li ng-show="!isUsuarioLogado()"><a href="#" ng-click="entrar()" data-toggle="modal" data-target="#loginModal">Entrar</a></li>
                         <li ng-show="isUsuarioLogado()"><a href="#" ng-click="logout()">Sair</a></li>
 
                     </ul>
@@ -93,34 +88,42 @@
                 </div>
             </div>            
         </div>
+		
+		<!-- Set the display duration in milli-secs.  Default is 5000, 0 disables the fade-away. -->
+		<div flash-alert active-class="in" class="alert fade" duration="10000" style="margin-top:60px;margin-botton:0px">
+		    <!-- Manually hide the alert with `hide()` -->
+		    <button type="button" class="close" ng-click="hide()">&times;</button>		    
+		    <span class="alert-message">{{flash.message}}</span>
+		</div>
+	
 
-        <div id="content" ng-view class="container-fluid" style="padding: 60px" >
-
-
+		<div id="content" ng-view class="container-fluid"  >    
+        
         </div>
 
         <!--login modal-->
         <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog" style="width: 300pt">
+            <div class="modal-dialog" style="width: 330pt">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
                         <h1 class="text-center">Entrar</h1>
                     </div>
+                    
+                    <p ng-repeat="errs in errorsLogin" class="alert alert-danger"><strong>Erro</strong>: {{ errs}}</p>
+                    
                     <div class="modal-body">
-
-                        <p ng-repeat="errs in errors" class="alert alert-error"><strong>Erro</strong>: {{ errs}}</p>
 
                         <form class="form center-block" name="formLogin">
                             <div class="form-group">
-                                <input focus-me ng-model="usuario.email" required="true" class="form-control input-lg" placeholder="Email" type="text">
+                                <input focus-me ng-model="usuario.email" class="form-control input-lg" placeholder="Email" type="text">
                             </div>
                             <div class="form-group">
-                                <input ng-model="usuario.senha" required="true" class="form-control input-lg" placeholder="Senha" type="password">
+                                <input ng-model="usuario.senha" class="form-control input-lg" placeholder="Senha" type="password">
                             </div>
 
                             <div class="modal-footer">
-                                <button ng-disabled="!formLogin.$valid" ng-click="login()" data-dismiss="modal" class="btn btn-primary btn-lg btn-block" >Entrar</button>                                
+                                <button ng-click="login()" class="btn btn-primary btn-lg btn-block" >Entrar</button>                                
                             </div>
 
                         </form>

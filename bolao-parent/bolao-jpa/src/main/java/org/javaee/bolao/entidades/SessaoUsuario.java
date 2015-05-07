@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -39,6 +40,9 @@ public class SessaoUsuario extends AbstractEntity {
 	@NotNull
 	@Size(min = 36, max = 36)
 	private String token;
+
+	@Transient
+	private String code;
 
 	public Long getIdSessaoUsuario() {
 		return idSessaoUsuario;
@@ -78,6 +82,14 @@ public class SessaoUsuario extends AbstractEntity {
 
 	public void setToken(String token) {
 		this.token = token;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	@Override

@@ -32,7 +32,7 @@ public class StartupEJB {
 	@PostConstruct
 	private void init() {
 		initFlyWay();
-		initTimersPartida();
+		//initTimersPartida();
 	}
 
 	private void initTimersPartida() {

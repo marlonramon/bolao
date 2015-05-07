@@ -2,8 +2,8 @@
 
 var app = angular.module('bolao.apostaController', []);
 
-app.controller('ApostaListCtrl', ['$scope', 'Restangular', 'usuarioService',
-    function($scope, Restangular, usuarioService) {
+app.controller('ApostaListCtrl', ['$scope', 'Restangular', 'usuarioService', '$route', 'flash',
+    function($scope, Restangular, usuarioService, $route, flash) {
 
         var usuarioBolao = usuarioService.getBolaoSelecionado();
 
@@ -11,7 +11,7 @@ app.controller('ApostaListCtrl', ['$scope', 'Restangular', 'usuarioService',
             Restangular.one("campeonatos", usuarioBolao.bolao.campeonato.idCampeonato).all("rodadas").getList().then(function(rodadas) {
                 $scope.rodadas = rodadas;
 
-                for (var i = 0; i < $scope.rodadas.length; i++) { 
+                for (var i = 0; i < $scope.rodadas.length; i++) {
 
                     var r = $scope.rodadas[i];
 
@@ -22,8 +22,6 @@ app.controller('ApostaListCtrl', ['$scope', 'Restangular', 'usuarioService',
                 }
 
             });
-
-
 
         }
 
@@ -45,13 +43,20 @@ app.controller('ApostaListCtrl', ['$scope', 'Restangular', 'usuarioService',
             $scope.messages = {};
             if ($scope.apostas) {
                 Restangular.all("apostas").post($scope.apostas).then(function() {
-                    $scope.messages = {"message": "Palpites salvos com sucesso."};
+                    flash.success = 'Salvo com sucesso';
+                    $route.reload();
                 }, function(response) {
-                    $scope.errors = response.data;
+                    flash.error = response.data.mensagem;
                 });
             }
         };
+    }]);
 
+app.controller('ApostaFinalizadaListCtrl', ['$scope', 'Restangular', '$routeParams',
+    function($scope, Restangular, $routeParams) {
 
+        if ($routeParams.id) {
+            $scope.apostas = Restangular.one("apostas").one("usuariobolao", $routeParams.id).getList().$object;
+        } 
 
     }]);

@@ -29,7 +29,7 @@ public class UsuarioFacadeREST {
 	@Consumes({ "application/xml", "application/json" })
 	@RestricaoAcesso(acesso = Acesso.ANONIMO)
 	public void insertOrUpdate(Usuario usuario, @HeaderParam(SecurityInterceptor.AUTHORIZATION_PROPERTY) String token) {
-		usuarioFacade.insertOrUpdate(usuario, token);
+		Response.ok(usuarioFacade.insertOrUpdate(usuario, token)).build();
 	}
 
 	@DELETE

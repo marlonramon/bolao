@@ -49,7 +49,7 @@ public class UsuarioEAO extends AbstractEAO<Usuario> {
 
 		Root<Usuario> root = query.from(Usuario.class);
 
-		query = query.where(criteriaBuilder.equal(getCriteriaBuilder().upper(root.get(Usuario_.email)), email.toUpperCase()));
+		query = query.where(criteriaBuilder.equal(criteriaBuilder.upper(root.get(Usuario_.email)), email.toUpperCase()));
 
 		TypedQuery<Usuario> q = getEntityManager().createQuery(query);
 

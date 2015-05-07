@@ -1,6 +1,6 @@
 'use strict';
 
-var url = 'http://localhost:8080/bolao-web';
+var url = '/bolao-web';
 
 var baseUrl = url + '/app';
 
@@ -11,6 +11,8 @@ var app = angular.module('bolao', [
     'ngRoute',
     'ngCookies',
     'restangular',
+    'angular-flash.service',
+    'angular-flash.flash-alert-directive',
     'angular-underscore',
     'ngQuickDate',
     'bolao.services',
@@ -23,32 +25,9 @@ var app = angular.module('bolao', [
     'bolao.rankingController',
     'bolao.apostaController',
     'bolao.usuarioBolaoController'
-    
 
 ]);
 
-app.run(function($rootScope, $location, usuarioService) {
-
-    // enumerate routes that don't need authentication
-    var routesThatDontRequireAuth = ['/index'];
-
-    // check if current location matches route  
-    var routeClean = function(route) {
-
-        return _.find(routesThatDontRequireAuth,
-                function(noAuthRoute) {
-                    return _.str.startsWith(route, noAuthRoute);
-                });
-    };
-
-    $rootScope.$on('$routeChangeStart', function(event, next, current) {
-        // if route requires auth and user is not logged in
-        if (!routeClean($location.url()) && !usuarioService.isUsuarioLogado()) {
-            // redirect back to login
-            $location.path('/index');
-        }
-    });
-});
 
 app.config(['$routeProvider', function($routeProvider) {
         //usuarios
@@ -91,6 +70,11 @@ app.config(['$routeProvider', function($routeProvider) {
 
         $routeProvider.when('/usuariobolao-list', {templateUrl: 'partials/usuariobolao/usuariobolao-list.html', controller: 'UsuarioBolaoCtrl'});
 
+        $routeProvider.when('/aposta-finalizada/:id', {templateUrl: 'partials/aposta/aposta-finalizada.html', controller: 'ApostaFinalizadaListCtrl'});
+
+
+
+
         $routeProvider.otherwise({redirectTo: '/index'});
 
     }]);
@@ -99,26 +83,89 @@ app.run(function($rootScope) {
     $rootScope.baseUrlImages = baseUrlImages;
 });
 
+app.run(function(Restangular, $cookieStore,$location,flash, usuarioService) {
+    Restangular.setBaseUrl(baseUrl);
+    
+    if ($cookieStore.get('sessaoUsuario')) {
+        Restangular.setDefaultHeaders({'Authorization': $cookieStore.get('sessaoUsuario').token});
+    }
 
+    Restangular.setErrorInterceptor(function(response) {
 
-app.config(function(RestangularProvider) {
-    RestangularProvider.setBaseUrl(baseUrl);
-//    RestangularProvider.setDefaultHttpFields({withCredentials: true});
+        if (response.status === 403) {
+            flash.error = response.status + ' ' + response.data.mensagem;
+            $location.path('/index');
+            return false;
+        }
 
-    RestangularProvider.setErrorInterceptor(function(response) {
+        if (response.status === 401) {
+            flash.error = response.status + ' ' + response.data.mensagem;
+            usuarioService.logout();
+            $location.path('/index');
+            return false;
+        }
 
-        //alert(response.status+' '+ response.data.mensagem);
-
+        if (response.status === 500) {
+            alert('Erro interno no Servidor. Contate o dministrador.');
+        }
 
     });
 
-
-
 });
+
+app.run(function($rootScope, $location, usuarioService, $cookieStore) {
+
+    // enumerate routes that don't need authentication
+    var routesThatDontRequireAuth = ['/index', '/usuario-edit'];
+
+    // check if current location matches route  
+    var routeClean = function(route) {
+
+        return _.find(routesThatDontRequireAuth,
+                function(noAuthRoute) {
+                    return _.str.startsWith(route, noAuthRoute);
+                });
+    };
+
+    $rootScope.$on('$routeChangeStart', function(event, next, current) {
+        // if route requires auth and user is not logged in
+        if (!routeClean($location.url()) && !usuarioService.isUsuarioLogado()) {
+            // redirect back to login
+            console.log('redirecionando');
+            $location.path('/index');
+
+        }
+    });
+});
+
 
 app.config(function(ngQuickDateDefaultsProvider) {
     return ngQuickDateDefaultsProvider.set({
     });
+});
+
+app.config(function(flashProvider) {
+
+    // Support bootstrap 3.0 "alert-danger" class with error flash types
+    flashProvider.errorClassnames.push('alert-danger');
+
+    /**
+     * Also have...
+     *
+     * flashProvider.warnClassnames
+     * flashProvider.infoClassnames
+     * flashProvider.successClassnames
+     */
+
+});
+
+app.directive('numberMask', function() {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            $(element).numeric();
+        }
+    }
 });
 
 

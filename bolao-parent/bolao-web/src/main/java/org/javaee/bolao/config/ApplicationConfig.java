@@ -6,6 +6,8 @@ import java.util.Set;
 
 import javax.ws.rs.core.Application;
 
+import org.javaee.bolao.security.AuthzController;
+
 @javax.ws.rs.ApplicationPath("/app")
 public class ApplicationConfig extends Application {
 
@@ -40,6 +42,8 @@ public class ApplicationConfig extends Application {
         resources.add(org.javaee.bolao.security.SecurityInterceptor.class);
         resources.add(org.javaee.bolao.usuario.UsuarioFacadeREST.class);
         resources.add(org.javaee.bolao.usuariobolao.UsuarioBolaoFacadeREST.class);
+        resources.add(AuthzController.class);
+        
     }
     
 }

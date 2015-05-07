@@ -14,6 +14,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -31,12 +32,12 @@ public class Usuario extends AbstractEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idUsuario;
 	
-	@NotNull
+	@Null
 	@Size(min = 1, max = 80)
 	private String senha;
 	
 	@Transient
-	@NotNull
+	@Null
 	private String confirmarSenha;
 	
 	@Temporal(TemporalType.TIMESTAMP)
@@ -62,6 +63,12 @@ public class Usuario extends AbstractEntity {
 	
 	public Usuario() {
 	}
+	
+	public Usuario(String nome, String email) {
+		this.nome = nome;
+		this.email = email;
+	}
+	
 
 	@PrePersist
 	private void prePersist() {
