@@ -1,0 +1,36 @@
+
+
+<div class="container">
+    <div class="panel  panel-default">
+
+
+        <div class="panel-heading">Bolões</div>
+        <div class="panel-body">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>                        
+                        <th>Bolão</th>                        
+                        <th>Participar</th>
+                        <th>Sair</th>
+                    </tr>
+                </thead>
+
+                <tr ng-repeat="usuariobolao in usuarioBoloes">                    
+                    <td>{{usuariobolao.bolao.descricao}}</td>
+                    <td>
+                        <a ng-disabled="usuariobolao.idUsuarioBolao" ng-click="vincular(usuariobolao)" class="btn btn-primary">Participar</a>                        
+                    </td>
+                    <td>                        
+                        <a ng-disabled="!usuariobolao.idUsuarioBolao" ng-click="delete(usuariobolao.idUsuarioBolao)" class="btn btn-primary">Sair do Bolão</a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    Total: {{usuarioBoloes.length}}
+</div>
+
+
+

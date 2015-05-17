@@ -1,24 +1,39 @@
-<div class="modal-dialog" style="width: 300pt">
-    <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-            <h1 class="text-center">Entrar</h1>
-        </div>
-        <div class="modal-body">
-            <form class="form center-block">
-                <div class="form-group">
-                    <input ng-model="usuario.email" required="true" class="form-control input-lg" placeholder="Email" type="email">
-                </div>
-                <div class="form-group">
-                    <input ng-model="usuario.senha" required="true" class="form-control input-lg" placeholder="Senha" type="password">
-                </div>
 
-                <div class="modal-footer">
-                    <button ng-click="login()" class="btn btn-primary btn-lg btn-block">Entrar</button>                                
-                </div>
+<div class="account-container" style="margin-bottom: 200px">
 
-            </form>
-        </div>
+    <div class="content clearfix">
 
-    </div>
-</div>
+        <form name="formLogin" >
+
+            <h1>Login</h1>		
+
+            <div class="login-fields">
+
+                <p>Por favor informe seu usuário e senha</p>
+
+                <div class="field">
+                    <label for="username">Usuário</label>
+                    <input type="text" id="username" name="username" value="" placeholder="Usuário" class="login username-field" ng-model="usuario.email" />
+                </div> <!-- /field -->
+
+                <div class="field">
+                    <label for="password">Senha:</label>
+                    <input type="password" id="password" name="password" value="" placeholder="Senha" class="login password-field" ng-model="usuario.senha"/>
+                </div> <!-- /password -->
+
+            </div> <!-- /login-fields -->
+
+            <div class="login-actions" >
+
+
+                <button class="button btn btn-success btn-large" ng-click="login()">Entrar</button>
+
+            </div> <!-- .actions -->
+
+
+
+        </form>
+
+    </div> <!-- /content -->
+
+</div> <!-- /account-container -->

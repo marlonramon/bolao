@@ -1,0 +1,28 @@
+
+
+<div class="container">
+    <div class="panel  panel-default">
+
+
+        <div class="panel-heading">Ranking Bolão - {{rankingBolao.descricao}}</div>
+        <div class="panel-body">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Usuário</th>
+                        <th>Pontuação</th>
+                    </tr>
+                </thead>
+
+                <tr ng-repeat="usuario in rankingBolao.usuarios">
+                    <td><a href="#/aposta-finalizada/{{usuario.idUsuarioBolao}}"> {{usuario.nome}}</a></td>
+                    <td>{{usuario.pontuacao}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+
+

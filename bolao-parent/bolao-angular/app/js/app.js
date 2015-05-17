@@ -1,6 +1,6 @@
 'use strict';
 
-var url = '/bolao-web';
+var url = 'http://localhost:8080/bolao-web';
 
 var baseUrl = url + '/app';
 
@@ -35,6 +35,7 @@ app.config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/usuario-edit', {templateUrl: 'partials/usuarios/usuario-edit.html', controller: 'UserEditCtrl'});
         $routeProvider.when('/usuario-edit/:id', {templateUrl: 'partials/usuarios/usuario-edit.html', controller: 'UserEditCtrl'});
         $routeProvider.when('/usuario-login', {templateUrl: 'partials/usuarios/usuario-login.html', controller: 'LoginCtrl'});
+        $routeProvider.when('/usuario-create', {templateUrl: 'partials/usuarios/usuario-create.html', controller: 'UserEditCtrl'});
 
         //campenatos
         $routeProvider.when('/campeonato-list', {templateUrl: 'partials/campeonato/campeonato-list.html', controller: 'CampeonatoListCtrl'});
@@ -72,7 +73,7 @@ app.config(['$routeProvider', function($routeProvider) {
 
         $routeProvider.when('/aposta-finalizada/:id', {templateUrl: 'partials/aposta/aposta-finalizada.html', controller: 'ApostaFinalizadaListCtrl'});
 
-
+        $routeProvider.when('/index', {templateUrl: 'partials/home.html', controller: 'LoginCtrl'});
 
 
         $routeProvider.otherwise({redirectTo: '/index'});
@@ -91,6 +92,8 @@ app.run(function(Restangular, $cookieStore,$location,flash, usuarioService) {
     }
 
     Restangular.setErrorInterceptor(function(response) {
+
+        flash.error = response.data.mensagem;
 
         if (response.status === 403) {
             flash.error = response.status + ' ' + response.data.mensagem;
@@ -116,7 +119,7 @@ app.run(function(Restangular, $cookieStore,$location,flash, usuarioService) {
 app.run(function($rootScope, $location, usuarioService, $cookieStore) {
 
     // enumerate routes that don't need authentication
-    var routesThatDontRequireAuth = ['/index', '/usuario-edit'];
+    var routesThatDontRequireAuth = ['/index', '/usuario-login','/usuario-create'];
 
     // check if current location matches route  
     var routeClean = function(route) {

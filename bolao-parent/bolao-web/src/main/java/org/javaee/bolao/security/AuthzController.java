@@ -27,6 +27,7 @@ import org.apache.oltu.oauth2.common.OAuthProviderType;
 import org.apache.oltu.oauth2.common.message.types.GrantType;
 import org.apache.oltu.oauth2.common.message.types.ResponseType;
 import org.apache.oltu.oauth2.common.token.OAuthToken;
+import org.javaee.bolao.eao.SessaoUsuarioEAO;
 import org.javaee.bolao.entidades.SessaoUsuario;
 import org.javaee.bolao.entidades.Usuario;
 import org.javaee.bolao.usuario.UsuarioFacade;
@@ -48,6 +49,9 @@ public class AuthzController {
 
 	@Context
 	private UriInfo uriInfo;
+	
+	@Inject
+	private SessaoUsuarioEAO sessaoUsuarioEAO;
 
 	@GET
 	@Path("/authorize")
@@ -111,15 +115,14 @@ public class AuthzController {
 			OAuthResourceResponse resourceResponse = oAuthClient.resource(bearerClientRequest, OAuth.HttpMethod.GET, OAuthResourceResponse.class);
 			
 			
-			
-			sessaoUsuario.setToken(accessToken.getAccessToken());
-			sessaoUsuario.setDataExpiracao(new Date(accessToken.getExpiresIn()));
-			
 			JSONObject jsonObject = new JSONObject(resourceResponse.getBody());
 			
 			Usuario usuario = findUsuario(jsonObject.getString("email"), jsonObject.getString("name"));
 			
-			sessaoUsuario.setUsuario(usuario);
+			
+			
+			sessaoUsuario = sessaoUsuarioEAO.create(usuario, accessToken.getExpiresIn());
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();

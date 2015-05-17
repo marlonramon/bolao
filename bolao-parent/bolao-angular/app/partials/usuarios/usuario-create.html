@@ -1,64 +1,48 @@
+<div class="account-container register">
 
-<div class="container" style="width: 380pt">
-    <div class="panel panel-default ">
+    <div class="content clearfix">
 
-        <div class="panel-body">
-            
-            <p ng-repeat="errs in errors" class="alert alert-danger"><strong>Erro</strong>: {{ errs}}</p>
-            <form class="form-horizontal" id="formUsuario" name="form">
+        <form name="formUsuario" >
 
-                <fieldset> 
-                    <legend ng-show="!usuario.id">Participar</legend>
+            <h1>Increver-se</h1>			
 
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label" for="inputEmail">E-Mail:</label>
+            <div class="login-fields">
 
-                        <div class="col-lg-8">
-                            <input autofocus="true" class="form-control" type="email" id="inputEmail" ng-model="usuario.email" required="true"/>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label" for="inputName">Nome:</label>
+                <p>Criar conta:</p>
 
-                        <div class="col-lg-8">
-                            <input class="form-control" type="text" id="inputName" ng-model="usuario.nome" required="true"/>
-                        </div>
-                    </div>
-
-                    
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label" for="inputPassword">Senha:</label>
-
-                        <div class="col-lg-8">
-                            <input class="form-control" type="password" id="inputPassword" ng-model="usuario.senha" required="true"/>
-                        </div>
-                    </div>
-                    
-                     <div class="form-group">
-                        <label class="col-lg-3 control-label" for="inputConfPassword">Confirmação:</label>
-
-                        <div class="col-lg-8">
-                            <input class="form-control" type="password" id="inputConfPassword" ng-model="usuario.confirmarSenha" match="usuario.senha" required="true"/>
-                        </div>
-                    </div>
-
-
-                    <div class="form-group">
-                        <div class="col-lg-8 col-lg-offset-3">
-                            <button ng-disabled="!form.$valid" ng-click="inscrever()" class="btn btn-small btn-primary">Inscrever-se</button>
-                        </div>
-                    </div>
-
-
-                </fieldset>
-            </form>
-
-        </div>    
-    </div>
-</div>
+                <div class="field">
+                    <label for="firstname">Nome:</label>
+                    <input type="text" id="firstname" name="firstname" value="" placeholder="Nome" class="login" ng-model="usuario.nome" required="true"/>
+                </div> <!-- /field -->
 
 
 
 
+                <div class="field">
+                    <label for="email">Email:</label>
+                    <input type="text" id="email" name="email" value="" placeholder="Email" class="login" ng-model="usuario.email" required="true"/>
+                </div> <!-- /field -->
 
+                <div class="field">
+                    <label for="password">Senha:</label>
+                    <input type="password" id="password" name="password" value="" placeholder="Senha" class="login" ng-model="usuario.senha" required="true"/>
+                </div> <!-- /field -->
+
+                <div class="field">
+                    <label for="confirm_password">Confirmação de Senha:</label>
+                    <input type="password" id="confirm_password" name="confirm_password" value="" placeholder="Confirmação de Senha" class="login" ng-model="usuario.confirmarSenha" match="usuario.senha" required="true"/>
+                </div> <!-- /field -->
+
+            </div> <!-- /login-fields -->
+
+            <div class="login-actions">
+               
+                <button class="button btn btn-primary btn-large" ng-click="save()">Inscrever-se</button>
+
+            </div> <!-- .actions -->
+
+        </form>
+
+    </div> <!-- /content -->
+
+</div> <!-- /account-container -->

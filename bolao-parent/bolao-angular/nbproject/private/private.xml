@@ -3,12 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/java/workspace/bolao.git/bolao-parent/bolao-angular/app/index.html</file>
-            <file>file:/C:/java/workspace/bolao.git/bolao-parent/bolao-angular/app/partials/usuarios/usuario-create.html</file>
-            <file>file:/C:/java/workspace/bolao.git/bolao-parent/bolao-angular/app/js/usuarioController.js</file>
-            <file>file:/C:/java/workspace/bolao.git/bolao-parent/bolao-angular/app/js/apostaController.js</file>
-            <file>file:/C:/java/workspace/bolao.git/bolao-parent/bolao-angular/app/partials/usuarios/usuario-edit.html</file>
-            <file>file:/C:/java/workspace/bolao.git/bolao-parent/bolao-angular/app/partials/aposta/aposta-list.html</file>
+            <file>file:/home/marlon/projetos/bolao/bolao-parent/bolao-angular/app/partials/usuarios/usuario-login.html</file>
+            <file>file:/home/marlon/projetos/bolao/bolao-parent/bolao-angular/app/index_old.html</file>
+            <file>file:/home/marlon/projetos/bolao/bolao-parent/bolao-angular/app/js/services/usuarioService.js</file>
+            <file>file:/home/marlon/projetos/bolao/bolao-parent/bolao-angular/app/css/style.css</file>
+            <file>file:/home/marlon/projetos/bolao/bolao-parent/bolao-angular/app/css/pages/signin.css</file>
+            <file>file:/home/marlon/projetos/bolao/bolao-parent/bolao-angular/app/index.html</file>
+            <file>file:/home/marlon/projetos/bolao/bolao-parent/bolao-angular/app/partials/home.html</file>
+            <file>file:/home/marlon/projetos/bolao/bolao-parent/bolao-angular/app/js/app.js</file>
+            <file>file:/home/marlon/projetos/bolao/bolao-parent/bolao-angular/app/js/controllers/usuarioController.js</file>
         </group>
     </open-files>
 </project-private>

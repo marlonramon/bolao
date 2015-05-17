@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="bolao">
+    <head>
+        <title>Bolão</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
+
+<!--        <link rel="stylesheet" type="text/css" href="css/ng-quick-date-plus-default-theme.css" media="all" />-->
+
+
+
+<!--        <script src="lib/jquery.numeric.js"></script>    	
+        <script src="lib/angular-flash.min.js"></script>-->
+
+
+    </head>
+    <body ng-controller="LoginCtrl">
+
+        <div class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <a href="#" class="navbar-brand">Bolão</a>
+                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="navbar-collapse collapse" id="navbar-main">
+
+                    <ul class="nav navbar-nav">
+                        <li ng-show="isUsuarioLogado()"><a href="#/aposta-list">Palpites</a></li>
+                        <li ng-show="isUsuarioLogado()"><a ng-click="toViewScore()">Pontuação</a></li>
+                        <li class="dropdown" ng-show="isAdm()">
+                            <a id="menuAdm" href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                Administrador
+                                <span class="caret"></span>
+                            </a>
+                            <ul id="menu" class="dropdown-menu" aria-labelledby="menuAdm">
+                                <li><a href="#/bolao-list" >Bolões</a></li>
+                                <li><a href="#/usuariobolao-list">Usuário/Bolão</a></li>
+                                <li><a href="#/campeonato-list">Campeonatos</a></li>
+                                <li><a href="#/rodada-list">Rodadas</a></li>
+                                <li><a href="#/clube-list">Clubes</a></li>
+                                <li><a href="#/partida-list">Partidas</a></li>
+                                <li><a href="#/usuario-list">Usuários</a></li>
+                                <li><a href="#/aposta-list">Apostas</a></li>
+                            </ul>
+
+                        </li> 
+
+
+                    </ul>
+
+
+                    <ul class="nav navbar-nav navbar-right">
+
+                        <li ng-show="isUsuarioLogado()" class="navbar-text">Bem vindo {{sessaoUsuario.usuario.nome}}</li>
+                        <li ng-show="!isUsuarioLogado()"><a href="#" ng-click="entrar()" data-toggle="modal" data-target="#loginModal">Entrar</a></li>
+                        <li ng-show="isUsuarioLogado()"><a href="#" ng-click="logout()">Sair</a></li>
+
+                    </ul>
+
+                </div>
+            </div>            
+        </div>
+
+        <!-- Set the display duration in milli-secs.  Default is 5000, 0 disables the fade-away. -->
+        <div flash-alert active-class="in" class="alert fade" duration="10000" style="margin-top:60px;margin-botton:0px">
+            <!-- Manually hide the alert with `hide()` -->
+            <button type="button" class="close" ng-click="hide()">&times;</button>		    
+            <span class="alert-message">{{flash.message}}</span>
+        </div>
+
+
+        <div id="content" ng-view class="container-fluid"  >    
+
+        </div>
+
+        <!--login modal-->
+        <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" style="width: 330pt">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                        <h1 class="text-center">Entrar</h1>
+                    </div>
+
+                    <p ng-repeat="errs in errorsLogin" class="alert alert-danger"><strong>Erro</strong>: {{ errs}}</p>
+
+                    <div class="modal-body">
+
+                        <form class="form center-block" name="formLogin">
+                            <div class="form-group">
+                                <input focus-me ng-model="usuario.email" class="form-control input-lg" placeholder="Email" type="text">
+                            </div>
+                            <div class="form-group">
+                                <input ng-model="usuario.senha" class="form-control input-lg" placeholder="Senha" type="password">
+                            </div>
+
+                            <div class="modal-footer">
+                                <button ng-click="login()" class="btn btn-primary btn-lg btn-block" >Entrar</button>                                
+                            </div>
+
+                        </form>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+        <script>
+                    !function (A, n, g, u, l, a, r) {
+                        A.GoogleAnalyticsObject = l, A[l] = A[l] || function () {
+                            (A[l].q = A[l].q || []).push(arguments)
+                        }, A[l].l = +new Date, a = n.createElement(g),
+                                r = n.getElementsByTagName(g)[0], a.src = u, r.parentNode.insertBefore(a, r)
+                    }(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+                    ga('create', 'UA-XXXXX-X');
+                    ga('send', 'pageview');
+        </script>
+
+
+        <!-- build:js(.) scripts/vendor.js -->
+        <!-- bower:js -->
+        <script src="bower_components/jquery/dist/jquery.js"></script>
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="bower_components/angular-animate/angular-animate.js"></script>
+        <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+        <script src="bower_components/angular-resource/angular-resource.js"></script>
+        <script src="bower_components/angular-route/angular-route.js"></script>
+        <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+        <script src="bower_components/angular-touch/angular-touch.js"></script>
+        <script src="bower_components/underscore/underscore.js"></script>
+        <script src="bower_components/angular-underscore/angular-underscore.js"></script>
+        <script src="bower_components/restangular/dist/restangular.js"></script>
+        <script src="bower_components/angular-flash/dist/angular-flash.js"></script>
+        <!-- endbower -->
+        <!-- endbuild -->
+
+        <script src="scripts/app.js"></script>
+        <script src="scripts/services/services.js"></script>
+        <script src="scripts/controllers/campeonatoController.js"></script>
+        <script src="scripts/controllers/apostaController.js"></script>
+        <script src="scripts/controllers/usuarioController.js"></script>
+        <script src="scripts/controllers/bolaoController.js"></script>
+        <script src="scripts/controllers/clubeController.js"></script>
+        <script src="scripts/controllers/rodadaController.js"></script>
+        <script src="scripts/controllers/partidaController.js"></script>
+        <script src="scripts/controllers/rankingController.js"></script>
+        <script src="scripts/controllers/usuarioBolaoController.js"></script>
+
+    </body>
+</html>

@@ -43,6 +43,7 @@ public class ApplicationConfig extends Application {
         resources.add(org.javaee.bolao.usuario.UsuarioFacadeREST.class);
         resources.add(org.javaee.bolao.usuariobolao.UsuarioBolaoFacadeREST.class);
         resources.add(AuthzController.class);
+        resources.add(CORSResourceRequestFilter.class);
         
     }
     
