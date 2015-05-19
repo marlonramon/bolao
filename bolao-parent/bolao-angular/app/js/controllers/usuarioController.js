@@ -62,8 +62,13 @@ app.controller('LoginCtrl', ['$scope', '$cookieStore', 'Restangular', 'usuarioSe
         
         
         $scope.login = function () {
-            usuarioService.login($scope.usuario);            
+            usuarioService.login($scope.usuario);       
+            $location.path('/index');
         };
+        
+        $scope.sessaoUsuario = function () {
+            return usuarioService.getSessaoUsuario();
+        }
 
         $scope.entrar = function () {
             $scope.errorsLogin = {};
@@ -97,23 +102,12 @@ app.controller('LoginCtrl', ['$scope', '$cookieStore', 'Restangular', 'usuarioSe
         };
 
         $scope.isUsuarioLogado = function () {
-            if ($scope.sessaoUsuario) {
-                return $scope.sessaoUsuario;
-            } else {
-                return usuarioService.isUsuarioLogado();
-            }
-
+            return usuarioService.isUsuarioLogado();
         };
 
         $scope.logout = function () {
-            Restangular.all('usuarios/logout').post($scope.sessaoUsuario.usuario).then(function (data) {
-                $scope.sessaoUsuario = null;
-                $cookieStore.remove('sessaoUsuario');
-            }, function (error) {
-                $scope.sessaoUsuario = null;
-                $cookieStore.remove('sessaoUsuario');
-                console.log(error.status);
-            });
+            usuarioService.logout();
+            $location.path('/index');
         };
 
         $scope.setBolaoSelecionado = function (usuarioBolao) {

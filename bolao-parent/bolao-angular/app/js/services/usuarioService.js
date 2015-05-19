@@ -1,44 +1,51 @@
 'use strict';
 
-var app = angular.module('bolao.services', ['ngResource', 'ngCookies']);
+app.factory('usuarioService', ['$http', 'Restangular' , '$window', function ($http, Restangular, $window) {
 
-app.factory('usuarioService', ['Restangular','$http', '$window', function($http,  Restangular, $window) {
-        
-        
+        var sessionUser;
 
-        function login(usuario) {
-          
-            Restangular.all('usuarios/login').post($scope.usuario).then(function (sessaoUsuario) {                
-                
-                Restangular.setDefaultHeaders({'Authorization': sessaoUsuario.token});
-                
-                $window.sessionStorage["sessaoUsuario"] = sessaoUsuario;
-        
-            }, function (response) {
-        
-                
-            });
-        
+        return {
             
-        };
+            login: function (usuario) {
+
+                Restangular.all('usuarios/login').post(usuario).then(function (sessaoUsuario) {
+
+                    Restangular.setDefaultHeaders({'Authorization': sessaoUsuario.token});
+
+                    sessionUser = sessaoUsuario;
+
+                    //$window.sessionStorage["sessaoUsuario"] = sessaoUsuario;
+                    $window.localStorage.setItem('sessaoUsuario', JSON.stringify(sessaoUsuario));
+                    
+                    return sessionUser;
+
+                }, function (response) {
 
 
-        function getSessaoUsuario () {
-            return $window.sessionStorage["sessaoUsuario"];
-        };
+                });
 
-        function isUsuarioLogado() {
-            return $window.sessionStorage["sessaoUsuario"];
-        };
 
-        function logout() {
-            Restangular.all('usuarios/logout').post(getSessaoUsuario().usuario).then(function(data) {
-                $window.sessionStorage["sessaoUsuario"] = null;                
-            }, function(error) {
-                $window.sessionStorage["sessaoUsuario"] = null;                
-            });
-        };
-
+            },
+            
+            getSessaoUsuario: function () {
+                return JSON.parse($window.localStorage.getItem('sessaoUsuario'));
+            },
+            
+            isUsuarioLogado: function () {
+                return $window.localStorage.getItem('sessaoUsuario');
+            },
+            
+            logout: function () {
+                Restangular.all('usuarios/logout').post(this.getSessaoUsuario().usuario).then(function (data) {
+                    //$window.sessionStorage["sessaoUsuario"] = null;
+                    
+                    $window.localStorage.removeItem('sessaoUsuario');
+                }, function (error) {
+                    //$window.sessionStorage["sessaoUsuario"] = null;
+                    $window.localStorage.removeItem('sessaoUsuario');
+                });
+            }
+        }
 
     }]);
 

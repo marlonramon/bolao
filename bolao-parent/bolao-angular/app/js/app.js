@@ -14,8 +14,7 @@ var app = angular.module('bolao', [
     'angular-flash.service',
     'angular-flash.flash-alert-directive',
     'angular-underscore',
-    'ngQuickDate',
-    'bolao.services',
+    'ngQuickDate',    
     'bolao.usuarioController',
     'bolao.campeonatoController',
     'bolao.bolaoController',
@@ -73,7 +72,7 @@ app.config(['$routeProvider', function($routeProvider) {
 
         $routeProvider.when('/aposta-finalizada/:id', {templateUrl: 'partials/aposta/aposta-finalizada.html', controller: 'ApostaFinalizadaListCtrl'});
 
-        $routeProvider.when('/index', {templateUrl: 'partials/home.html', controller: 'LoginCtrl'});
+        $routeProvider.when('/index', {templateUrl: 'partials/home.html', controller: 'HomeCtrl'});
 
 
         $routeProvider.otherwise({redirectTo: '/index'});
