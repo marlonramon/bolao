@@ -62,8 +62,7 @@ app.controller('LoginCtrl', ['$scope', '$cookieStore', 'Restangular', 'usuarioSe
         
         
         $scope.login = function () {
-            usuarioService.login($scope.usuario);       
-            $location.path('/index');
+            usuarioService.login($scope.usuario);
         };
         
         $scope.sessaoUsuario = function () {

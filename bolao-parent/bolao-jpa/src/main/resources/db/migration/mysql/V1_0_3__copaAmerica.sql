@@ -1,0 +1,1 @@
+insert into campeonato (idcampeonato,descricao,imagem,ativo) values (1,'Copa América 2015','campeonatos/copaAmerica.png',1)

@@ -1,6 +1,6 @@
 'use strict';
 
-app.factory('usuarioService', ['$http', 'Restangular' , '$window', function ($http, Restangular, $window) {
+app.factory('usuarioService', ['$http', 'Restangular' , '$window', '$location', 'flash' , function ($http, Restangular, $window,$location, flash) {
 
         var sessionUser;
 
@@ -17,7 +17,8 @@ app.factory('usuarioService', ['$http', 'Restangular' , '$window', function ($ht
                     //$window.sessionStorage["sessaoUsuario"] = sessaoUsuario;
                     $window.localStorage.setItem('sessaoUsuario', JSON.stringify(sessaoUsuario));
                     
-                    return sessionUser;
+                    flash.error = null ;
+                    $location.path("/");
 
                 }, function (response) {
 
@@ -37,12 +38,11 @@ app.factory('usuarioService', ['$http', 'Restangular' , '$window', function ($ht
             
             logout: function () {
                 Restangular.all('usuarios/logout').post(this.getSessaoUsuario().usuario).then(function (data) {
-                    //$window.sessionStorage["sessaoUsuario"] = null;
-                    
                     $window.localStorage.removeItem('sessaoUsuario');
+                    flash.error = null ;
+                    $location.path("/");
                 }, function (error) {
-                    //$window.sessionStorage["sessaoUsuario"] = null;
-                    $window.localStorage.removeItem('sessaoUsuario');
+                    
                 });
             }
         }

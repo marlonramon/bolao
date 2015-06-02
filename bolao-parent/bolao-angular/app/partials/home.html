@@ -3,12 +3,21 @@
     <div class="span6">
         <div class="widget widget-nopad">
             <div class="widget-header"> <i class="icon-list-alt"></i>
-                <h3>Pontuação Atual</h3>
+                <h3>Crie seu proprio Bolão</h3>
             </div>
             <!-- /widget-header -->
             <div class="widget-content">
                 <div class="widget big-stats-container">
                     <div class="widget-content">
+                       
+                        <table class="table table-hover">
+                            <tr ng-repeat="campeonato in campeonatos| filter:filter">
+                                <td><img ng-src="{{baseUrlImages + '/' + campeonato.imagem}}"/></td>                                                    
+                                <td>{{campeonato.descricao}}</td>                                                    
+                            </tr>
+                        </table>
+
+
                         <!-- Adicionar Pontuacao -->
 
                     </div>

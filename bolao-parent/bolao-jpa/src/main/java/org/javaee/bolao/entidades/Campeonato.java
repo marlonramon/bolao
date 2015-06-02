@@ -36,7 +36,11 @@ public class Campeonato extends AbstractEntity
 	
 	@OneToMany(mappedBy="campeonato")
 	@XmlTransient
-	private Set<Bolao> boloes = new HashSet<Bolao>(); 
+	private Set<Bolao> boloes = new HashSet<Bolao>();
+	
+	@NotNull
+	@Size(max=200)
+	private String imagem;
 	
 	public Long getIdCampeonato() {
 		return idCampeonato;
@@ -68,6 +72,15 @@ public class Campeonato extends AbstractEntity
 	
 	public void setBoloes(Set<Bolao> boloes) {
 		this.boloes = boloes;
+	}
+	
+	public String getImagem() {
+		return imagem;
+	}
+	
+	
+	public void setImagem(String imagem) {
+		this.imagem = imagem;
 	}
 	
 	@Override
