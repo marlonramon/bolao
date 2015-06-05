@@ -2,6 +2,18 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/home/marlon/projetos/bolao/bolao-parent/bolao-angular/app/partials/usuarios/usuario-login.html</file>
+            <file>file:/home/marlon/projetos/bolao/bolao-parent/bolao-angular/app/js/controllers/usuarioBolaoController.js</file>
+            <file>file:/home/marlon/projetos/bolao/bolao-parent/bolao-angular/app/js/controllers/homeController.js</file>
+            <file>file:/home/marlon/projetos/bolao/bolao-parent/bolao-angular/app/partials/partida/partida-list.html</file>
+            <file>file:/home/marlon/projetos/bolao/bolao-parent/bolao-angular/app/js/controllers/apostaController.js</file>
+            <file>file:/home/marlon/projetos/bolao/bolao-parent/bolao-angular/app/css/style.css</file>
+            <file>file:/home/marlon/projetos/bolao/bolao-parent/bolao-angular/app/index.html</file>
+            <file>file:/home/marlon/projetos/bolao/bolao-parent/bolao-angular/app/partials/home.html</file>
+            <file>file:/home/marlon/projetos/bolao/bolao-parent/bolao-angular/app/js/controllers/partidaController.js</file>
+            <file>file:/home/marlon/projetos/bolao/bolao-parent/bolao-angular/app/partials/bolao/bolao-list.html</file>
+            <file>file:/home/marlon/projetos/bolao/bolao-parent/bolao-angular/app/partials/aposta/aposta-list.html</file>
+        </group>
     </open-files>
 </project-private>

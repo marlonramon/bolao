@@ -42,9 +42,19 @@ public class BolaoFacadeREST {
 	}
 
 	@GET
+	@RestricaoAcesso(acesso=Acesso.ANONIMO)
 	@Produces({ "application/xml", "application/json" })
 	public List<Bolao> findAll() {
 		return bolaoFacade.findAll();
+	}
+	
+	
+	@GET
+	@Path("/usuario/{id}")
+	@RestricaoAcesso(acesso=Acesso.USUARIO)
+	@Produces({ "application/xml", "application/json" })
+	public List<Bolao> findByUsuario(@PathParam("id") Long idUsuario) {
+		return bolaoFacade.
 	}
 
 	@GET

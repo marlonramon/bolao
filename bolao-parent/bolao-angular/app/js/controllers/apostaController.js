@@ -5,8 +5,11 @@ var app = angular.module('bolao.apostaController', []);
 app.controller('ApostaListCtrl', ['$scope', 'Restangular', 'usuarioService', '$route', 'flash',
     function($scope, Restangular, usuarioService, $route, flash) {
 
-        var usuarioBolao = usuarioService.getBolaoSelecionado();
-
+    
+        var usuarioBoloes = Restangular.one('usuarioboloes').one('usuarios',usuarioService.getSessaoUsuario().usuario.idUsuario).get();
+        
+        var usuarioBolao = null;
+        
         if (usuarioBolao) {
             Restangular.one("campeonatos", usuarioBolao.bolao.campeonato.idCampeonato).all("rodadas").getList().then(function(rodadas) {
                 $scope.rodadas = rodadas;

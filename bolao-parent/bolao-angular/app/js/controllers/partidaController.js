@@ -26,6 +26,8 @@ app.controller('PartidaEditCtrl', ['$scope', '$routeParams', '$location', 'Resta
         
         if ($routeParams.id) {
             Restangular.one('partidas', $routeParams.id).get().then(function(partida) {
+                $scope.campeonatoSelecionado = partida.rodada.campeonato;
+                $scope.getRodadas();
                 $scope.partida = partida;
             });
         }
@@ -55,7 +57,6 @@ app.controller('PartidaEditCtrl', ['$scope', '$routeParams', '$location', 'Resta
 
         $scope.getRodadas = function(){
             if($scope.campeonatoSelecionado){
-                console.log('idCampeonato: '+$scope.campeonatoSelecionado.idCampeonato);
                 $scope.rodadas = Restangular.one("campeonatos", $scope.campeonatoSelecionado.idCampeonato).all("rodadas").getList().$object;
             }else{
                 $scope.rodadas = {};

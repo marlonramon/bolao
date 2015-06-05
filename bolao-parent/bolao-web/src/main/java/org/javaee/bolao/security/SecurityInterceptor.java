@@ -38,7 +38,6 @@ public class SecurityInterceptor implements ContainerRequestFilter {
 		
 		UriRoutingContext routingContext = (UriRoutingContext) requestContext.getUriInfo();
 	    ResourceMethodInvoker invoker = (ResourceMethodInvoker) routingContext.getInflector();
-//	    Class<?> className = invoker.getResourceClass();
 	    Method method = invoker.getResourceMethod();
 		
 		String token = requestContext.getHeaderString("Authorization");

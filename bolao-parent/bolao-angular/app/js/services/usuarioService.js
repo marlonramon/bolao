@@ -42,7 +42,9 @@ app.factory('usuarioService', ['$http', 'Restangular' , '$window', '$location', 
                     flash.error = null ;
                     $location.path("/");
                 }, function (error) {
-                    
+                    $window.localStorage.removeItem('sessaoUsuario');
+                    flash.error = null ;
+                    $location.path("/");
                 });
             }
         }

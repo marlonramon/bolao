@@ -13,6 +13,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
+import org.javaee.bolao.beans.SessaoUsuarioVO;
+import org.javaee.bolao.beans.UsuarioVO;
+import org.javaee.bolao.entidades.SessaoUsuario;
 import org.javaee.bolao.entidades.Usuario;
 import org.javaee.bolao.entidades.UsuarioBolao;
 import org.javaee.bolao.security.Acesso;
@@ -60,23 +63,31 @@ public class UsuarioFacadeREST {
 
 	@POST
 	@Path("login")
-	@Consumes({ "application/xml", "application/json" })
-	@Produces({ "application/xml", "application/json" })
 	@RestricaoAcesso(acesso = Acesso.ANONIMO)
+	@Produces({ "application/xml", "application/json" })
 	public Response login(Usuario user) {
-		return Response.ok(this.usuarioFacade.login(user.getEmail(), user.getSenha())).build();
+		
+		SessaoUsuario sessaoUsuario = this.usuarioFacade.login(user.getEmail(), user.getSenha());
+		
+		Usuario usuario = sessaoUsuario.getUsuario();
+		
+		UsuarioVO usuarioVO = new UsuarioVO(usuario.getIdUsuario(), usuario.getNome(), usuario.getEmail(), usuario.getAdmin());
+		
+		SessaoUsuarioVO sessaoUsuarioVO = new SessaoUsuarioVO(usuarioVO, sessaoUsuario.getToken(), sessaoUsuario.getCode());
+		
+		return Response.ok(sessaoUsuarioVO).build();
 	}
 
 	@POST
 	@Path("logout")
+	@RestricaoAcesso(acesso = Acesso.ANONIMO)
 	@Consumes({ "application/xml", "application/json" })
 	@Produces({ "application/xml", "application/json" })
-	@RestricaoAcesso(acesso = Acesso.ANONIMO)
 	public Response logout(Usuario usuario) {
-		if (this.usuarioFacade.logout(usuario.getEmail())) {
-			return Response.ok().build();
-		}
-		return Response.notModified().build();
+		
+		this.usuarioFacade.logout(usuario.getEmail());
+
+		return Response.ok().build();
 	}
 
 	@GET

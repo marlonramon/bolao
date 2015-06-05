@@ -91,9 +91,9 @@ app.controller('LoginCtrl', ['$scope', '$cookieStore', 'Restangular', 'usuarioSe
         };
 
         $scope.isAdm = function () {
-            var sessaoUsuario = $scope.sessaoUsuario;
+            var sessaoUsuario = usuarioService.getSessaoUsuario();
 
-            if ($scope.isUsuarioLogado()) {
+            if (usuarioService.isUsuarioLogado()) {
                 return sessaoUsuario.usuario.admin;
             } else {
                 return false;

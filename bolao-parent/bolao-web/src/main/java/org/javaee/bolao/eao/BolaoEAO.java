@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.ManagedBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CompoundSelection;
@@ -48,6 +49,22 @@ public class BolaoEAO extends AbstractEAO<Bolao> {
 	@Override
 	public EntityManager getEntityManager() {
 		return entityManager;
+	}
+	
+	public List<Bolao> findByUsuario(Long idUsuario) {
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("select bolao from Bolao bolao where bolao not in (select bolao from Bolao bolao ");
+		sb.append(" inner join bolao.usuariosBolao usuariosBolao");
+		sb.append(" where usuariosBolao.usuario.idUsuario = :idUsuario)");
+		
+		
+		TypedQuery<Bolao> query = getEntityManager().createQuery(sb.toString(),Bolao.class);
+		
+		query.setParameter("idUsuario", idUsuario);
+		
+		return query.getResultList();
+		
 	}
 
 	public RankingBolaoVO ranking(Bolao bolao, int limite) {

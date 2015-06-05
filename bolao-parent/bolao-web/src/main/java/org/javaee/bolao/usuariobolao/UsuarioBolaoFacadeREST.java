@@ -22,8 +22,7 @@ public class UsuarioBolaoFacadeREST
 
   @POST
   @Consumes({"application/xml", "application/json"})
-  public void insertOrUpdate(UsuarioBolao usuarioBolao)
-  {
+  public void insertOrUpdate(UsuarioBolao usuarioBolao) {
     usuarioFacade.vincularUsuarioBolao(usuarioBolao.getUsuario().getIdUsuario(), usuarioBolao.getBolao().getIdBolao());    		
   }
 
@@ -33,13 +32,6 @@ public class UsuarioBolaoFacadeREST
     this.usuarioFacade.delete(id);
   }
 
-//  @GET
-//  @Path("{id}")
-//  @Produces({"application/xml", "application/json"})
-//  public UsuarioBolao find(@PathParam("id") Long id) {
-//    return this.usuarioFacade.find(id);
-//  }
-//
   @GET
   @Path("usuarios/{idUsuario}")
   @Produces({"application/xml", "application/json"})

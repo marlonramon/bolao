@@ -110,12 +110,17 @@ app.run(function(Restangular, $cookieStore,$location,flash, usuarioService) {
         if (response.status === 500) {
             alert('Erro interno no Servidor. Contate o dministrador.');
         }
+        
+        if (response.status === 404) {
+            alert('Erro interno no Servidor. Contate o dministrador.');
+        }
+        
 
     });
 
 });
 
-app.run(function($rootScope, $location, usuarioService, $cookieStore) {
+app.run(function($rootScope, $location, usuarioService, $cookieStore,flash) {
 
     // enumerate routes that don't need authentication
     var routesThatDontRequireAuth = ['/index', '/usuario-login','/usuario-create'];
@@ -133,7 +138,7 @@ app.run(function($rootScope, $location, usuarioService, $cookieStore) {
         // if route requires auth and user is not logged in
         if (!routeClean($location.url()) && !usuarioService.isUsuarioLogado()) {
             // redirect back to login
-            console.log('redirecionando');
+            flash.error = null;
             $location.path('/index');
 
         }
