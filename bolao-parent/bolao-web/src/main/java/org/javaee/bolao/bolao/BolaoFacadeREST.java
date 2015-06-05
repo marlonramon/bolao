@@ -54,7 +54,7 @@ public class BolaoFacadeREST {
 	@RestricaoAcesso(acesso=Acesso.USUARIO)
 	@Produces({ "application/xml", "application/json" })
 	public List<Bolao> findByUsuario(@PathParam("id") Long idUsuario) {
-		return bolaoFacade.
+		return null;
 	}
 
 	@GET
