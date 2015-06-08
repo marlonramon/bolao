@@ -1,0 +1,48 @@
+<div class="account-container register">
+
+    <div class="content clearfix">
+
+        <form name="formUsuario" >
+
+            <h1>Increver-se</h1>			
+
+            <div class="login-fields">
+
+                <p>Criar conta:</p>
+
+                <div class="field">
+                    <label for="firstname">Nome:</label>
+                    <input type="text" id="firstname" name="firstname" value="" placeholder="Nome" class="login" ng-model="usuario.nome" required="true"/>
+                </div> <!-- /field -->
+
+
+
+
+                <div class="field">
+                    <label for="email">Email:</label>
+                    <input type="text" id="email" name="email" value="" placeholder="Email" class="login" ng-model="usuario.email" required="true"/>
+                </div> <!-- /field -->
+
+                <div class="field">
+                    <label for="password">Senha:</label>
+                    <input type="password" id="password" name="password" value="" placeholder="Senha" class="login" ng-model="usuario.senha" required="true"/>
+                </div> <!-- /field -->
+
+                <div class="field">
+                    <label for="confirm_password">Confirmação de Senha:</label>
+                    <input type="password" id="confirm_password" name="confirm_password" value="" placeholder="Confirmação de Senha" class="login" ng-model="usuario.confirmarSenha" match="usuario.senha" required="true"/>
+                </div> <!-- /field -->
+
+            </div> <!-- /login-fields -->
+
+            <div class="login-actions">
+               
+                <button class="button btn btn-primary btn-large" ng-click="save()">Inscrever-se</button>
+
+            </div> <!-- .actions -->
+
+        </form>
+
+    </div> <!-- /content -->
+
+</div> <!-- /account-container -->

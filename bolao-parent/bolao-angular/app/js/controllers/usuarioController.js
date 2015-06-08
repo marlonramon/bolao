@@ -32,7 +32,7 @@ app.controller('UserEditCtrl', ['$scope', '$routeParams', '$location', 'Restangu
             });
         }
 
-        $scope.save = function () {
+        $scope.save = function () {            
             Restangular.all('usuarios').post($scope.usuario).then(function () {
                 $location.path('index');
             }, function (response) {
@@ -57,14 +57,14 @@ app.controller('UserEditCtrl', ['$scope', '$routeParams', '$location', 'Restangu
 app.controller('LoginCtrl', ['$scope', '$cookieStore', 'Restangular', 'usuarioService', '$route', '$location',
     function ($scope, $cookieStore, Restangular, usuarioService, $route, $location) {
 
-        $scope.boloesUsuario = {};        
+        $scope.boloesUsuario = {};
         $scope.errorsLogin = {};
-        
-        
+
+
         $scope.login = function () {
             usuarioService.login($scope.usuario);
         };
-        
+
         $scope.sessaoUsuario = function () {
             return usuarioService.getSessaoUsuario();
         }
@@ -119,6 +119,15 @@ app.controller('LoginCtrl', ['$scope', '$cookieStore', 'Restangular', 'usuarioSe
 
         $scope.toViewScore = function () {
             $location.path('/ranking-bolao/' + $scope.getBolaoSelecionado().bolao.idBolao);
+        };
+
+        $scope.isActive = function (viewLocation) {
+            var active = (viewLocation === $location.path());
+            return active;
+        };
+        
+        $scope.loginWithGoogle = function () {
+          usuarioService.loginWithGoogle();
         };
 
     }]);

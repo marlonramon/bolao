@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -29,7 +27,6 @@ import javax.validation.ConstraintViolationException;
 import org.javaee.bolao.entidades.IEntity;
 import org.javaee.bolao.entidades.SessaoUsuario;
 import org.javaee.bolao.exception.BolaoRuntimeException;
-import org.javaee.bolao.util.XmlUtil;
 
 public abstract class AbstractEAO<E extends IEntity>
 {
@@ -49,7 +46,10 @@ public abstract class AbstractEAO<E extends IEntity>
 		try{
 			getEntityManager().persist(entity);
 		}catch(Exception e){
-			throw convertException(e);
+			e.printStackTrace();
+			RuntimeException convertException = convertException(e);
+			convertException.printStackTrace();
+			throw convertException;
 		}
 	}
 
@@ -66,7 +66,7 @@ public abstract class AbstractEAO<E extends IEntity>
 				sb.append("\nInvalidValue: "+constraintViolation.getInvalidValue());
 				sb.append("\nProperty: "+constraintViolation.getPropertyPath());
 				sb.append("\nMessage: "+constraintViolation.getMessage());
-//				logger.severe(sb.toString());
+				System.out.println(sb.toString());
 			}
 		}
 		
@@ -314,4 +314,5 @@ public abstract class AbstractEAO<E extends IEntity>
 	public E getSingleResult(CriteriaQuery<E> criteriaQuery) {
 		return getSingleResult(createQuery(criteriaQuery));
 	}
+		
 }

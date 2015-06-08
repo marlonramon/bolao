@@ -6,10 +6,8 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import org.javaee.bolao.config.BolaoConfig;
-import org.javaee.bolao.eao.BolaoEAO;
 import org.javaee.bolao.eao.SessaoUsuarioEAO;
 import org.javaee.bolao.eao.UsuarioEAO;
-import org.javaee.bolao.entidades.Bolao;
 import org.javaee.bolao.entidades.SessaoUsuario;
 import org.javaee.bolao.entidades.Usuario;
 import org.javaee.bolao.entidades.UsuarioBolao;
@@ -30,9 +28,6 @@ public class UsuarioFacade {
 	@Inject
 	private UsuarioBolaoFacade usuarioBolaoFacade;
 
-	@Inject
-	private BolaoEAO bolaoEAO;
-
 	public Usuario insertOrUpdate(Usuario usuario, String token) {
 
 		validarEmailDuplicado(usuario);
@@ -40,8 +35,7 @@ public class UsuarioFacade {
 		criptografarSenha(usuario);
 
 		if (!usuario.hasId()) {
-			usuarioEAO.insert(usuario);
-			vincularUsuarioBoloes(usuario);
+			usuarioEAO.insert(usuario);			
 		} else {
 			validarAlteracao(usuario, token);
 			usuarioEAO.update(usuario);
@@ -66,16 +60,7 @@ public class UsuarioFacade {
 		}
 
 	}
-
-	private void vincularUsuarioBoloes(Usuario usuario) {
-		List<Bolao> boloes = bolaoEAO.findAll();
-
-		for (Bolao bolao : boloes) {
-			usuarioBolaoFacade.vincularUsuarioBolao(usuario, bolao);
-		}
-
-	}
-
+	
 	private void criptografarSenha(Usuario usuario) {
 
 		if (usuario.getSenha() != null) {

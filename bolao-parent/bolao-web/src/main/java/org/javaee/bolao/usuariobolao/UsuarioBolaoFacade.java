@@ -60,7 +60,7 @@ public class UsuarioBolaoFacade {
 		return false;
 	}
 
-	private boolean isUsuarioVinculadoBolao(Usuario usuario, Bolao bolao) {
+	public boolean isUsuarioVinculadoBolao(Usuario usuario, Bolao bolao) {
 		return usuarioBolaoEAO.findByUsuarioAndBolao(usuario, bolao) != null;
 	}
 
@@ -90,5 +90,10 @@ public class UsuarioBolaoFacade {
 
 	public List<UsuarioBolao> findBoloesByUsuario(Usuario usuario) {
 		return usuarioBolaoEAO.findBoloesByUsuario(usuario);
+	}
+	
+	public List<UsuarioBolao> findBoloesByUsuario(Long idUsuario) {
+		Usuario usuario = usuarioEAO.find(idUsuario);
+		return findBoloesByUsuario(usuario);
 	}
 }

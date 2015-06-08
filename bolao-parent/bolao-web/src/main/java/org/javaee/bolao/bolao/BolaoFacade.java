@@ -61,4 +61,16 @@ public class BolaoFacade {
 		Bolao bolao = bolaoEAO.find(id);
 		return bolaoEAO.ranking(bolao, limite);
 	}
+	
+	public List<Bolao> findByUsuario(Long idUsuario) {
+		List<Bolao> boloes = bolaoEAO.findAll();
+		Usuario usuario = usuarioEAO.find(idUsuario);
+		
+		for (Bolao bolao : boloes) {
+			bolao.setUsuarioVinculado(usuarioBolaoFacade.isUsuarioVinculadoBolao(usuario, bolao));
+		}
+		
+		return boloes;
+	}
+	
 }

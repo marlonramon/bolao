@@ -86,8 +86,8 @@ app.run(function($rootScope) {
 app.run(function(Restangular, $cookieStore,$location,flash, usuarioService) {
     Restangular.setBaseUrl(baseUrl);
     
-    if ($cookieStore.get('sessaoUsuario')) {
-        Restangular.setDefaultHeaders({'Authorization': $cookieStore.get('sessaoUsuario').token});
+    if (usuarioService.isUsuarioLogado()) {
+        Restangular.setDefaultHeaders({'Authorization': usuarioService.getSessaoUsuario().token});
     }
 
     Restangular.setErrorInterceptor(function(response) {
@@ -102,7 +102,7 @@ app.run(function(Restangular, $cookieStore,$location,flash, usuarioService) {
 
         if (response.status === 401) {
             flash.error = response.status + ' ' + response.data.mensagem;
-            usuarioService.logout();
+            //usuarioService.logout();
             $location.path('/index');
             return false;
         }

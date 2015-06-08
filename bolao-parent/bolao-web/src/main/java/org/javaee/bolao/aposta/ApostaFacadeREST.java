@@ -42,7 +42,7 @@ public class ApostaFacadeREST {
 	@GET
 	@Path("usuariobolao/{idUsuarioBolao}")
 	@Produces({ "application/xml", "application/json" })
-	@RestricaoAcesso(acesso = Acesso.USUARIO)
+	@RestricaoAcesso(acesso = Acesso.ANONIMO)
 	public List<Aposta> findByUsuario(@PathParam("idUsuarioBolao") Long idUsuarioBolao) {
 		return apostaFacade.findApostasFinalizadas(idUsuarioBolao);
 	}

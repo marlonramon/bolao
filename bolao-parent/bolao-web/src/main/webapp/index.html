@@ -1,66 +1,60 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="bolao">
     <head>
+        <meta charset="utf-8">
         <title>Bolão</title>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-
-        <link rel="stylesheet" href="css/bootstrap.min.css" />
-        <link rel="stylesheet" href="css/bootstrap.css" />
-        <link rel="stylesheet" type="text/css" href="css/ng-quick-date-plus-default-theme.css" media="all" />
-
-        <!-- include javascript, jQuery FIRST -->
-        <script src="lib/jquery.min.js"></script>
-        <script src="lib/bootstrap.min.js"></script>  
-        <script src="lib/angular/angular.js"></script>
-        <script src="lib/angular/angular-route.js"></script>
-        <script src="lib/angular/angular-resource.js"></script>
-        <script src="lib/angular/angular-cookies.js"></script>
-        <script type="text/javascript" src="lib/underscore-min.js"></script>
-        <script type="text/javascript" src="lib/underscore.string.min.js"></script>
-        <script type="text/javascript" src="lib/angular-underscore.min.js"></script>
-        <script type="text/javascript" src="lib/restangular.min.js"></script>
-        <script type="text/javascript" src="lib/ng-quick-date.js"></script>
-    	<script src="lib/jquery.numeric.js"></script>    	
-    	<script src="lib/angular-flash.min.js"></script>
-
-        <script src="js/app.js"></script>
-        <script src="js/services.js"></script>
-
-        <script src="js/campeonatoController.js"></script>
-        <script src="js/apostaController.js"></script>
-        <script src="js/usuarioController.js"></script>
-        <script src="js/bolaoController.js"></script>
-        <script src="js/clubeController.js"></script>
-        <script src="js/rodadaController.js"></script>
-        <script src="js/partidaController.js"></script>
-        <script src="js/rankingController.js"></script>
-        <script src="js/usuarioBolaoController.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="resourcesle-mobile-web-resources-capable" content="yes">
+        
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet">
+        
+        <link href="resources/css/bootstrap.min.css" rel="stylesheet">
+        <link href="resources/css/bootstrap-responsive.min.css" rel="stylesheet">
+        <link href="resources/css/font-awesome.css" rel="stylesheet">
+        <link href="resources/css/style.css" rel="stylesheet">
+        <link href="resources/css/pages/dashboard.css" rel="stylesheet">
+        <link href="resources/css/pages/signin.css" rel="stylesheet" type="text/css">
+        <link href="resources/css/ng-quick-date.css" rel="stylesheet" type="text/css">
+        <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+              <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+            <![endif]-->
     </head>
     <body ng-controller="LoginCtrl">
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container"> <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span
+                            class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span> </a><a class="brand"  href="index.html"><img src="resources/img/bolao.png" alt="logo" class="img-logo" /> Bolão </a>
+                    <div class="nav-collapse">
+                        <ul class="nav pull-right">
+                            <li ng-hide="isUsuarioLogado()" ><a href="#/usuario-login"> <i
+                                        class="icon-signin"></i> Entrar</a>                                
+                            </li>
+                            <li ng-show="isUsuarioLogado()" class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
+                                        class="icon-user"></i> {{sessaoUsuario().usuario.nome}} <b class="caret"></b></a>
+                                <ul class="dropdown-menu">                                    
+                                    <li><a href="javascript:;" ng-click="logout()">Logout</a></li>
+                                </ul>
+                            </li>
+                        </ul>
 
-        <div class="navbar navbar-default navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <a href="#" class="navbar-brand">Bolão</a>
-                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
+                    </div>
+                    <!--/.nav-collapse --> 
                 </div>
-                <div class="navbar-collapse collapse" id="navbar-main">
-
-                    <ul class="nav navbar-nav">
-                        <li ng-show="isUsuarioLogado()"><a href="#/aposta-list">Palpites</a></li>
-                        <li ng-show="isUsuarioLogado()"><a ng-click="toViewScore()">Pontuação</a></li>
-                        <li class="dropdown" ng-show="isAdm()">
-                            <a id="menuAdm" href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                Administrador
-                                <span class="caret"></span>
-                            </a>
-                            <ul id="menu" class="dropdown-menu" aria-labelledby="menuAdm">
+                <!-- /container --> 
+            </div>
+            <!-- /navbar-inner --> 
+        </div>
+        <!-- /navbar -->
+        <div class="subnavbar">
+            <div class="subnavbar-inner">
+                <div class="container">
+                    <ul class="mainnav">
+                        <li ng-class="{active : isActive('/index')}"><a href="index.html"><i class="icon-home"></i><span>Home</span> </a> </li>
+                        <li ng-show="isUsuarioLogado()" ng-class="{active : isActive('/aposta-list')}"><a href="#/aposta-list"><i class="icon-list-alt"></i><span>Palpites</span> </a> </li>                        
+                        
+                        <li class="dropdown" ng-show="isAdm()"><a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-long-arrow-down"></i><span>Admin</span> <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
                                 <li><a href="#/bolao-list" >Bolões</a></li>
                                 <li><a href="#/usuariobolao-list">Usuário/Bolão</a></li>
                                 <li><a href="#/campeonato-list">Campeonatos</a></li>
@@ -70,69 +64,90 @@
                                 <li><a href="#/usuario-list">Usuários</a></li>
                                 <li><a href="#/aposta-list">Apostas</a></li>
                             </ul>
-
-                        </li> 
-                       
-
+                        </li>
                     </ul>
-
-
-                    <ul class="nav navbar-nav navbar-right">
-
-                        <li ng-show="isUsuarioLogado()" class="navbar-text">Bem vindo {{sessaoUsuario.usuario.nome}}</li>
-                        <li ng-show="!isUsuarioLogado()"><a href="#" ng-click="entrar()" data-toggle="modal" data-target="#loginModal">Entrar</a></li>
-                        <li ng-show="isUsuarioLogado()"><a href="#" ng-click="logout()">Sair</a></li>
-
-                    </ul>
-
                 </div>
-            </div>            
-        </div>
-		
-		<!-- Set the display duration in milli-secs.  Default is 5000, 0 disables the fade-away. -->
-		<div flash-alert active-class="in" class="alert fade" duration="10000" style="margin-top:60px;margin-botton:0px">
-		    <!-- Manually hide the alert with `hide()` -->
-		    <button type="button" class="close" ng-click="hide()">&times;</button>		    
-		    <span class="alert-message">{{flash.message}}</span>
-		</div>
-	
-
-		<div id="content" ng-view class="container-fluid"  >    
-        
-        </div>
-
-        <!--login modal-->
-        <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog" style="width: 330pt">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-                        <h1 class="text-center">Entrar</h1>
-                    </div>
-                    
-                    <p ng-repeat="errs in errorsLogin" class="alert alert-danger"><strong>Erro</strong>: {{ errs}}</p>
-                    
-                    <div class="modal-body">
-
-                        <form class="form center-block" name="formLogin">
-                            <div class="form-group">
-                                <input focus-me ng-model="usuario.email" class="form-control input-lg" placeholder="Email" type="text">
-                            </div>
-                            <div class="form-group">
-                                <input ng-model="usuario.senha" class="form-control input-lg" placeholder="Senha" type="password">
-                            </div>
-
-                            <div class="modal-footer">
-                                <button ng-click="login()" class="btn btn-primary btn-lg btn-block" >Entrar</button>                                
-                            </div>
-
-                        </form>
-                    </div>
-
-
-
-                </div>
+                <!-- /container --> 
             </div>
+            <!-- /subnavbar-inner --> 
         </div>
+        <!-- /subnavbar -->
+
+        <div class="main-inner">
+
+
+            <div class="container">
+
+                <div ng-show="flash.message" flash-alert active-class="in" class="alert fade" duration="10000" >
+                    <!-- Manually hide the alert with `hide()` -->
+                    <button type="button" class="close" ng-click="hide()">&times;</button>		    
+                    <span class="alert-message">{{flash.message}}</span>
+                </div>
+
+
+
+
+
+
+                <div id="content" ng-view >   
+
+
+                </div>
+
+            </div>
+
+
+
+        </div>
+        <!-- /main -->
+
+
+
+
+
+
+        <!-- Le javascript
+        ================================================== --> 
+        <!-- Placed at the end of the document so the pages load faster --> 
+        <script src="resources/js/jquery-1.7.2.min.js"></script> 
+        <script src="resources/js/excanvas.min.js"></script> 
+        <script src="resources/js/chart.min.js" type="text/javascript"></script> 
+        <script src="resources/js/bootstrap.js"></script>
+        <script language="javascript" type="text/javascript" src="resources/js/full-calendar/fullcalendar.min.js"></script>
+        <script src="resources/js/base.js"></script> 
+
+        <!-- include javascript, jQuery FIRST -->
+        <script type="text/javascript" src="resources/lib/bootstrap.min.js"></script>  
+        <script type="text/javascript" src="resources/lib/angular/angular.js"></script>
+        <script type="text/javascript" src="resources/lib/angular/angular-route.js"></script>
+        <script type="text/javascript" src="resources/lib/angular/angular-resource.js"></script>
+        <script type="text/javascript" src="resources/lib/angular/angular-cookies.js"></script>
+        <script type="text/javascript" src="resources/lib/underscore-min.js"></script>
+        <script type="text/javascript" src="resources/lib/underscore.string.min.js"></script>
+        <script type="text/javascript" src="resources/lib/angular-underscore.min.js"></script>
+        <script type="text/javascript" src="resources/lib/restangular.min.js"></script>
+        <script type="text/javascript" src="resources/lib/ng-quick-date.js"></script>
+        <script type="text/javascript" src="resources/lib/jquery.numeric.js"></script>    	
+        <script type="text/javascript" src="resources/lib/angular-flash.min.js"></script>
+
+        <script type="text/javascript" src="resources/js/app.js"></script>
+
+
+        <script type="text/javascript" src="resources/js/controllers/campeonatoController.js"></script>
+        <script type="text/javascript" src="resources/js/controllers/apostaController.js"></script>
+        <script type="text/javascript" src="resources/js/controllers/usuarioController.js"></script>
+        <script type="text/javascript" src="resources/js/controllers/bolaoController.js"></script>
+        <script type="text/javascript" src="resources/js/controllers/clubeController.js"></script>
+        <script type="text/javascript" src="resources/js/controllers/rodadaController.js"></script>
+        <script type="text/javascript" src="resources/js/controllers/partidaController.js"></script>
+        <script type="text/javascript" src="resources/js/controllers/rankingController.js"></script>
+        <script type="text/javascript" src="resources/js/controllers/usuarioBolaoController.js"></script>
+        <script type="text/javascript" src="resources/js/controllers/homeController.js"></script>
+        <script type="text/javascript" src="resources/js/services/usuarioService.js"></script>
+        
+
+        <script src="resources/js/signin.js"></script>
+
+
     </body>
 </html>

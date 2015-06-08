@@ -1,5 +1,6 @@
 package org.javaee.bolao.usuario;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -14,6 +15,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
 import org.javaee.bolao.beans.SessaoUsuarioVO;
+import org.javaee.bolao.beans.UsuarioBolaoVO;
 import org.javaee.bolao.beans.UsuarioVO;
 import org.javaee.bolao.entidades.SessaoUsuario;
 import org.javaee.bolao.entidades.Usuario;
@@ -94,7 +96,16 @@ public class UsuarioFacadeREST {
 	@Path("{idUsuario}/boloes")
 	@Produces({ "application/xml", "application/json" })
 	@RestricaoAcesso(acesso = Acesso.USUARIO)
-	public List<UsuarioBolao> findBoloes(@PathParam("idUsuario") Long idUsuario) {
-		return this.usuarioFacade.findBoloes(idUsuario);
+	public List<UsuarioBolaoVO> findBoloes(@PathParam("idUsuario") Long idUsuario) {
+		
+		List<UsuarioBolao> usuarioBoloes = this.usuarioFacade.findBoloes(idUsuario);
+		
+		List<UsuarioBolaoVO> usuarioBoloesVO = Collections.emptyList();
+		
+		for (UsuarioBolao usuarioBolao : usuarioBoloes) {
+			usuarioBoloesVO.add(new UsuarioBolaoVO(usuarioBolao.getIdUsuarioBolao(), usuarioBolao.getBolao()));
+		}
+		
+		return usuarioBoloesVO;
 	}
 }

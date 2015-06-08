@@ -42,25 +42,24 @@ public class BolaoFacadeREST {
 	}
 
 	@GET
-	@RestricaoAcesso(acesso=Acesso.ANONIMO)
+	@RestricaoAcesso(acesso = Acesso.ANONIMO)
 	@Produces({ "application/xml", "application/json" })
 	public List<Bolao> findAll() {
 		return bolaoFacade.findAll();
 	}
-	
-	
+
 	@GET
 	@Path("/usuario/{id}")
-	@RestricaoAcesso(acesso=Acesso.USUARIO)
+	@RestricaoAcesso(acesso = Acesso.USUARIO)
 	@Produces({ "application/xml", "application/json" })
 	public List<Bolao> findByUsuario(@PathParam("id") Long idUsuario) {
-		return null;
+		return bolaoFacade.findByUsuario(idUsuario);
 	}
 
 	@GET
 	@Path("{id}/ranking/{limite}")
 	@Produces({ "application/xml", "application/json" })
-	@RestricaoAcesso(acesso = Acesso.USUARIO)
+	@RestricaoAcesso(acesso = Acesso.ANONIMO)
 	public RankingBolaoVO ranking(@PathParam("id") Long id, @PathParam("limite") Integer limite) {
 		return bolaoFacade.ranking(id, limite);
 	}

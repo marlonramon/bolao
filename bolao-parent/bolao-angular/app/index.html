@@ -49,8 +49,8 @@
             <div class="subnavbar-inner">
                 <div class="container">
                     <ul class="mainnav">
-                        <li class="active"><a href="index.html"><i class="icon-home"></i><span>Home</span> </a> </li>
-                        <li ng-show="isUsuarioLogado()"><a href="reports.html"><i class="icon-list-alt"></i><span>Palpites</span> </a> </li>
+                        <li ng-class="{active : isActive('/index')}"><a href="index.html"><i class="icon-home"></i><span>Home</span> </a> </li>
+                        <li ng-show="isUsuarioLogado()" ng-class="{active : isActive('/aposta-list')}"><a href="#/aposta-list"><i class="icon-list-alt"></i><span>Palpites</span> </a> </li>
                         <li><a href="reports.html"><i class="icon-list-alt"></i><span>Sobre</span> </a> </li>
                         
                         <li class="dropdown" ng-show="isAdm()"><a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-long-arrow-down"></i><span>Admin</span> <b class="caret"></b></a>

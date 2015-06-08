@@ -5,34 +5,36 @@
 
         <form name="formLogin" >
 
-            <h1>Login</h1>		
+            <fieldset>
+                <legend> Acessar ou <a href="#/usuario-create"> Cadastrar</a></legend>
+                
+                <div class="login-fields">
 
-            <div class="login-fields">
+                    <p>Por favor informe seu usuário e senha</p>
 
-                <p>Por favor informe seu usuário e senha</p>
+                    <div class="field">
+                        <label for="username">Usuário</label>
+                        <input type="text" id="username" name="username" value="" placeholder="Usuário" class="login username-field" ng-model="usuario.email" />
+                    </div> <!-- /field -->
 
-                <div class="field">
-                    <label for="username">Usuário</label>
-                    <input type="text" id="username" name="username" value="" placeholder="Usuário" class="login username-field" ng-model="usuario.email" />
-                </div> <!-- /field -->
+                    <div class="field">
+                        <label for="password">Senha:</label>
+                        <input type="password" id="password" name="password" value="" placeholder="Senha" class="login password-field" ng-model="usuario.senha"/>
+                    </div> <!-- /password -->
 
-                <div class="field">
-                    <label for="password">Senha:</label>
-                    <input type="password" id="password" name="password" value="" placeholder="Senha" class="login password-field" ng-model="usuario.senha"/>
-                </div> <!-- /password -->
+                </div> <!-- /login-fields -->
 
-            </div> <!-- /login-fields -->
+                <div class="control-group">
+                
 
-            <div class="control-group">
-                <div class="controls" >
+                        <button class="btn btn-success btn-large" ng-click="login()">Entrar</button>
+                        
+                        <button class="btn btn-large btn-google-alt" ng-click="loginWithGoogle()" style="width: 240px"><i class="icon-google-plus-sign" style="margin-right: 5px" ></i>Entrar com o Google+</button>
 
-                    <button class="btn btn-large btn-google-alt" ng-click="login()" style="margin-right: 5px;"><i class="icon-google-plus-sign"></i>Entrar com o Google+</button>
-                    <button class="btn btn-success btn-large" ng-click="login()">Entrar</button>
+                
+                </div>
 
-                </div> <!-- .actions -->
-            </div>
-
-
+            </fieldset>
         </form>
 
     </div> <!-- /content -->

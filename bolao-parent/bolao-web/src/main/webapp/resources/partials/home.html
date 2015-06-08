@@ -1,0 +1,61 @@
+
+<div class="row">
+    <div class="span6">
+        <div class="widget widget-nopad">
+            <div class="widget-header"> <i class="icon-list-alt"></i>
+                <h3>Campeonatos disponíveis</h3>
+            </div>
+            <!-- /widget-header -->
+
+            <div class="widget widget-table">
+                <div class="widget-content">
+
+                    <table class="table table-hover">
+                        <tr ng-repeat="campeonato in campeonatos| filter:filter">
+                            <td style="width: 40px"><img style="width: 32px;height: 32px" ng-src="{{baseUrlImages + '/' + campeonato.imagem}}"/></td>
+                            <td style="color: #080808">{{campeonato.descricao}}</td>
+                        </tr>
+                    </table>
+
+                </div>
+                <!-- /widget-content --> 
+
+            </div>
+
+        </div>
+        
+        <!-- /widget -->
+       
+        <!-- /widget --> 
+    </div>
+    <!-- /span6 -->
+    <div class="span6">
+        <div class="widget widget-table">
+            
+            <div class="widget-header"> <i class="icon-bookmark"></i>
+                <h3>Bolões disponíveis</h3>
+            </div>
+            <!-- /widget-header -->
+            <div class="widget-content">
+                <table class="table">
+                        <tr ng-repeat="bolao in boloes | filter:filter">
+                            <td style="width: 40px"><img style="width: 32px;height: 32px" ng-src="{{baseUrlImages + '/' + bolao.campeonato.imagem}}"/></td>
+                            <td style="color: #080808;text-align: left">{{bolao.descricao}}</td>
+                            <td class="td-actions" style="text-align: right"> 
+                            	<button ng-show="isUsuarioLogado() && !bolao.isUsuarioVinculado" class="btn-success" ng-click="participar(bolao)">Participar!</button> 
+                            	<button class="btn-inverse" ng-click="toViewScore(bolao)">Ranking</button> 
+                            </td>
+                        </tr>
+                    </table>
+                
+            </div>
+            <!-- /widget-content --> 
+        </div>
+        
+        
+        <!-- /widget --> 
+                <!-- /widget -->
+    </div>
+    <!-- /span6 --> 
+</div>
+<!-- /row --> 

@@ -11,13 +11,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
+@XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Bolao extends AbstractEntity {
 	private static final long serialVersionUID = 1L;
@@ -50,6 +53,9 @@ public class Bolao extends AbstractEntity {
 	@OneToMany(mappedBy="bolao")
 	@XmlTransient
 	private Set<UsuarioBolao> usuariosBolao = new HashSet<>();
+	
+	@Transient
+	private boolean isUsuarioVinculado;
 	
 	public Long getIdBolao() {
 		return idBolao;
@@ -113,6 +119,14 @@ public class Bolao extends AbstractEntity {
 	
 	public void setUsuariosBolao(Set<UsuarioBolao> usuariosBolao) {
 		this.usuariosBolao = usuariosBolao;
+	}
+	
+	public boolean isUsuarioVinculado() {
+		return isUsuarioVinculado;
+	}
+	
+	public void setUsuarioVinculado(boolean isUsuarioVinculado) {
+		this.isUsuarioVinculado = isUsuarioVinculado;
 	}
 
 

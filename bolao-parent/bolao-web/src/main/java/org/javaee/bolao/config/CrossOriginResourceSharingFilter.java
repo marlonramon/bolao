@@ -12,8 +12,6 @@ public class CrossOriginResourceSharingFilter implements ContainerResponseFilter
     @Override
     public void filter(ContainerRequestContext requestContext, ContainerResponseContext response) {
     	
-    	System.out.println("akiiiii");
-    	
     	final MultivaluedMap<String,Object> headers = response.getHeaders();
     	
     	headers.add("Access-Control-Allow-Origin", "*");

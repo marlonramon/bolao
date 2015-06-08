@@ -5,7 +5,6 @@ import java.util.List;
 import javax.annotation.ManagedBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CompoundSelection;

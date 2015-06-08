@@ -30,7 +30,7 @@ public class ApplicationConfig extends Application {
     }
 
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(org.javaee.bolao.aposta.ApostaFacadeREST.class);
+    	resources.add(org.javaee.bolao.aposta.ApostaFacadeREST.class);
         resources.add(org.javaee.bolao.bolao.BolaoFacadeREST.class);
         resources.add(org.javaee.bolao.campeonato.CampeonatoFacadeREST.class);
         resources.add(org.javaee.bolao.clube.ClubeFacadeREST.class);

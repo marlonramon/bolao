@@ -32,12 +32,10 @@ public class Usuario extends AbstractEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idUsuario;
 	
-	@Null
 	@Size(min = 1, max = 80)
 	private String senha;
 	
-	@Transient
-	@Null
+	@Transient	
 	private String confirmarSenha;
 	
 	@Temporal(TemporalType.TIMESTAMP)
@@ -63,6 +61,11 @@ public class Usuario extends AbstractEntity {
 	
 	public Usuario() {
 	}
+	
+	public Usuario(Long idUsuario) {
+		this.idUsuario = idUsuario;
+	}
+
 	
 	public Usuario(String nome, String email) {
 		this.nome = nome;
