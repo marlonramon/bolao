@@ -35,6 +35,25 @@
 	<build>
 		<plugins>
 			<plugin>
+			    <groupId>org.codehaus.mojo</groupId>
+			    <artifactId>build-helper-maven-plugin</artifactId>
+			    <version>1.8</version>
+			    <executions>
+				<execution>
+				    <id>add-modelgen-generated-sources-directory</id>
+				    <phase>generate-sources</phase>
+				    <goals>
+				        <goal>add-source</goal>
+				    </goals>
+				    <configuration>
+				        <sources>
+				            <source>${project.build.directory}/generated-sources/meta-model</source>
+				        </sources>
+				    </configuration>
+				</execution>
+			    </executions>
+			</plugin>
+			<plugin>
 				<groupId>org.bsc.maven</groupId>
 				<artifactId>maven-processor-plugin</artifactId>
 				<version>2.2.4</version>
