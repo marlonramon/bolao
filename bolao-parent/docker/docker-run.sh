@@ -1,0 +1,1 @@
+docker run -it -p 8080:8080 -p 4848:4848 glassfish/bolao:1.0
