@@ -1,0 +1,22 @@
+FROM	payara/server-full:164
+
+USER 	root
+
+RUN	rm -rf /var/lib/apt/lists/*
+RUN	rm -rf /var/cache/*
+
+USER 	payara
+RUN 	rm /opt/$PKG_FILE_NAME
+RUN	rm -rf $PAYARA_PATH/glassfish/domains/payaradomain/
+
+RUN	mkdir $PAYARA_PATH/tmp
+COPY	glassfish-resources-docker.xml $PAYARA_PATH/tmp
+COPY	${war.name}.war $PAYARA_PATH/tmp
+
+RUN     $PAYARA_PATH/bin/asadmin --user admin --passwordfile=/opt/pwdfile start-domain && \
+		$PAYARA_PATH/bin/asadmin --user admin --passwordfile=/opt/pwdfile add-resources $PAYARA_PATH/tmp/glassfish-resources-docker.xml            
+
+CMD     $PAYARA_PATH/bin/asadmin --user admin --passwordfile=/opt/pwdfile start-domain && \		
+		$PAYARA_PATH/bin/asadmin --user admin --passwordfile=/opt/pwdfile stop-domain && \
+		mv $PAYARA_PATH/tmp/${war.name}.war $PAYARA_PATH/glassfish/domains/domain1/autodeploy && \
+		$PAYARA_PATH/bin/asadmin --user admin --passwordfile=/opt/pwdfile start-domain --verbose

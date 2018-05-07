@@ -8,10 +8,10 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
+import javax.ws.rs.container.ResourceInfo;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.ext.Provider;
 
-import org.glassfish.jersey.server.internal.routing.UriRoutingContext;
-import org.glassfish.jersey.server.model.ResourceMethodInvoker;
 import org.javaee.bolao.config.BolaoConfig;
 import org.javaee.bolao.entidades.SessaoUsuario;
 import org.javaee.bolao.entidades.Usuario;
@@ -24,8 +24,8 @@ import org.javaee.bolao.usuario.UsuarioFacade;
 public class SecurityInterceptor implements ContainerRequestFilter {
 	public static final String AUTHORIZATION_PROPERTY = "Authorization";
 
-//	@Context
-//	private ResourceInfo resourceInfo;
+	@Context
+	private ResourceInfo resourceInfo;
 
 //	@Inject
 	private UsuarioFacade usuarioFacade;
@@ -36,10 +36,7 @@ public class SecurityInterceptor implements ContainerRequestFilter {
 
 	private void doFilter(ContainerRequestContext requestContext) {
 		
-		UriRoutingContext routingContext = (UriRoutingContext) requestContext.getUriInfo();
-	    ResourceMethodInvoker invoker = (ResourceMethodInvoker) routingContext.getInflector();
-//	    Class<?> className = invoker.getResourceClass();
-	    Method method = invoker.getResourceMethod();
+	    Method method = resourceInfo.getResourceMethod();
 		
 		String token = requestContext.getHeaderString("Authorization");
 

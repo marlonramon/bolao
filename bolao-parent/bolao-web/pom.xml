@@ -12,6 +12,13 @@
 	<artifactId>bolao-web</artifactId>
 	<packaging>war</packaging>
 
+	<properties>		
+		<war.name>${project.artifactId}</war.name>
+		<docker.bolao.name>bolao-${project.version}</docker.bolao.name>
+		<docker.mysql.name>mysql-bolao-5.7</docker.mysql.name>
+		<docker.repository>bolao/bolao</docker.repository>
+	</properties>
+
 	<build>
 
 		<finalName>${project.artifactId}</finalName>
@@ -21,6 +28,7 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.3</version>
 				<configuration>
+					<warName>${war.name}</warName>					
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
@@ -45,6 +53,34 @@
 									<type>jar</type>
 								</artifactItem>
 							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.0.1</version>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/docker</outputDirectory>
+							<resources>
+								<resource>
+									<directory>docker</directory>
+									<filtering>true</filtering>
+								</resource>
+								<resource>
+									<directory>${project.build.directory}</directory>
+									<include>${war.name}.war</include>
+								</resource>
+							</resources>
 						</configuration>
 					</execution>
 				</executions>
@@ -127,17 +163,6 @@
 			<version>1.4.7</version>
 		</dependency>
 
-		<!-- <dependency> -->
-		<!-- <groupId>org.glassfish.jersey.ext</groupId> -->
-		<!-- <artifactId>jersey-bean-validation</artifactId> -->
-		<!-- <version>2.9</version> -->
-		<!-- <exclusions> -->
-		<!-- <exclusion> -->
-		<!-- <groupId>org.hibernate</groupId> -->
-		<!-- <artifactId>hibernate-validator</artifactId> -->
-		<!-- </exclusion> -->
-		<!-- </exclusions> -->
-		<!-- </dependency> -->
 	</dependencies>
 
 </project>
